@@ -194,18 +194,18 @@ iframe {
 }
 
 .wrap-login100 {
-  width: 1170px;
-  background: #fff;
-  overflow: hidden;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  flex-direction: row-reverse;
-
+    width: 1170px;
+    background: #fff;
+    overflow: hidden;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    flex-direction: row-reverse;
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.2);
 }
 
 /*==================================================================
@@ -235,16 +235,27 @@ iframe {
 
 /*==================================================================
 [ Form ]*/
+.register100-form {
+    width: 100%;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: inherit;
+    padding: 100px 65px 150px 65px;
+}
+
+
 
 .login100-form {
-  width: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 150px 65px 150px 65px;
+    width: 50%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 150px 65px 150px 65px;
 }
 
 .login100-form-title {
