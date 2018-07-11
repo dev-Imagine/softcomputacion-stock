@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Registro de Usuario";
+    Layout = "~/Views/Shared/_UsuarioLogueado.cshtml";
+}
+
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form class="register100-form validate-form" autocomplete="off">
+                <span class="login100-form-title p-b-34 fs-26">
+                    Nuevo usuario
+                </span>
+
+                <div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Ingrese un usuario">
+                    <input id="usuario" class="input100" type="text" name="usuario" placeholder="Nombre usuario">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Ingrese su Apellido y nombre">
+                    <input class="input100" type="password" name="apellidoNombre" placeholder="Apellido y nombre">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Ingrese su contraseña">
+                    <input class="input100" type="password" name="contraseña" placeholder="Contraseña">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Repita su contraseña">
+                    <input class="input100" type="password" name="repetir_contraseña" placeholder="Repetir contraseña">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" onclick="location.href='@Url.Action("Index","Home")'">
+                        Crear
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

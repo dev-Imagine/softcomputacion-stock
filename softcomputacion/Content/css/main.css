@@ -233,15 +233,6 @@ iframe {
     box-shadow: 1px 1px 1px 1px rgba(0,0,0,.2);
 }
 
-.ordenFila {
-    width: 1170px;
-    background: #fff;
-    overflow: hidden;
-    flex-wrap: wrap;
-    align-items: stretch;
-    box-shadow: 1px 1px 1px 1px rgba(0,0,0,.2);
-}
-
 /*==================================================================
 [ login more ]*/
 .login100-more {
@@ -520,18 +511,11 @@ input.input100 {
     opacity: 1;
 }
 
-<<<<<<< HEAD
 @media (max-width: 992px) {
     .alert-validate::before {
         visibility: visible;
         opacity: 1;
     }
-=======
-.item-tabla {
-    border-bottom: 1px solid rgba(0,0,0,.2);
-    padding-bottom: 5px;
-    margin-bottom: 10px;
->>>>>>> ramaLucas
 }
 
 .item-tabla {

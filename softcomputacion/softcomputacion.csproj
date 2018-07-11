@@ -334,14 +334,11 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Usuario\frmUsuario.cshtml" />
     <Content Include="Views\Shared\_UsuarioLogueado.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Proveedor\ListaProveedores.cshtml" />
     <Content Include="Views\Proveedor\_frmProveedor.cshtml" />
     <Content Include="Views\Error\Error.cshtml" />
-=======
-    <Content Include="Views\Usuario\ListarUsuario.cshtml" />
->>>>>>> ramaLucas
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
