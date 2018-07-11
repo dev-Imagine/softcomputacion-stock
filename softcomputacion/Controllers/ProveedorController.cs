@@ -40,7 +40,19 @@ namespace softcomputacion.Controllers
         }
 
         //vistas parciales
-
+        public PartialViewResult _frmProveedor(proveedor oProveedor)
+        {
+            if (oProveedor == null || oProveedor.idProveedor == 0)
+            {
+                oProveedor = new proveedor();
+            }
+            //else
+            //{
+            //    srvProveedor sProveedor = new srvProveedor();
+            //    oProveedor = sProveedor.ObtenerProveedor(idProveedor);
+            //}
+            return PartialView(oProveedor);
+        }
         //metodos
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult GuardarModificarProveedor(proveedor oProveedor)
