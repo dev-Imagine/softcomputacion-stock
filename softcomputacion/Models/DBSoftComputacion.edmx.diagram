@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="BDSoftComputacionModel.categoria" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BDSoftComputacionModel.estado" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="BDSoftComputacionModel.producto" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDSoftComputacionModel.proveedor" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BDSoftComputacionModel.proveedorXproducto" Width="1.5" PointX="7.5" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BDSoftComputacionModel.subcategoria" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BDSoftComputacionModel.tipoUsuario" Width="1.5" PointX="7.75" PointY="1.375" IsExpanded="true" />
@@ -18,8 +17,9 @@
         <AssociationConnector Association="BDSoftComputacionModel.FK_producto_estado" ManuallyRouted="false" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_producto_subcategoria" ManuallyRouted="false" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_proveedorXproducto_producto" ManuallyRouted="false" />
-        <AssociationConnector Association="BDSoftComputacionModel.FK_proveedorXproducto_proveedor" ManuallyRouted="false" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_usuario_tipoUsuario" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BDSoftComputacionModel.proveedor" Width="1.5" PointX="3.375" PointY="0.875" />
+        <AssociationConnector Association="BDSoftComputacionModel.FK_proveedorXproducto_proveedor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -4,7 +4,10 @@
     Layout = "~/Views/Shared/_UsuarioLogueado.cshtml";
     List<softcomputacion.Models.proveedor> lstProveedor = (List<softcomputacion.Models.proveedor>)ViewBag.lstProveedores;
 }
-
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryFormPopup" }))
+{
+    @Html.AntiForgeryToken()
+}
 <br />
 <br />
 <div class="container-fluid">
@@ -82,21 +85,40 @@
         swal({
             title: "¿Estás seguro?",
             text: "¿Estás seguro que deseas eliminar el proveedor?. Una vez eliminado no se podrá recuperar!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                $('#div-' + idProveedor).remove();
-                //eliminar
+            type: "warning",
+            dangerMode: true,
+            showCancelButton: true,
+            confirmButtonClass: "btn-outline-primary",
+            confirmButtonText: "Aceptar",
+            cancelButtonClass: "btn-outline-dark",
+            cancelButtonText: "Cancelar",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                    //eliminar
+                    LlamarControladorEliminarProveedor(idProveedor)
+                } else {
+                    swal("Cancelado", "", "error");
+                }
+            });
 
-                swal("Exito! El proveedor ha sido eliminado", {
-                    icon: "success",
-                });
-            } else {
-                swal("Cancelado", "", "error");
-            }
+    }
+
+    function LlamarControladorEliminarProveedor(idProveedor) {
+        var url = "@Url.Action("EliminarProveedor", "Proveedor")";
+        var token = $('input[name="__RequestVerificationToken"]').val();
+        var data = { idProveedor: idProveedor, __RequestVerificationToken: token };
+            $.post(url, data).done(function (data) {
+                if (data == "True") {
+                    $('#div-' + idProveedor).remove();
+                    swal("Exito!", "El proveedor ha sido eliminado.", "success");
+                }
+                else {
+                    swal("Ocurrió un error", "Se produjo un error al intentar eliminar el proveedor.", "error");
+                }
             });
     }
+   
 </script>

@@ -32,7 +32,6 @@ namespace softcomputacion.Servicios
                 using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
                 {
                     oProveedor.nombreEmpresa = oProveedor.nombreEmpresa.ToUpper();
-                    oProveedor.proveedorXproducto.Clear();
                     bd.Entry(oProveedor).State = System.Data.Entity.EntityState.Modified;
                     bd.SaveChanges();
                     return oProveedor;
@@ -62,13 +61,27 @@ namespace softcomputacion.Servicios
                 throw ex;
             }
         }
+        public proveedor ObtenerProveedor(int idProveedor)
+        {
+            try
+            {
+                using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
+                {
+                    return bd.proveedor.Where(x => x.idProveedor == idProveedor && x.fechaBaja == null).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public List<proveedor> ObtenerProveedores()
         {
             try
             {
                 using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
                 {
-                    return bd.proveedor.OrderBy(x => x.nombreEmpresa).ToList();
+                    return bd.proveedor.Where(x=> x.fechaBaja==null).OrderBy(x => x.nombreEmpresa).ToList();
                 }
             }
             catch (Exception ex)
@@ -86,8 +99,25 @@ namespace softcomputacion.Servicios
                     {
                         return bd.proveedor.ToList();
                     }
-                    return bd.proveedor.Where(x => x.nombreEmpresa.Contains(nombreEmpresa.ToUpper())).OrderBy(x => x.nombreEmpresa).ToList();
+                    return bd.proveedor.Where(x => x.nombreEmpresa.Contains(nombreEmpresa.ToUpper()) && x.fechaBaja == null).OrderBy(x => x.nombreEmpresa).ToList();
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public proveedor EliminarProveedor(int idProveedor)
+        {
+            try
+            {
+                proveedor oProveedor = ObtenerProveedor(idProveedor);
+                using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
+                {
+                    oProveedor.fechaBaja = DateTime.Now;
+                    ModificarProveedor(oProveedor);
+                }
+                return oProveedor;
             }
             catch (Exception ex)
             {
