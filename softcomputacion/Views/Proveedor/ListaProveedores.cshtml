@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "ListaProveedores";
     Layout = "~/Views/Shared/_UsuarioLogueado.cshtml";
+    List<softcomputacion.Models.proveedor> lstProveedor = (List<softcomputacion.Models.proveedor>)ViewBag.lstProveedores;
 }
 
 <br />
@@ -15,130 +16,86 @@
     <hr />
     <br />
     <div class="row container-fluid">
-        
+        <!--Busqueda proveedores-->
         <div class="col-12 col-lg-8">
+            <div class="col-12">
+                <form method="post" action="@Url.Action("ListaProveedores", "Proveedor")" autocomplete="off">
+                    <div class="row">
+                        <div class="col-12 col-sm-10">
+                            <div class="wrap-input100 m-b-20">
+                                <input class="input100" type="text" name="nombreEmpresa" placeholder="Buscar...">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-2">
+                            <div class="container-login100-form-btn m-b-20">
+                                <button class="login100-form-btn fs-22" style="height:56px;" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <!--Lista de proveedores-->
-            <div class="row item-tabla">
-                <div class="col-8">
-                    <span class="login100-form-title p-b-10">
-                        Nicolas Ballaman
-                    </span>
-                </div>
-                <div class="col-4 text-right">
-                    <span class="p-b-10">
-                        tel: 3537-516096
-                    </span>
-                </div>
-                <div class="col-12">
-                    <span class="login100-form-title p-b-10 fs-13">
-                        Categoria1, Categoria1, Categoria1, Categoria1,Categoria1 Categoria1 Categoria1
-                    </span>
-                </div>
-            </div>
-            <div class="row item-tabla">
-                <div class="col-8">
-                    <span class="login100-form-title p-b-10">
-                        Lucas Rovere
-                    </span>
-                </div>
-                <div class="col-4 text-right">
-                    <span class="p-b-10">
-                        Skipe: _lucasRove
-                    </span>
-                </div>
-                <div class="col-12">
-                    <span class="login100-form-title p-b-10 fs-13">
-                        Categoria1, Categoria1, Categoria1, Categoria1,Categoria1 Categoria1 Categoria1
-                    </span>
-                </div>
-            </div>
-            <div class="row item-tabla">
-                <div class="col-8">
-                    <span class="login100-form-title p-b-10">
-                        Nicolas Ballaman
-                    </span>
-                </div>
-                <div class="col-4 text-right">
-                    <span class="p-b-10">
-                        tel: 3537-516096
-                    </span>
-                </div>
-                <div class="col-12">
-                    <span class="login100-form-title p-b-10 fs-13">
-                        Categoria1, Categoria1, Categoria1, Categoria1,Categoria1 Categoria1 Categoria1
-                    </span>
-                </div>
-            </div>
-            <div class="row item-tabla">
-                <div class="col-8">
-                    <span class="login100-form-title p-b-10">
-                        Lucas Rovere
-                    </span>
-                </div>
-                <div class="col-4 text-right">
-                    <span class="p-b-10">
-                        Skipe: _lucasRove
-                    </span>
-                </div>
-                <div class="col-12">
-                    <span class="login100-form-title p-b-10 fs-13">
-                        Categoria1, Categoria1, Categoria1, Categoria1,Categoria1 Categoria1 Categoria1
-                    </span>
-                </div>
-            </div>
-            <div class="row item-tabla">
-                <div class="col-8">
-                    <span class="login100-form-title p-b-10">
-                        Nicolas Ballaman
-                    </span>
-                </div>
-                <div class="col-4 text-right">
-                    <span class="p-b-10">
-                        tel: 3537-516096
-                    </span>
-                </div>
-                <div class="col-12">
-                    <span class="login100-form-title p-b-10 fs-13">
-                        Categoria1, Categoria1, Categoria1, Categoria1,Categoria1 Categoria1 Categoria1
-                    </span>
-                </div>
+            <div class="m-b-15">
+                @foreach (softcomputacion.Models.proveedor oProveedor in lstProveedor)
+                {
+                    <div id="div-@oProveedor.idProveedor" class="row item-tabla">
+                        <div class="col-12 col-md-9">
+                            <div class="row">
+                                <div class="col-12 col-md-7">
+                                    <span class="login100-form-title p-b-10">
+                                        @oProveedor.nombreEmpresa
+                                    </span>
+                                </div>
+                                <div class="col-12 col-md-4 text-center">
+                                    <span class="p-b-10">
+                                        Tel: @oProveedor.telefono
+                                    </span>
+                                </div>
+                                <div class="col-12">
+                                    <span class="login100-form-title p-b-10 fs-13">
+                                        @oProveedor.otroContacto
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <div class="btn-group w-full" role="group">
+                                <button type="button" class="btn btn-outline-dark" style="width:50%"><i class="fas fa-pen"></i></button>
+                                <button type="button" class="btn btn-outline-danger" style="width:50%" onclick="EliminarProveedor(@oProveedor.idProveedor)"><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-        <div class="col-12 col-lg-4">
-            <form class="validate-form" autocomplete="off">
-                <span class="login100-form-title p-b-34">
-                    Proveedor
-                </span>
-
-                <div class="wrap-input100 validate-input m-b-20" data-validate="Ingrese el proveedor">
-                    <input id="proveedor" class="input100" type="text" name="proveedor" placeholder="Proveedor">
-                    <span class="focus-input100"></span>
-                </div>
-                <div class="wrap-input100 m-b-20">
-                    <input class="input100" type="number" name="telefono" placeholder="Teléfono">
-                    <span class="focus-input100"></span>
-                </div>
-                <div class="wrap-input100 validate-input m-b-20" data-validate="Contaco">
-                    <input class="input100" type="text" name="contacto" placeholder="Otro contacto">
-                    <span class="focus-input100"></span>
-                </div>
-                <div class="wrap-input100 validate-input m-b-20" data-validate="Contaco">
-                    <select class="form-control input100" style="border:0px; height: 55px;" id="exampleFormControlSelect1">
-                        <option>Categoria 1</option>
-                        <option>Categoria 2</option>
-                        <option>Categoria 3</option>
-                        <option>Categoria 4</option>
-                        <option>Categoria 5</option>
-                    </select>
-                </div>
-               
-
-                <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" onclick="location.href='@Url.Action("frmUsuario","Home")'">
-                        Guardar
-                    </button>
-                </div>
-            </form>
+        <div id="div-frmProveedor" class="col-12 col-lg-4">
+            @Html.Partial("_frmProveedor", new softcomputacion.Models.proveedor())
         </div>
     </div>
 </div>
+
+
+<script>
+    function EliminarProveedor(idProveedor) {
+        swal({
+            title: "¿Estás seguro?",
+            text: "¿Estás seguro que deseas eliminar el proveedor?. Una vez eliminado no se podrá recuperar!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $('#div-' + idProveedor).remove();
+                //eliminar
+                swal("Exito! El proveedor ha sido eliminado", {
+                    icon: "success",
+                });
+            } else {
+                swal("Cancelado", "", "error");
+            }
+            });
+    }
+</script>
