@@ -6,12 +6,12 @@ using System.Web.Mvc;
 
 namespace softcomputacion.Controllers
 {
-    public class HomeController : Controller
+    public class UsuarioController : Controller
     {
-        public ActionResult Index()
+        // GET: Usuario
+        public ActionResult frmUsuario()
         {
             return View();
         }
-
     }
 }
