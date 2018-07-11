@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BDSoftComputacionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BDSoftComputacionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="categoria">
           <Key>
             <PropertyRef Name="idCategoria" />
@@ -50,6 +50,7 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
           <Property Name="nombreEmpresa" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="telefono" Type="varchar" MaxLength="100" />
           <Property Name="otroContacto" Type="varchar" MaxLength="100" />
+          <Property Name="fechaBaja" Type="datetime" />
         </EntityType>
         <EntityType Name="proveedorXproducto">
           <Key>
@@ -207,8 +208,7 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BDSoftComputacionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -251,16 +251,6 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
           <NavigationProperty Name="subcategoria" Relationship="Self.FK_producto_subcategoria" FromRole="producto" ToRole="subcategoria" />
           <NavigationProperty Name="proveedorXproducto" Relationship="Self.FK_proveedorXproducto_producto" FromRole="producto" ToRole="proveedorXproducto" />
         </EntityType>
-        <EntityType Name="proveedor">
-          <Key>
-            <PropertyRef Name="idProveedor" />
-          </Key>
-          <Property Name="idProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombreEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="otroContacto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="proveedorXproducto" Relationship="Self.FK_proveedorXproducto_proveedor" FromRole="proveedor" ToRole="proveedorXproducto" />
-        </EntityType>
         <EntityType Name="proveedorXproducto">
           <Key>
             <PropertyRef Name="idProveedorXproducto" />
@@ -269,7 +259,7 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
           <Property Name="idProveedor" Type="Int32" Nullable="false" />
           <Property Name="idProducto" Type="Int32" Nullable="false" />
           <NavigationProperty Name="producto" Relationship="Self.FK_proveedorXproducto_producto" FromRole="proveedorXproducto" ToRole="producto" />
-          <NavigationProperty Name="proveedor" Relationship="Self.FK_proveedorXproducto_proveedor" FromRole="proveedorXproducto" ToRole="proveedor" />
+          <NavigationProperty Name="proveedor" Relationship="BDSoftComputacionModel.FK_proveedorXproducto_proveedor" FromRole="proveedorXproducto" ToRole="proveedor" />
         </EntityType>
         <EntityType Name="subcategoria">
           <Key>
@@ -361,18 +351,6 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_proveedorXproducto_proveedor">
-          <End Role="proveedor" Type="Self.proveedor" Multiplicity="1" />
-          <End Role="proveedorXproducto" Type="Self.proveedorXproducto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proveedor">
-              <PropertyRef Name="idProveedor" />
-            </Principal>
-            <Dependent Role="proveedorXproducto">
-              <PropertyRef Name="idProveedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_usuario_tipoUsuario">
           <End Role="tipoUsuario" Type="Self.tipoUsuario" Multiplicity="1" />
           <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
@@ -389,7 +367,6 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
           <EntitySet Name="categoria" EntityType="Self.categoria" />
           <EntitySet Name="estado" EntityType="Self.estado" />
           <EntitySet Name="producto" EntityType="Self.producto" />
-          <EntitySet Name="proveedor" EntityType="Self.proveedor" />
           <EntitySet Name="proveedorXproducto" EntityType="Self.proveedorXproducto" />
           <EntitySet Name="subcategoria" EntityType="Self.subcategoria" />
           <EntitySet Name="tipoUsuario" EntityType="Self.tipoUsuario" />
@@ -414,15 +391,39 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
             <End Role="producto" EntitySet="producto" />
             <End Role="proveedorXproducto" EntitySet="proveedorXproducto" />
           </AssociationSet>
-          <AssociationSet Name="FK_proveedorXproducto_proveedor" Association="Self.FK_proveedorXproducto_proveedor">
-            <End Role="proveedor" EntitySet="proveedor" />
-            <End Role="proveedorXproducto" EntitySet="proveedorXproducto" />
-          </AssociationSet>
           <AssociationSet Name="FK_usuario_tipoUsuario" Association="Self.FK_usuario_tipoUsuario">
             <End Role="tipoUsuario" EntitySet="tipoUsuario" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
+          <EntitySet Name="proveedor" EntityType="BDSoftComputacionModel.proveedor" />
+          <AssociationSet Name="FK_proveedorXproducto_proveedor" Association="BDSoftComputacionModel.FK_proveedorXproducto_proveedor">
+            <End Role="proveedor" EntitySet="proveedor" />
+            <End Role="proveedorXproducto" EntitySet="proveedorXproducto" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="proveedor">
+          <Key>
+            <PropertyRef Name="idProveedor" />
+          </Key>
+          <Property Name="idProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreEmpresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="otroContacto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="fechaBaja" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="proveedorXproducto" Relationship="BDSoftComputacionModel.FK_proveedorXproducto_proveedor" FromRole="proveedor" ToRole="proveedorXproducto" />
+        </EntityType>
+        <Association Name="FK_proveedorXproducto_proveedor">
+          <End Type="BDSoftComputacionModel.proveedor" Role="proveedor" Multiplicity="1" />
+          <End Type="BDSoftComputacionModel.proveedorXproducto" Role="proveedorXproducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proveedor">
+              <PropertyRef Name="idProveedor" />
+            </Principal>
+            <Dependent Role="proveedorXproducto">
+              <PropertyRef Name="idProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -464,16 +465,6 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="proveedor">
-            <EntityTypeMapping TypeName="BDSoftComputacionModel.proveedor">
-              <MappingFragment StoreEntitySet="proveedor">
-                <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
-                <ScalarProperty Name="nombreEmpresa" ColumnName="nombreEmpresa" />
-                <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="otroContacto" ColumnName="otroContacto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="proveedorXproducto">
             <EntityTypeMapping TypeName="BDSoftComputacionModel.proveedorXproducto">
               <MappingFragment StoreEntitySet="proveedorXproducto">
@@ -509,6 +500,17 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
                 <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="dni" ColumnName="dni" />
                 <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proveedor">
+            <EntityTypeMapping TypeName="BDSoftComputacionModel.proveedor">
+              <MappingFragment StoreEntitySet="proveedor">
+                <ScalarProperty Name="fechaBaja" ColumnName="fechaBaja" />
+                <ScalarProperty Name="otroContacto" ColumnName="otroContacto" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="nombreEmpresa" ColumnName="nombreEmpresa" />
+                <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

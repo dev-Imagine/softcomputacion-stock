@@ -24,6 +24,7 @@ namespace softcomputacion.Models
         public string nombreEmpresa { get; set; }
         public string telefono { get; set; }
         public string otroContacto { get; set; }
+        public Nullable<System.DateTime> fechaBaja { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<proveedorXproducto> proveedorXproducto { get; set; }
