@@ -204,7 +204,7 @@ iframe {
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
-    flex-direction: row-reverse;
+    /*flex-direction: row-reverse;*/
     box-shadow: 1px 1px 1px 1px rgba(0,0,0,.2);
 }
 

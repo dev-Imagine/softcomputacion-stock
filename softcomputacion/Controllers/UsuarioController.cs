@@ -13,5 +13,9 @@ namespace softcomputacion.Controllers
         {
             return View();
         }
+        public ActionResult lstUsuario()
+        {
+            return View();
+        }
     }
 }
