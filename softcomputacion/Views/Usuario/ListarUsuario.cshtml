@@ -1,0 +1,103 @@
+﻿
+
+@{
+    ViewBag.Title = "Listar Usuario";
+    Layout = "~/Views/Shared/_UsuarioLogueado.cshtml";
+    List<softcomputacion.Models.proveedor> lstProveedor = (List<softcomputacion.Models.proveedor>)ViewBag.lstProveedores;
+}
+
+<br />
+<br />
+<div class="container-fluid">
+        <div class="row">
+        <div class="col-12 text-center">
+            <h2>Usuarios</h2>
+        </div>
+    </div>
+    <hr />
+    <br />
+    <div class="row container-fluid">
+            <!--Lista de Usuarios-->
+            <div class="m-b-15">
+               
+                    <div id="div-IdUsuario" class="row item-tabla">
+                        <div class="col-12 col-md-9">
+                            <div class="row">
+                                <div class="col-12 col-md-2">
+                                    <span class="login100-form-title p-b-10 fs-13 ">
+                                        Apellido
+                                    </span>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <span class="login100-form-title p-b-10 fs-13 ">
+                                        Nombre
+                                    </span>
+                                </div>
+                                <div class="col-12 col-md-3 text-center">
+                                    <span class="login100-form-title p-b-10 fs-13">
+                                        contraseña
+                                    </span>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <span class="login100-form-title p-b-10 fs-13" style="cursor:pointer">
+                                        Tel: telefono
+                                    </span>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <span class="login100-form-title p-b-10 fs-13">
+                                        DNI: 12345678
+                                    </span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12">
+                            <div class="btn-group w-full" role="group">
+                                <button type="button" class="btn btn-outline-dark" style="width:50%"><i class="fas fa-pen"></i></button>
+                                <button type="button" class="btn btn-outline-danger" style="width:50%" onclick="BajaUsuario(idUsuario)"><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+        <div id="div-frmProveedor" class="col-12 col-lg-4">
+            <form class="validate-form" method="post" action="" autocomplete="off">
+                <span class="login100-form-title p-b-34">
+                    Usuario
+                </span>
+                <input name="idUsuario" value="" disabled class="dis-none">
+                <div class="wrap-input100 validate-input m-b-20" data-validate="Ingrese el nombre">
+                    <input class="input100" type="text" name="nombre" placeholder="Nombre" value="">
+                </div>
+                <div class="wrap-input100 validate-input m-b-20" data-validate="Ingrese el apellido">
+                    <input class="input100" type="text" name="apellido" placeholder="apellido" value="">
+                </div>
+                <div class="wrap-input100 m-b-20">
+                    <input class="input100" type="text" name="contraseña" placeholder="Contraseña" value="">
+                </div>
+                <div class="wrap-input100 m-b-20">
+                    <input class="input100" type="text" name="repetir_contraseña" placeholder="Repetir Contraseña" value="">
+                </div>
+                <div class="wrap-input100 m-b-20">
+                    <input class="input100" type="text" name="dni" placeholder="DNI" value="">
+
+                </div>
+                <div class="wrap-input100 validate-input m-b-20" data-validate="">
+                    <select class="form-control input100" style="border:0px; height: 55px;" id="exampleFormControlSelect1">
+                        <option>Tipo 1</option>
+                        <option>Tipo 2</option>
+
+                    </select>
+                </div>
+
+
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" type="submit">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
