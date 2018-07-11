@@ -9,7 +9,8 @@ namespace softcomputacion.Controllers
     public class UsuarioController : Controller
     {
         // GET: Usuario
-        public ActionResult frmUsuario()
+       
+        public ActionResult ListarUsuario()
         {
             return View();
         }

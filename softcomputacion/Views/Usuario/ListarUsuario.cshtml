@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Listar Usuarios";
+    Layout = "~/Views/Shared/_UsuarioLogueado.cshtml";
+}
+<br />
+<div class="container-fluid">
+    <br />
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>Usuarios</h2>
+        </div>
+    </div>
+    <hr />
+    <br />
+    <div class="row container-fluid">        
+        <div class="col-12 col-lg-8">            
+            <!--Lista de Usuarios-->
+            <div class="m-b-15">                
+                        <div id="div-idUsuario" class="row item-tabla">
+                            <div class="col-12 col-md-9">
+                                <div class="row">
+                                    <div class="col-12 col-md-3">
+                                        <span class="login100-form-title p-b-10 fs-13">
+                                            apellido
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-2 text-center">
+                                        <span class="login100-form-title p-b-10 fs-13">
+                                            nombre
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <span class="login100-form-title p-b-10 fs-13" style="cursor:pointer">
+                                            contraseña
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <span class="login100-form-title p-b-10 fs-13">
+                                            telefono
+                                        </span>
+                                    </div>
+                                    <div class="col-12 col-md-1">
+                                        <span class="login100-form-title p-b-10 fs-13">
+                                            12345678
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <div class="btn-group w-full" role="group">
+                                    <button type="button" class="btn btn-outline-dark" style="width:50%"><i class="fas fa-pen"></i></button>
+                                    <button type="button" class="btn btn-outline-danger" style="width:50%" onclick="BajaUsuario(idUsuario)"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    
+
+                
+            </div>
+        </div>
+        <div id="div-frmUsuario" class="col-12 col-lg-4">
+
+            <form class="validate-form" autocomplete="off">
+                <span class="login100-form-title p-b-34">
+                    Usuario
+                </span>
+
+                <div class="wrap-input100 validate-input m-b-20" data-validate="Ingrese el nombre">
+                    <input id="nombre" class="input100" type="text" name="nombre" placeholder="Nombre">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-20" data-validate="Ingrese el Apellido">
+                    <input id="apellido" class="input100" type="text" name="nombre" placeholder="Apellido">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 m-b-20">
+                    <input class="input100" type="password" name="contraseña" placeholder="Contraseña">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-20" data-validate="dni">
+                    <input class="input100" type="text" name="dni" placeholder="DNI">
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-20" data-validate="Contaco">
+                    <select class="form-control input100" style="border:0px; height: 55px;" id="select">
+                        <option>Usuario 1</option>
+                        <option>Usuario 2</option>
+                    </select>
+                </div>
+
+
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" onclick="location.href='@Url.Action("Index","Home")'">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
