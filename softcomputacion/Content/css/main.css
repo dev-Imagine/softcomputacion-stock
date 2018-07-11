@@ -90,9 +90,6 @@ ul, li {
 	list-style-type: none;
 }
 
-hr {
-    border-top: 1px solid rgb(220, 53, 69);
-}
 
 /*---------------------------------------------*/
 input {
@@ -506,10 +503,5 @@ input.input100 {
   }
 }
 
-.item-tabla {
-    border-bottom: 1px solid rgba(0,0,0,.2);
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-}
 
 
