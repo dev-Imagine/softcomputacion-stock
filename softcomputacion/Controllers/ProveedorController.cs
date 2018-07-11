@@ -56,7 +56,7 @@ namespace softcomputacion.Controllers
                 return RedirectToAction("Error", "Error", new { stError = "Se produjo un error al intentar guardar o modificar el proveedor." });
             }
         }
-        [HttpPost]
+        [HttpPost,ValidateAntiForgeryToken]
         public JsonResult EliminarProveedor(int idProveedor)
         {
             try
