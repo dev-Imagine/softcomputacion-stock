@@ -46,11 +46,6 @@ namespace softcomputacion.Controllers
             {
                 oProveedor = new proveedor();
             }
-            //else
-            //{
-            //    srvProveedor sProveedor = new srvProveedor();
-            //    oProveedor = sProveedor.ObtenerProveedor(idProveedor);
-            //}
             return PartialView(oProveedor);
         }
         //metodos

@@ -5,9 +5,22 @@
 
 <form class="validate-form" method="post" action="@Url.Action("GuardarModificarProveedor","Proveedor")" autocomplete="off">
     @Html.AntiForgeryToken()
-    <span class="login100-form-title p-b-34">
-        Proveedor
-    </span>
+    @if (Model.idProveedor == 0)
+    {
+        <span class="login100-form-title p-b-34">
+            Nuevo proveedor
+        </span>
+    }
+    else
+    {
+        <span class="login100-form-title p-b-5">
+            Modificando proveedor
+        </span>
+        <span class="login100-form-title p-b-34">
+            @Model.nombreEmpresa
+        </span>
+    }
+    
     <input name="oProveedor.idProveedor" value="@Model.idProveedor" class="dis-none">
     <div class="wrap-input100 validate-input m-b-20" data-validate="Ingrese el proveedor">
         <input class="input100" type="text" name="oProveedor.nombreEmpresa" placeholder="Proveedor" value="@Model.nombreEmpresa">
@@ -28,11 +41,16 @@
             <option>Categoria 5</option>
         </select>
     </div>*@
+    @if (Model.idProveedor == 0)
+    {
+        <button type="submit" class="btn btn-success" style="width:100%">Guardar</button>
+    }
+    else
+    {
+        <div class="btn-group w-full" role="group">
+            <button type="button" class="btn btn-dark" style="width:50%" onclick="location.href='@Url.Action("ListaProveedores","Proveedor")'">Cancelar</button>
+            <button type="submit" class="btn btn-success" style="width:50%">Guardar</button>
+        </div>
+    }
 
-
-    <div class="container-login100-form-btn">
-        <button class="login100-form-btn" type="submit">
-            Guardar
-        </button>
-    </div>
 </form>
