@@ -24,7 +24,7 @@ namespace softcomputacion.Models
         public string nombre { get; set; }
         public string observacion { get; set; }
         public int stockMinimo { get; set; }
-        public int stockMaximo { get; set; }
+        public int stockIdeal { get; set; }
         public int stockActual { get; set; }
         public decimal precioCosto { get; set; }
         public decimal precioGremio { get; set; }

@@ -27,11 +27,11 @@ namespace softcomputacion.Models
     
         public virtual DbSet<categoria> categoria { get; set; }
         public virtual DbSet<estado> estado { get; set; }
-        public virtual DbSet<producto> producto { get; set; }
         public virtual DbSet<proveedorXproducto> proveedorXproducto { get; set; }
         public virtual DbSet<subcategoria> subcategoria { get; set; }
         public virtual DbSet<tipoUsuario> tipoUsuario { get; set; }
         public virtual DbSet<proveedor> proveedor { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
+        public virtual DbSet<producto> producto { get; set; }
     }
 }

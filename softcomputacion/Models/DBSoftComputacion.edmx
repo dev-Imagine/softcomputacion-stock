@@ -19,15 +19,20 @@
           <Property Name="idEstado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="precioDolar">
+          <Property Name="precioDolar" Type="money" />
+        </EntityType>-->
         <EntityType Name="producto">
           <Key>
             <PropertyRef Name="idProducto" />
           </Key>
           <Property Name="idProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="observacion" Type="varchar(max)" Nullable="false" />
+          <Property Name="observacion" Type="varchar(max)" />
           <Property Name="stockMinimo" Type="int" Nullable="false" />
-          <Property Name="stockMaximo" Type="int" Nullable="false" />
+          <Property Name="stockIdeal" Type="int" Nullable="false" />
           <Property Name="stockActual" Type="int" Nullable="false" />
           <Property Name="precioCosto" Type="money" Nullable="false" />
           <Property Name="precioGremio" Type="money" Nullable="false" />
@@ -215,8 +220,8 @@
           </Key>
           <Property Name="idCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="producto" Relationship="Self.FK_producto_categoria" FromRole="categoria" ToRole="producto" />
           <NavigationProperty Name="subcategoria" Relationship="Self.FK_subcategoria_categoria" FromRole="categoria" ToRole="subcategoria" />
+          <NavigationProperty Name="producto" Relationship="BDSoftComputacionModel.FK_producto_categoria" FromRole="categoria" ToRole="producto" />
         </EntityType>
         <EntityType Name="estado">
           <Key>
@@ -224,29 +229,7 @@
           </Key>
           <Property Name="idEstado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="producto" Relationship="Self.FK_producto_estado" FromRole="estado" ToRole="producto" />
-        </EntityType>
-        <EntityType Name="producto">
-          <Key>
-            <PropertyRef Name="idProducto" />
-          </Key>
-          <Property Name="idProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="stockMinimo" Type="Int32" Nullable="false" />
-          <Property Name="stockMaximo" Type="Int32" Nullable="false" />
-          <Property Name="stockActual" Type="Int32" Nullable="false" />
-          <Property Name="precioCosto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="precioGremio" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="precioContado" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="precioLista" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="idCategoria" Type="Int32" Nullable="false" />
-          <Property Name="idSubCategoria" Type="Int32" Nullable="false" />
-          <Property Name="idEstado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="categoria" Relationship="Self.FK_producto_categoria" FromRole="producto" ToRole="categoria" />
-          <NavigationProperty Name="estado" Relationship="Self.FK_producto_estado" FromRole="producto" ToRole="estado" />
-          <NavigationProperty Name="subcategoria" Relationship="Self.FK_producto_subcategoria" FromRole="producto" ToRole="subcategoria" />
-          <NavigationProperty Name="proveedorXproducto" Relationship="Self.FK_proveedorXproducto_producto" FromRole="producto" ToRole="proveedorXproducto" />
+          <NavigationProperty Name="producto" Relationship="BDSoftComputacionModel.FK_producto_estado" FromRole="estado" ToRole="producto" />
         </EntityType>
         <EntityType Name="proveedorXproducto">
           <Key>
@@ -255,8 +238,8 @@
           <Property Name="idProveedorXproducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idProveedor" Type="Int32" Nullable="false" />
           <Property Name="idProducto" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="producto" Relationship="Self.FK_proveedorXproducto_producto" FromRole="proveedorXproducto" ToRole="producto" />
           <NavigationProperty Name="proveedor" Relationship="BDSoftComputacionModel.FK_proveedorXproducto_proveedor" FromRole="proveedorXproducto" ToRole="proveedor" />
+          <NavigationProperty Name="producto" Relationship="BDSoftComputacionModel.FK_proveedorXproducto_producto" FromRole="proveedorXproducto" ToRole="producto" />
         </EntityType>
         <EntityType Name="subcategoria">
           <Key>
@@ -266,7 +249,7 @@
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="idCategoria" Type="Int32" Nullable="false" />
           <NavigationProperty Name="categoria" Relationship="Self.FK_subcategoria_categoria" FromRole="subcategoria" ToRole="categoria" />
-          <NavigationProperty Name="producto" Relationship="Self.FK_producto_subcategoria" FromRole="subcategoria" ToRole="producto" />
+          <NavigationProperty Name="producto" Relationship="BDSoftComputacionModel.FK_producto_subcategoria" FromRole="subcategoria" ToRole="producto" />
         </EntityType>
         <EntityType Name="tipoUsuario">
           <Key>
@@ -276,18 +259,6 @@
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="usuario" Relationship="BDSoftComputacionModel.FK_usuario_tipoUsuario" FromRole="tipoUsuario" ToRole="usuario" />
         </EntityType>
-        <Association Name="FK_producto_categoria">
-          <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
-          <End Role="producto" Type="Self.producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="categoria">
-              <PropertyRef Name="idCategoria" />
-            </Principal>
-            <Dependent Role="producto">
-              <PropertyRef Name="idCategoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_subcategoria_categoria">
           <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
           <End Role="subcategoria" Type="Self.subcategoria" Multiplicity="*" />
@@ -300,68 +271,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_producto_estado">
-          <End Role="estado" Type="Self.estado" Multiplicity="1" />
-          <End Role="producto" Type="Self.producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estado">
-              <PropertyRef Name="idEstado" />
-            </Principal>
-            <Dependent Role="producto">
-              <PropertyRef Name="idEstado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_producto_subcategoria">
-          <End Role="subcategoria" Type="Self.subcategoria" Multiplicity="1" />
-          <End Role="producto" Type="Self.producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="subcategoria">
-              <PropertyRef Name="idSubCategoria" />
-            </Principal>
-            <Dependent Role="producto">
-              <PropertyRef Name="idSubCategoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_proveedorXproducto_producto">
-          <End Role="producto" Type="Self.producto" Multiplicity="1" />
-          <End Role="proveedorXproducto" Type="Self.proveedorXproducto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="producto">
-              <PropertyRef Name="idProducto" />
-            </Principal>
-            <Dependent Role="proveedorXproducto">
-              <PropertyRef Name="idProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="BDSoftComputacionEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="categoria" EntityType="Self.categoria" />
           <EntitySet Name="estado" EntityType="Self.estado" />
-          <EntitySet Name="producto" EntityType="Self.producto" />
           <EntitySet Name="proveedorXproducto" EntityType="Self.proveedorXproducto" />
           <EntitySet Name="subcategoria" EntityType="Self.subcategoria" />
           <EntitySet Name="tipoUsuario" EntityType="Self.tipoUsuario" />
-          <AssociationSet Name="FK_producto_categoria" Association="Self.FK_producto_categoria">
-            <End Role="categoria" EntitySet="categoria" />
-            <End Role="producto" EntitySet="producto" />
-          </AssociationSet>
           <AssociationSet Name="FK_subcategoria_categoria" Association="Self.FK_subcategoria_categoria">
             <End Role="categoria" EntitySet="categoria" />
             <End Role="subcategoria" EntitySet="subcategoria" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producto_estado" Association="Self.FK_producto_estado">
-            <End Role="estado" EntitySet="estado" />
-            <End Role="producto" EntitySet="producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producto_subcategoria" Association="Self.FK_producto_subcategoria">
-            <End Role="subcategoria" EntitySet="subcategoria" />
-            <End Role="producto" EntitySet="producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_proveedorXproducto_producto" Association="Self.FK_proveedorXproducto_producto">
-            <End Role="producto" EntitySet="producto" />
-            <End Role="proveedorXproducto" EntitySet="proveedorXproducto" />
           </AssociationSet>
           <EntitySet Name="proveedor" EntityType="BDSoftComputacionModel.proveedor" />
           <AssociationSet Name="FK_proveedorXproducto_proveedor" Association="BDSoftComputacionModel.FK_proveedorXproducto_proveedor">
@@ -372,6 +290,23 @@
           <AssociationSet Name="FK_usuario_tipoUsuario" Association="BDSoftComputacionModel.FK_usuario_tipoUsuario">
             <End Role="tipoUsuario" EntitySet="tipoUsuario" />
             <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <EntitySet Name="producto" EntityType="BDSoftComputacionModel.producto" />
+          <AssociationSet Name="FK_producto_categoria" Association="BDSoftComputacionModel.FK_producto_categoria">
+            <End Role="categoria" EntitySet="categoria" />
+            <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producto_estado" Association="BDSoftComputacionModel.FK_producto_estado">
+            <End Role="estado" EntitySet="estado" />
+            <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producto_subcategoria" Association="BDSoftComputacionModel.FK_producto_subcategoria">
+            <End Role="subcategoria" EntitySet="subcategoria" />
+            <End Role="producto" EntitySet="producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proveedorXproducto_producto" Association="BDSoftComputacionModel.FK_proveedorXproducto_producto">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="proveedorXproducto" EntitySet="proveedorXproducto" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="proveedor">
@@ -423,6 +358,76 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="producto">
+          <Key>
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="idProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="observacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="stockMinimo" Type="Int32" Nullable="false" />
+          <Property Name="stockIdeal" Type="Int32" Nullable="false" />
+          <Property Name="stockActual" Type="Int32" Nullable="false" />
+          <Property Name="precioCosto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="precioGremio" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="precioContado" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="precioLista" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="idCategoria" Type="Int32" Nullable="false" />
+          <Property Name="idSubCategoria" Type="Int32" Nullable="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="categoria" Relationship="BDSoftComputacionModel.FK_producto_categoria" FromRole="producto" ToRole="categoria" />
+          <NavigationProperty Name="estado" Relationship="BDSoftComputacionModel.FK_producto_estado" FromRole="producto" ToRole="estado" />
+          <NavigationProperty Name="subcategoria" Relationship="BDSoftComputacionModel.FK_producto_subcategoria" FromRole="producto" ToRole="subcategoria" />
+          <NavigationProperty Name="proveedorXproducto" Relationship="BDSoftComputacionModel.FK_proveedorXproducto_producto" FromRole="producto" ToRole="proveedorXproducto" />
+        </EntityType>
+        <Association Name="FK_producto_categoria">
+          <End Type="BDSoftComputacionModel.categoria" Role="categoria" Multiplicity="1" />
+          <End Type="BDSoftComputacionModel.producto" Role="producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="idCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producto_estado">
+          <End Type="BDSoftComputacionModel.estado" Role="estado" Multiplicity="1" />
+          <End Type="BDSoftComputacionModel.producto" Role="producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado">
+              <PropertyRef Name="idEstado" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="idEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producto_subcategoria">
+          <End Type="BDSoftComputacionModel.subcategoria" Role="subcategoria" Multiplicity="1" />
+          <End Type="BDSoftComputacionModel.producto" Role="producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subcategoria">
+              <PropertyRef Name="idSubCategoria" />
+            </Principal>
+            <Dependent Role="producto">
+              <PropertyRef Name="idSubCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proveedorXproducto_producto">
+          <End Type="BDSoftComputacionModel.producto" Role="producto" Multiplicity="1" />
+          <End Type="BDSoftComputacionModel.proveedorXproducto" Role="proveedorXproducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="proveedorXproducto">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -442,25 +447,6 @@
               <MappingFragment StoreEntitySet="estado">
                 <ScalarProperty Name="idEstado" ColumnName="idEstado" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="producto">
-            <EntityTypeMapping TypeName="BDSoftComputacionModel.producto">
-              <MappingFragment StoreEntitySet="producto">
-                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="observacion" ColumnName="observacion" />
-                <ScalarProperty Name="stockMinimo" ColumnName="stockMinimo" />
-                <ScalarProperty Name="stockMaximo" ColumnName="stockMaximo" />
-                <ScalarProperty Name="stockActual" ColumnName="stockActual" />
-                <ScalarProperty Name="precioCosto" ColumnName="precioCosto" />
-                <ScalarProperty Name="precioGremio" ColumnName="precioGremio" />
-                <ScalarProperty Name="precioContado" ColumnName="precioContado" />
-                <ScalarProperty Name="precioLista" ColumnName="precioLista" />
-                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
-                <ScalarProperty Name="idSubCategoria" ColumnName="idSubCategoria" />
-                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -512,6 +498,25 @@
                 <ScalarProperty Name="apellido" ColumnName="apellido" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="producto">
+            <EntityTypeMapping TypeName="BDSoftComputacionModel.producto">
+              <MappingFragment StoreEntitySet="producto">
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+                <ScalarProperty Name="idSubCategoria" ColumnName="idSubCategoria" />
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="precioLista" ColumnName="precioLista" />
+                <ScalarProperty Name="precioContado" ColumnName="precioContado" />
+                <ScalarProperty Name="precioGremio" ColumnName="precioGremio" />
+                <ScalarProperty Name="precioCosto" ColumnName="precioCosto" />
+                <ScalarProperty Name="stockActual" ColumnName="stockActual" />
+                <ScalarProperty Name="stockIdeal" ColumnName="stockIdeal" />
+                <ScalarProperty Name="stockMinimo" ColumnName="stockMinimo" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
