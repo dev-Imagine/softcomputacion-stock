@@ -19,11 +19,6 @@
           <Property Name="idEstado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="precioDolar">
-          <Property Name="precioDolar" Type="money" />
-        </EntityType>-->
         <EntityType Name="producto">
           <Key>
             <PropertyRef Name="idProducto" />
@@ -85,6 +80,8 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
           <Property Name="telefono" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="dni" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="idTipoUsuario" Type="int" Nullable="false" />
+          <Property Name="contraseña" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fechaBaja" Type="datetime" />
         </EntityType>
         <Association Name="FK_producto_categoria">
           <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
@@ -277,19 +274,7 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
           </Key>
           <Property Name="idTipoUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="usuario" Relationship="Self.FK_usuario_tipoUsuario" FromRole="tipoUsuario" ToRole="usuario" />
-        </EntityType>
-        <EntityType Name="usuario">
-          <Key>
-            <PropertyRef Name="idUsuario" />
-          </Key>
-          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="dni" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="idTipoUsuario" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tipoUsuario" Relationship="Self.FK_usuario_tipoUsuario" FromRole="usuario" ToRole="tipoUsuario" />
+          <NavigationProperty Name="usuario" Relationship="BDSoftComputacionModel.FK_usuario_tipoUsuario" FromRole="tipoUsuario" ToRole="usuario" />
         </EntityType>
         <Association Name="FK_producto_categoria">
           <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
@@ -351,18 +336,6 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_usuario_tipoUsuario">
-          <End Role="tipoUsuario" Type="Self.tipoUsuario" Multiplicity="1" />
-          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tipoUsuario">
-              <PropertyRef Name="idTipoUsuario" />
-            </Principal>
-            <Dependent Role="usuario">
-              <PropertyRef Name="idTipoUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="BDSoftComputacionEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="categoria" EntityType="Self.categoria" />
           <EntitySet Name="estado" EntityType="Self.estado" />
@@ -370,7 +343,6 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
           <EntitySet Name="proveedorXproducto" EntityType="Self.proveedorXproducto" />
           <EntitySet Name="subcategoria" EntityType="Self.subcategoria" />
           <EntitySet Name="tipoUsuario" EntityType="Self.tipoUsuario" />
-          <EntitySet Name="usuario" EntityType="Self.usuario" />
           <AssociationSet Name="FK_producto_categoria" Association="Self.FK_producto_categoria">
             <End Role="categoria" EntitySet="categoria" />
             <End Role="producto" EntitySet="producto" />
@@ -391,14 +363,15 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
             <End Role="producto" EntitySet="producto" />
             <End Role="proveedorXproducto" EntitySet="proveedorXproducto" />
           </AssociationSet>
-          <AssociationSet Name="FK_usuario_tipoUsuario" Association="Self.FK_usuario_tipoUsuario">
-            <End Role="tipoUsuario" EntitySet="tipoUsuario" />
-            <End Role="usuario" EntitySet="usuario" />
-          </AssociationSet>
           <EntitySet Name="proveedor" EntityType="BDSoftComputacionModel.proveedor" />
           <AssociationSet Name="FK_proveedorXproducto_proveedor" Association="BDSoftComputacionModel.FK_proveedorXproducto_proveedor">
             <End Role="proveedor" EntitySet="proveedor" />
             <End Role="proveedorXproducto" EntitySet="proveedorXproducto" />
+          </AssociationSet>
+          <EntitySet Name="usuario" EntityType="BDSoftComputacionModel.usuario" />
+          <AssociationSet Name="FK_usuario_tipoUsuario" Association="BDSoftComputacionModel.FK_usuario_tipoUsuario">
+            <End Role="tipoUsuario" EntitySet="tipoUsuario" />
+            <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="proveedor">
@@ -421,6 +394,32 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
             </Principal>
             <Dependent Role="proveedorXproducto">
               <PropertyRef Name="idProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dni" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idTipoUsuario" Type="Int32" Nullable="false" />
+          <Property Name="contraseña" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fechaBaja" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tipoUsuario" Relationship="BDSoftComputacionModel.FK_usuario_tipoUsuario" FromRole="usuario" ToRole="tipoUsuario" />
+        </EntityType>
+        <Association Name="FK_usuario_tipoUsuario">
+          <End Type="BDSoftComputacionModel.tipoUsuario" Role="tipoUsuario" Multiplicity="1" />
+          <End Type="BDSoftComputacionModel.usuario" Role="usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipoUsuario">
+              <PropertyRef Name="idTipoUsuario" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="idTipoUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -491,18 +490,6 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="usuario">
-            <EntityTypeMapping TypeName="BDSoftComputacionModel.usuario">
-              <MappingFragment StoreEntitySet="usuario">
-                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="apellido" ColumnName="apellido" />
-                <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="dni" ColumnName="dni" />
-                <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="proveedor">
             <EntityTypeMapping TypeName="BDSoftComputacionModel.proveedor">
               <MappingFragment StoreEntitySet="proveedor">
@@ -511,6 +498,20 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
                 <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="nombreEmpresa" ColumnName="nombreEmpresa" />
                 <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="BDSoftComputacionModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="fechaBaja" ColumnName="fechaBaja" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="idTipoUsuario" ColumnName="idTipoUsuario" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

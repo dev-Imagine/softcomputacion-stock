@@ -20,6 +20,8 @@ namespace softcomputacion.Models
         public string telefono { get; set; }
         public string dni { get; set; }
         public int idTipoUsuario { get; set; }
+        public string contraseña { get; set; }
+        public Nullable<System.DateTime> fechaBaja { get; set; }
     
         public virtual tipoUsuario tipoUsuario { get; set; }
     }
