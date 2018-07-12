@@ -11,15 +11,15 @@
         <EntityTypeShape EntityType="BDSoftComputacionModel.proveedorXproducto" Width="1.5" PointX="7.5" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BDSoftComputacionModel.subcategoria" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BDSoftComputacionModel.tipoUsuario" Width="1.5" PointX="7.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDSoftComputacionModel.usuario" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_producto_categoria" ManuallyRouted="false" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_subcategoria_categoria" ManuallyRouted="false" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_producto_estado" ManuallyRouted="false" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_producto_subcategoria" ManuallyRouted="false" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_proveedorXproducto_producto" ManuallyRouted="false" />
-        <AssociationConnector Association="BDSoftComputacionModel.FK_usuario_tipoUsuario" ManuallyRouted="false" />
         <EntityTypeShape EntityType="BDSoftComputacionModel.proveedor" Width="1.5" PointX="3.375" PointY="0.875" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_proveedorXproducto_proveedor" />
+        <EntityTypeShape EntityType="BDSoftComputacionModel.usuario" Width="1.5" PointX="10" PointY="0.75" />
+        <AssociationConnector Association="BDSoftComputacionModel.FK_usuario_tipoUsuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
