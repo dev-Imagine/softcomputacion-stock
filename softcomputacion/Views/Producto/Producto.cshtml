@@ -3,6 +3,8 @@
     ViewBag.Title = "Producto";
     Layout = "~/Views/Shared/_UsuarioLogueado.cshtml";
     softcomputacion.Models.producto oProducto = (softcomputacion.Models.producto)ViewBag.oProducto;
+    List<softcomputacion.Models.categoria> lstCategorias = (List<softcomputacion.Models.categoria>)ViewBag.lstCategorias;
+    List<softcomputacion.Models.proveedor> lstProveedores = (List<softcomputacion.Models.proveedor>)ViewBag.lstProveedores;
 }
 <br /><br />
 <div class="container-fluid">
@@ -35,31 +37,30 @@
                 <div class="col-12 col-md-6">
                     <label >Categoría</label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
-                        <select class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idCategoria">
-                            <option value="1">Categoria 1</option>
-                            <option value="2">Categoria 2</option>
-                            <option value="3">Categoria 3</option>
-                            <option value="4">Categoria 4</option>
-                            <option value="5">Categoria 5</option>
+                        <select id="select-Categorias" onchange="CargarComboSubcategoria()" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idCategoria">
+                            <option selected value="0">Categoría</option>
+                            @{
+                                foreach (softcomputacion.Models.categoria oCategoria in lstCategorias)
+                                {
+                                    <option value="@oCategoria.idCategoria">@oCategoria.nombre</option>
+                                }
+                            }
                         </select>
                     </div>
+
                 </div>
                 <div class="col-12 col-md-6">
                     <label >Sub categoría</label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
-                        <select class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
-                            <option value="1">Subcategoria 1</option>
-                            <option value="1">Subcategoria 2</option>
-                            <option value="1">Subcategoria 3</option>
-                            <option value="1">Subcategoria 4</option>
-                            <option value="1">Subcategoria 5</option>
+                        <select disabled id="select-Subcategoria" onchange="SeleccionarSubcategoria()" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
+                            <option value="0">Subcategoria</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="col-12">
-                    <div class="row fs-14">
-                        <div id="div-categoria-1" class="col-12 col-md-6">
+                    <div class="row fs-14" id="subcategorias-agregadas">
+                        @*<div id="div-categoria-1" class="col-12 col-md-6">
                             <div class="categoria-seleccionada">
                                 <span style="float:right">
                                     <a style="cursor:pointer" onclick="EliminarCategoria(1)">
@@ -68,37 +69,8 @@
                                 </span>
                                 <p style="margin-bottom: 0px;">Categoria1 / Subcategoría2</p>
                             </div>
-                        </div>
-                        <div id="div-categoria-2" class="col-12 col-md-6">
-                            <div class="categoria-seleccionada">
-                                <span style="float:right">
-                                    <a style="cursor:pointer" onclick="EliminarCategoria(2)">
-                                        <i class="far fa-times-circle" aria-hidden="true"></i>
-                                    </a>
-                                </span>
-                                <p style="margin-bottom: 0px;">Categoria1 / Subcategoría2</p>
-                            </div>
-                        </div>
-                        <div id="div-categoria-3" class="col-12 col-md-6">
-                            <div class="categoria-seleccionada">
-                                <span style="float:right">
-                                    <a style="cursor:pointer" onclick="EliminarCategoria(3)">
-                                        <i class="far fa-times-circle" aria-hidden="true"></i>
-                                    </a>
-                                </span>
-                                <p style="margin-bottom: 0px;">Categoria1 / Subcategoría2</p>
-                            </div>
-                        </div>
-                        <div id="div-categoria-4" class="col-12 col-md-6">
-                            <div class="categoria-seleccionada">
-                                <span style="float:right">
-                                    <a style="cursor:pointer" onclick="EliminarCategoria(4)">
-                                        <i class="far fa-times-circle" aria-hidden="true"></i>
-                                    </a>
-                                </span>
-                                <p style="margin-bottom: 0px;">Categoria1 / Subcategoría2</p>
-                            </div>
-                        </div>
+                        </div>*@
+                       
 
 
                     </div>
@@ -169,17 +141,19 @@
 
                 <div class="col-12 text-center">
                     <br />
-                    <span class="badge fs-20 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="background-color:#dc3545; color:#fff;">PROVEEDOR</span>
+                    <span class="badge fs-20 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="background-color:#dc3545; color:#fff;">PROVEEDORES</span>
                 </div>
                 <div class="col-12">
                     <label >Proveedores</label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
                         <select class="form-control input100" style="border:0px; height: 55px;" name="oProveedorxProducto.idProveedor">
-                            <option value="1">Proveedor 1</option>
-                            <option value="1">Proveedor 2</option>
-                            <option value="1">Proveedor 3</option>
-                            <option value="1">Proveedor 4</option>
-                            <option value="1">Proveedor 5</option>
+                            <option value="0">Proveedores</option>
+                            @{
+                                foreach (softcomputacion.Models.proveedor oProveedor in lstProveedores)
+                                {
+                                    <option value="@oProveedor.idProveedor">@oProveedor.nombreEmpresa</option>
+                                }
+                            }
                         </select>
                     </div>
                 </div>
@@ -206,9 +180,62 @@
 
 @section scripts{
 <script>
+
+    $(document).ready(function () {
+        var idProducto = '@oProducto.idProducto';
+        if (idProducto == 0 || idProducto == null) {
+            $(':input[type="number"]').val('');
+           // $(":input").val('');
+        }
+    });
+
+    //********** Categoria **********
+
+    function CargarComboSubcategoria() {
+        var url = "@Url.Action("ObtenerSubcategoriaDeCategoria", "Producto")";
+        var idCategoria = document.getElementById("select-Categorias").value;
+        var data = { idCategoria: idCategoria };
+        $.post(url, data).done(function (data) {
+            if (data == "<option selected value=\"0\">Subcategoria</option>" | data == "") {
+                document.getElementById("select-Subcategoria").innerHTML = "<option selected value=\"0\">Subcategoria</option>";
+                document.getElementById("select-Subcategoria").setAttribute("disabled", "true");
+            }
+            else {
+                document.getElementById("select-Subcategoria").innerHTML = data + "";
+                document.getElementById("select-Subcategoria").removeAttribute("disabled");
+            }
+        });
+    }
+
+    function SeleccionarSubcategoria()
+    {
+        var NombreCategoria = $("#select-Categorias option:selected").text();
+        var idSubcategoria = document.getElementById("select-Subcategoria").value;
+        var NombreSubcategoria = $("#select-Subcategoria option:selected").text();
+        var ExisteSubcategoria = false;
+        $("#subcategorias-agregadas div").each(function () {
+            var idSubcategoriaAgregada = $(this).attr("id");
+            if (idSubcategoriaAgregada == "div-categoria-" + idSubcategoria) {
+                ExisteSubcategoria = true;
+            }
+        });
+        if (ExisteSubcategoria) {
+            swal("Subcategoria ya seleccionada.", "La subcategoria " + NombreSubcategoria + " ya ha sido asignado.", "info");
+        } else {
+            $('#subcategorias-agregadas').append("<div id=\"div-categoria-" + idSubcategoria + "\" class=\"col-12 col-md-6\"><div class=\"categoria-seleccionada\" ><span style=\"float:right\"><a style=\"cursor:pointer\" onclick=\"EliminarCategoria(" + idSubcategoria + ")\"><i class=\"far fa-times-circle\" aria-hidden=\"true\"></i></a></span><p style=\"margin-bottom: 0px;\">" + NombreCategoria + " / " + NombreSubcategoria + "</p></div></div>");
+        }
+        $("#select-Categorias").val(0);
+        $("#select-Categorias").change();
+    }
+
     function EliminarCategoria(id_categoria) {
         $('#div-categoria-' + id_categoria).remove();
     }
+
+    //********** FIN categorias **********
+
+
 </script>
 }
+
 
