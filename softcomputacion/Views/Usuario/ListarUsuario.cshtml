@@ -26,62 +26,62 @@
                    @foreach (var oUsuario in lstUsuarios)
                    {
                    
-                        <div id="div-@oUsuario.idUsuario" class="row item-tabla">
-                            <div class="col-12 col-md-9">
+                        <div id="div-@oUsuario.idUsuario" class="row item-tabla m-b-15">
+                            <div class="col-12">
                                 <div class="row">
-                                    <div class="col-12 col-md-2">
-                                        <span id="spanApellido-@oUsuario.idUsuario" class="login100-form-title p-b-10 fs-13 ">
-                                            @oUsuario.apellido
-                                        </span>
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <p class="login100-form-title p-b-10 fs-13 ">
+                                            <strong>Apellido:</strong>
+                                            <span id="spanApellido-@oUsuario.idUsuario">
+                                                 <i>@oUsuario.apellido</i>
+                                            </span>
+                                        </p>
                                     </div>
-                                    <div class="col-12 col-md-2">
-                                        <span id="spanNombre-@oUsuario.idUsuario" class="login100-form-title p-b-10 fs-13 ">
-                                            @oUsuario.nombre
-                                        </span>
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <p class="login100-form-title p-b-10 fs-13 ">
+                                            <strong>Nombre:</strong>
+                                            <span id="spanNombre-@oUsuario.idUsuario">
+                                                <i>@oUsuario.nombre</i>
+                                            </span>
+                                        </p>
                                     </div>
-                                    <div class="col-12 col-md-2 text-center"  style="cursor:pointer">
-                                        <span id="spanContraseña-@oUsuario.idUsuario" class="login100-form-title p-b-10 fs-13">
-                                            @oUsuario.contraseña
-                                        </span>
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <p class="login100-form-title p-b-10 fs-13 ">
+                                            <strong>Contraseña:</strong>
+                                            <span id="spanContraseña-@oUsuario.idUsuario">
+                                                <i>@oUsuario.contraseña</i>
+                                            </span>
+                                        </p>
                                     </div>
-                                    <div class="col-12 col-md-2">
-                                        <span id="spanTelefono-@oUsuario.idUsuario" class="login100-form-title p-b-10 fs-13">
-                                            @oUsuario.telefono
-                                        </span>
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <p class="login100-form-title p-b-10 fs-13 ">
+                                            <strong>Tel:</strong>
+                                            <span id="spanTelefono-@oUsuario.idUsuario">
+                                                <i>@oUsuario.telefono</i>
+                                            </span>
+                                        </p>
                                     </div>
-                                    <div  class="col-12 col-md-2">
-                                        <span id="spanDni-@oUsuario.idUsuario" class="login100-form-title p-b-10 fs-13">
-                                            @oUsuario.dni
-                                        </span>
+                                    <div  class="col-12 col-sm-6 col-md-4">
+                                        <p class="login100-form-title p-b-10 fs-13 ">
+                                            <strong>DNI:</strong>
+                                            <span id="spanDni-@oUsuario.idUsuario">
+                                                <i>@oUsuario.dni</i>
+                                            </span>
+                                        </p>
                                     </div>
-                                    <div class="col-12 col-md-2">
-                                        
-                                            @if (oUsuario.idTipoUsuario == 1)
-                                            {
-                                                <span id="spanTipo-@oUsuario.idUsuario" class="login100-form-title p-b-10 fs-13">
-                                                    Usuario
-                                                </span>
-                                            }
-                                            else
-                                            {
-                                                <span id="spanTipo-@oUsuario.idUsuario" class="login100-form-title p-b-10 fs-13">
-                                                    Super Usuario
-                                                </span>
-                                            }
-
-                                        
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <p class="login100-form-title p-b-10 fs-13 ">
+                                            <strong>Tipo:</strong>
+                                            <span id="spanTipo-@oUsuario.idUsuario">
+                                                <i>@oUsuario.tipoUsuario.nombre</i>
+                                            </span>
+                                        </p>
                                     </div>
                                 
                                 </div>
                             </div>
                             <div class="col-12 col-md-12">
-                                
-
-
-
-
                                 <div class="btn-group w-full" role="group">
-                                    
                                     <button type="button" class="btn btn-outline-dark" style="width:50%" onclick="ModificarUsuario(@oUsuario.idUsuario, @oUsuario.idTipoUsuario)"><i class="fas fa-pen"></i></button>
                                     <button type="button" class="btn btn-outline-danger" style="width:50%" onclick="EliminarUsuario(@oUsuario.idUsuario)"><i class="fas fa-times"></i></button>
                                 </div>
@@ -108,14 +108,14 @@
                 <div class="wrap-input100 validate-input m-b-20" data-validate="Apellido">
                     <input class="input100" type="text" name="oUsuario.apellido" id="frmApellido" placeholder="Apellido" value="">
                 </div>
-                <div class="wrap-input100 m-b-20">
+                <div class="wrap-input100 validate-input m-b-20" data-validate="Contraseña">
                     <input class="input100" type="password" name="oUsuario.contraseña" id="frmContraseña" placeholder="Contraseña" value="">
                 </div>
                 <div class="wrap-input100 m-b-20">
                     <input class="input100" type="number" name="oUsuario.telefono" id="frmTelefono" placeholder="Teléfono" value="">
                 </div>
-                <div class="wrap-input100 m-b-20">
-                    <input class="input100" type="number" name="oUsuario.dni" maxlength="8" id="frmDni" placeholder="DNI" value="">
+                <div class="wrap-input100 validate-input m-b-20" data-validate="DNI">
+                    <input class="input100" type="number" name="oUsuario.dni" min="10000000" max="99999999" id="frmDni" placeholder="DNI" value="">
 
                 </div>
                 <div class="wrap-input100 validate-input m-b-20" data-validate="">
@@ -130,13 +130,11 @@
                 <div class="container-login100-form-btn">
                     
                     <div id="btnModificar" hidden class="btn-group w-full" role="group">
+                        <button type="reset" class="btn btn-dark" style="width:50%" onclick="CancelarModificar()">Cancelar</button>
                         <button type="submit" class="btn btn-success" style="width:50%">Modificar</button>
-                        <button type="reset" class="btn btn-dark" style="width:50%" onclick="CancelarModificar()">Cancelar</button>                        
                     </div>
-
-                    <button id="btnGuardar" class="login100-form-btn" type="submit">
-                        Guardar
-                    </button>
+                    <button id="btnGuardar" type="submit" class="btn btn-success" style="width:100%">Guardar</button>
+                    
                 </div>
                 </form>
             </div>
@@ -189,12 +187,11 @@
 
 
     function ModificarUsuario(idUsuario, idTipo) {
-        alert(idUsuario);
         var id = idUsuario;
         var nombre = $('#spanNombre-' + idUsuario).text();
         var apellido = $('#spanApellido-' + idUsuario).text();
-        $('#spanFRM1').text("");
-        $('#spanFRM2').html("Modificando a" + apellido + ", " + nombre)
+        $('#spanFRM1').text("Modificando");
+        $('#spanFRM2').html( apellido + ", " + nombre)
         var contraseña = $('#spanContraseña-' + idUsuario).text();
         $('#frmIdUsuario').val(id);
         $('#frmNombre').val($.trim(nombre));

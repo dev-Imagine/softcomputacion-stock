@@ -14,7 +14,13 @@ namespace softcomputacion.Servicios
             {
                 using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
                 {
-                    return bd.usuario.Where(x=> x.fechaBaja == null).OrderBy(x => x.apellido).ToList();
+                    List<usuario> lstUsuario = bd.usuario.Where(x => x.fechaBaja == null).OrderBy(x => x.apellido).ToList();
+                    string st = "";
+                    foreach (usuario oUsuario in lstUsuario)
+                    {
+                        st = oUsuario.tipoUsuario.nombre;
+                    }
+                    return lstUsuario;
                 }
             }
             catch (Exception ex)
@@ -29,7 +35,9 @@ namespace softcomputacion.Servicios
             {
                 using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
                 {
-                    return bd.usuario.Where(x => x.idUsuario == oUsuario.idUsuario).FirstOrDefault();
+                    oUsuario = bd.usuario.Where(x => x.idUsuario == oUsuario.idUsuario).FirstOrDefault();
+                    string st = oUsuario.tipoUsuario.nombre;
+                    return oUsuario;
                 }
             }
             catch (Exception ex)
@@ -44,7 +52,9 @@ namespace softcomputacion.Servicios
             {
                 using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
                 {
-                    return bd.usuario.Where(x => x.idUsuario == idUsuario).FirstOrDefault();
+                    usuario oUsuario = bd.usuario.Where(x => x.idUsuario == idUsuario).FirstOrDefault();
+                    string st = oUsuario.tipoUsuario.nombre;
+                    return oUsuario;
                 }
             }
             catch (Exception ex)
