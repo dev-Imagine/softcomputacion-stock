@@ -52,30 +52,12 @@
                 <div class="col-12 col-md-6">
                     <label >Sub categoría</label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
-                        <select disabled id="select-Subcategoria" onchange="SeleccionarSubcategoria()" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
+                        <select disabled id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
                             <option value="0">Subcategoria</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="col-12">
-                    <div class="row fs-14" id="subcategorias-agregadas">
-                        @*<div id="div-categoria-1" class="col-12 col-md-6">
-                            <div class="categoria-seleccionada">
-                                <span style="float:right">
-                                    <a style="cursor:pointer" onclick="EliminarCategoria(1)">
-                                        <i class="far fa-times-circle" aria-hidden="true"></i>
-                                    </a>
-                                </span>
-                                <p style="margin-bottom: 0px;">Categoria1 / Subcategoría2</p>
-                            </div>
-                        </div>*@
-                       
-
-
-                    </div>
-                </div>
-                
 
                 <div class="col-12">
                     <label for="frmNombre">Observación</label>
@@ -146,7 +128,7 @@
                 <div class="col-12">
                     <label >Proveedores</label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
-                        <select class="form-control input100" style="border:0px; height: 55px;" name="oProveedorxProducto.idProveedor">
+                        <select id="selectProveedor" class="form-control input100" style="border:0px; height: 55px;" name="oProveedorxProducto.idProveedor" onchange="SeleccionarProveedor()">
                             <option value="0">Proveedores</option>
                             @{
                                 foreach (softcomputacion.Models.proveedor oProveedor in lstProveedores)
@@ -157,17 +139,38 @@
                         </select>
                     </div>
                 </div>
-                
 
-               
+                <div class="col-12">
+                    <div class="row fs-14" id="proveedores-agregados">
 
-                <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
-                    <div class="container-login100-form-btn">
-                        @*<div id="btnModificar" class="btn-group w-full" role="group">
-                            <button type="reset" class="btn btn-dark" style="width:50%" onclick="CancelarModificar()">Cancelar</button>
-                            <button type="submit" class="btn btn-success" style="width:50%">Modificar</button>
+                        @*<div id="div-proveedor-1" class="col-12 col-md-6">
+                            <div class="item-seleccionado">
+                                <span style="float:right">
+                                    <a style="cursor:pointer" onclick="EliminarProveedor(1)">
+                                        <i class="far fa-times-circle" aria-hidden="true"></i>
+                                    </a>
+                                </span>
+                                <p style="margin-bottom: 0px;">Proveedor</p>
+                            </div>
                         </div>*@
-                        <button id="btnGuardar" type="submit" class="btn btn-success" style="width:100%">Guardar</button>
+
+                    </div>
+                </div>
+                <div class="col-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
+                    <div class="container-login100-form-btn m-t-20">
+                        @if (oProducto.idProducto==0)
+	                    {
+		                    <button id="btnGuardar" type="submit" class="btn btn-success" style="width:100%">Guardar</button>       
+                        }
+                        else
+                        {
+                            <div id="btnModificar" class="btn-group w-full" role="group">
+                                <button type="reset" class="btn btn-dark" style="width:50%" onclick="CancelarModificar()">Cancelar</button>
+                                <button type="submit" class="btn btn-success" style="width:50%">Modificar</button>
+                            </div>
+                        }
+                        
+                        
                     </div>
                 </div>
                 <br />
@@ -185,7 +188,6 @@
         var idProducto = '@oProducto.idProducto';
         if (idProducto == 0 || idProducto == null) {
             $(':input[type="number"]').val('');
-           // $(":input").val('');
         }
     });
 
@@ -207,33 +209,58 @@
         });
     }
 
-    function SeleccionarSubcategoria()
-    {
-        var NombreCategoria = $("#select-Categorias option:selected").text();
-        var idSubcategoria = document.getElementById("select-Subcategoria").value;
-        var NombreSubcategoria = $("#select-Subcategoria option:selected").text();
-        var ExisteSubcategoria = false;
-        $("#subcategorias-agregadas div").each(function () {
-            var idSubcategoriaAgregada = $(this).attr("id");
-            if (idSubcategoriaAgregada == "div-categoria-" + idSubcategoria) {
-                ExisteSubcategoria = true;
-            }
-        });
-        if (ExisteSubcategoria) {
-            swal("Subcategoria ya seleccionada.", "La subcategoria " + NombreSubcategoria + " ya ha sido asignado.", "info");
-        } else {
-            $('#subcategorias-agregadas').append("<div id=\"div-categoria-" + idSubcategoria + "\" class=\"col-12 col-md-6\"><div class=\"categoria-seleccionada\" ><span style=\"float:right\"><a style=\"cursor:pointer\" onclick=\"EliminarCategoria(" + idSubcategoria + ")\"><i class=\"far fa-times-circle\" aria-hidden=\"true\"></i></a></span><p style=\"margin-bottom: 0px;\">" + NombreCategoria + " / " + NombreSubcategoria + "</p></div></div>");
-        }
-        $("#select-Categorias").val(0);
-        $("#select-Categorias").change();
-    }
+    //function SeleccionarSubcategoria()
+    //{
+    //    var NombreCategoria = $("#select-Categorias option:selected").text();
+    //    var idSubcategoria = document.getElementById("select-Subcategoria").value;
+    //    var NombreSubcategoria = $("#select-Subcategoria option:selected").text();
+    //    var ExisteSubcategoria = false;
+    //    $("#subcategorias-agregadas div").each(function () {
+    //        var idSubcategoriaAgregada = $(this).attr("id");
+    //        if (idSubcategoriaAgregada == "div-categoria-" + idSubcategoria) {
+    //            ExisteSubcategoria = true;
+    //        }
+    //    });
+    //    if (ExisteSubcategoria) {
+    //        swal("Subcategoria ya seleccionada.", "La subcategoria " + NombreSubcategoria + " ya ha sido asignada.", "info");
+    //    } else {
+    //        $('#subcategorias-agregadas').append("<div id=\"div-categoria-" + idSubcategoria + "\" class=\"col-12 col-md-6\"><div class=\"item-seleccionado\" ><span style=\"float:right\"><a style=\"cursor:pointer\" onclick=\"EliminarCategoria(" + idSubcategoria + ")\"><i class=\"far fa-times-circle\" aria-hidden=\"true\"></i></a></span><p style=\"margin-bottom: 0px;\">" + NombreCategoria + " / " + NombreSubcategoria + "</p></div></div>");
+    //    }
+    //    $("#select-Categorias").val(0);
+    //    $("#select-Categorias").change();
+    //}
 
-    function EliminarCategoria(id_categoria) {
-        $('#div-categoria-' + id_categoria).remove();
-    }
+    //function EliminarCategoria(id_categoria) {
+    //    $('#div-categoria-' + id_categoria).remove();
+    //}
 
     //********** FIN categorias **********
 
+    function SeleccionarProveedor()
+    {
+        var idProveedor = document.getElementById("selectProveedor").value;
+        var NombreProveedor = $("#selectProveedor option:selected").text();
+        ExisteProveedor = false;
+        $("#proveedores-agregados div").each(function () {
+            var idProveedorAgregado = $(this).attr("id");
+            if (idProveedorAgregado == "div-proveedor-" + idProveedor) {
+                ExisteProveedor = true;
+            }
+        });
+        if (idProveedor != 0) {
+            if (ExisteProveedor) {
+                swal("Proveedor ya seleccionado.", "El proveedor " + NombreProveedor + " ya ha sido seleccionado.", "info");
+            } else {
+                $('#proveedores-agregados').append("<div id=\"div-proveedor-" + idProveedor + "\" class=\"col-12 col-md-6\"><div class=\"item-seleccionado\" ><span style=\"float:right\"><a style=\"cursor:pointer\" onclick=\"EliminarProveedor(" + idProveedor + ")\"><i class=\"far fa-times-circle\" aria-hidden=\"true\"></i></a></span><p style=\"margin-bottom: 0px;\">" + NombreProveedor + "</p></div ></div >");
+            }
+            $("#selectProveedor").val(0);
+            $("#selectProveedor").change();
+        }
+        
+    }
+    function EliminarProveedor(id_proveedor) {
+        $('#div-proveedor-' + id_proveedor).remove();
+    }
 
 </script>
 }

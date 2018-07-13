@@ -528,7 +528,7 @@ input.input100 {
     margin-bottom: 10px;
 }
 
-.categoria-seleccionada {
+.item-seleccionado {
     border: 1px solid #dc3545;
     border-radius: 5px;
     padding-bottom: 4px;
@@ -538,6 +538,6 @@ input.input100 {
     padding-right: 10px;
     background-color: #eaeaea;
 }
-    .categoria-seleccionada span, .categoria-seleccionada p {
-        color:#000;
+    .item-seleccionado span, .item-seleccionado p {
+        color: #000;
     }
