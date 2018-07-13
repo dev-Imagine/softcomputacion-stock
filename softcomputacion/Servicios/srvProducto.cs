@@ -46,6 +46,7 @@ namespace softcomputacion.Servicios
         {
             try
             {
+                oProducto.nombre = oProducto.nombre.ToUpper();
                 if (oProducto.idProducto == 0)
                 {
                     GuardarProducto(oProducto);

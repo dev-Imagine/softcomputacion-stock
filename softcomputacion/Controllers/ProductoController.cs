@@ -74,14 +74,21 @@ namespace softcomputacion.Controllers
                 {
                     oProducto.idEstado = 3;
                 }
-                if (oProducto.stockActual >= oProducto.stockMinimo+1)
+                else
                 {
-                    oProducto.idEstado = 2;
+                    if (oProducto.stockActual >= oProducto.stockMinimo + 1)
+                    {
+                        oProducto.idEstado = 2;
+                    }
+                    else
+                    {
+                        if (oProducto.stockActual >= oProducto.stockIdeal)
+                        {
+                            oProducto.idEstado = 1;
+                        }
+                    }
                 }
-                if (oProducto.stockActual >= oProducto.stockIdeal)
-                {
-                    oProducto.idEstado = 1;
-                }
+                
 
                 sProducto.GuardarModificarProducto(oProducto);
                 return RedirectToAction("Producto");
