@@ -199,6 +199,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\srvCategoria.cs" />
+    <Compile Include="Servicios\srvProducto.cs" />
     <Compile Include="Servicios\srvProveedor.cs" />
     <Compile Include="Servicios\srvUsuario.cs" />
   </ItemGroup>

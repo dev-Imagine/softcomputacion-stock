@@ -30,7 +30,7 @@
                 <div class="col-12 col-md-6">
                     <label for="frmNombre">Precio costo</label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="Precio Costo">
-                        <input id="frmPrecioCosto" class="input100" type="number" name="oProducto.precioCosto" placeholder="Ideal" value="@oProducto.precioCosto">
+                        <input id="frmPrecioCosto" class="input100" type="number" name="oProducto.precioCosto" placeholder="Costo" value="@oProducto.precioCosto">
                     </div>
                 </div>
 
@@ -128,7 +128,7 @@
                 <div class="col-12">
                     <label >Proveedores</label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
-                        <select id="selectProveedor" class="form-control input100" style="border:0px; height: 55px;" name="oProveedorxProducto.idProveedor" onchange="SeleccionarProveedor()">
+                        <select id="selectProveedor" class="form-control input100" style="border:0px; height: 55px;" name="opxp.idProveedor" onchange="SeleccionarProveedor()">
                             <option value="0">Proveedores</option>
                             @{
                                 foreach (softcomputacion.Models.proveedor oProveedor in lstProveedores)
@@ -153,6 +153,8 @@
                                 <p style="margin-bottom: 0px;">Proveedor</p>
                             </div>
                         </div>*@
+
+                        <input id="inpProveedores" name="idProveedores" value="" class="dis-none">
 
                     </div>
                 </div>
@@ -235,7 +237,7 @@
     //}
 
     //********** FIN categorias **********
-
+    var idProveedores = " ";
     function SeleccionarProveedor()
     {
         var idProveedor = document.getElementById("selectProveedor").value;
@@ -252,11 +254,20 @@
                 swal("Proveedor ya seleccionado.", "El proveedor " + NombreProveedor + " ya ha sido seleccionado.", "info");
             } else {
                 $('#proveedores-agregados').append("<div id=\"div-proveedor-" + idProveedor + "\" class=\"col-12 col-md-6\"><div class=\"item-seleccionado\" ><span style=\"float:right\"><a style=\"cursor:pointer\" onclick=\"EliminarProveedor(" + idProveedor + ")\"><i class=\"far fa-times-circle\" aria-hidden=\"true\"></i></a></span><p style=\"margin-bottom: 0px;\">" + NombreProveedor + "</p></div ></div >");
+                //$('#proveedores-agregados').append("<input name=\"opxp\" value=" + idProveedor + "\" class=\"dis-none\">");
+                if (idProveedores == "undefined") {
+                    idProveedores = idProveedor;
+                } else
+                {
+                    idProveedores = idProveedores + idProveedor + ";";
+                }
+                $('#inpProveedores').val(idProveedores);
+                //alert(1);
             }
             $("#selectProveedor").val(0);
             $("#selectProveedor").change();
         }
-        
+
     }
     function EliminarProveedor(id_proveedor) {
         $('#div-proveedor-' + id_proveedor).remove();

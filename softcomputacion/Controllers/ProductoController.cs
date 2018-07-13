@@ -49,5 +49,47 @@ namespace softcomputacion.Controllers
             }
             
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult GuardarModificarProducto(producto oProducto, string idProveedores)
+        {
+            try
+            {
+                srvProducto sProducto = new srvProducto();
+                string [] idProveedor = idProveedores.Split(';');
+
+                proveedorXproducto oProvedorXproducto = new proveedorXproducto();
+                foreach (string idProv in idProveedor)
+                {
+                    if (idProv != "")
+                    {
+                        oProvedorXproducto = new proveedorXproducto();
+                        oProvedorXproducto.idProducto = oProducto.idProducto;
+                        oProvedorXproducto.idProveedor = Convert.ToInt32(idProv);
+                        oProducto.proveedorXproducto.Add(oProvedorXproducto);
+                    }
+ 
+                }
+                if (oProducto.stockMinimo>oProducto.stockActual)
+                {
+                    oProducto.idEstado = 3;
+                }
+                if (oProducto.stockActual >= oProducto.stockMinimo+1)
+                {
+                    oProducto.idEstado = 2;
+                }
+                if (oProducto.stockActual >= oProducto.stockIdeal)
+                {
+                    oProducto.idEstado = 1;
+                }
+
+                sProducto.GuardarModificarProducto(oProducto);
+                return RedirectToAction("Producto");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Error", new { stError = "Se produjo un error al intentar guardar o modificar el producto." });
+            }
+        }
     }
 }
