@@ -29,6 +29,12 @@ namespace softcomputacion.Controllers
             
         }
 
+        // *************** Vistas parciales
+        public PartialViewResult _PopUpGuardarModificarCategoria(int idCategoria =0)
+        {
+            srvCategoria sCategoria = new srvCategoria();
+            return PartialView(sCategoria.ObtenerCategoria(idCategoria));
+        }
         // *************** Metodos
         public JsonResult ObtenerSubcategoriaDeCategoria(int idCategoria)
         {
@@ -49,7 +55,6 @@ namespace softcomputacion.Controllers
             }
             
         }
-
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult GuardarModificarProducto(producto oProducto, string idProveedores)
         {
@@ -96,6 +101,30 @@ namespace softcomputacion.Controllers
             catch (Exception)
             {
                 return RedirectToAction("Error", "Error", new { stError = "Se produjo un error al intentar guardar o modificar el producto." });
+            }
+        }
+        public JsonResult GuardarModificarCategoria(categoria oCategoria, string[] Subcategorias)
+        {
+            try
+            {
+                oCategoria.nombre = oCategoria.nombre.ToUpper();
+                subcategoria oSubcategoria;
+                foreach (string stCategoria in Subcategorias)
+                {
+                    string[] stCat = stCategoria.Split(';');
+                    oSubcategoria = new subcategoria();
+                    oSubcategoria.idCategoria = oCategoria.idCategoria;
+                    oSubcategoria.idSubCategoria = Convert.ToInt32(stCat[0]);
+                    oSubcategoria.nombre = stCat[1].ToUpper();
+                    oCategoria.subcategoria.Add(oSubcategoria);
+                }
+                srvCategoria sCategoria = new srvCategoria();
+                oCategoria = sCategoria.GuardarModificarCategoria(oCategoria);
+                return Json(oCategoria.idCategoria + ";" + oCategoria.nombre);
+            }
+            catch (Exception)
+            {
+                return Json("");
             }
         }
     }

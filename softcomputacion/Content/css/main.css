@@ -538,6 +538,17 @@ input.input100 {
     padding-right: 10px;
     background-color: #eaeaea;
 }
-    .item-seleccionado span, .item-seleccionado p {
-        color: #000;
-    }
+.item-seleccionado span, .item-seleccionado p {
+    color: #000;
+}
+
+.btn-agregar {
+    font-size: 11px !important;
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+    padding-right: 2px !important;
+    padding-left: 2px !important;
+    height: 19px !important;
+    width: 19px !important;
+    margin-bottom: 2px !important;
+}

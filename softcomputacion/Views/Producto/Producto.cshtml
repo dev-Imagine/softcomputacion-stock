@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <label >Categoría</label>
+                    <label >Categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" onclick="_PopUpGuardarModificarCategoria(0)"><i class="fas fa-plus"></i></button></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
                         <select id="select-Categorias" onchange="CargarComboSubcategoria()" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idCategoria">
                             <option selected value="0">Categoría</option>
@@ -50,7 +50,7 @@
 
                 </div>
                 <div class="col-12 col-md-6">
-                    <label >Sub categoría</label>
+                    <label >Sub categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar"><i class="fas fa-plus"></i></button></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
                         <select disabled id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
                             <option value="0">Subcategoria</option>
@@ -126,7 +126,7 @@
                     <span class="badge fs-20 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="background-color:#dc3545; color:#fff;">PROVEEDORES</span>
                 </div>
                 <div class="col-12">
-                    <label >Proveedores</label>
+                    <label>Proveedores &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" data-toggle="modal" data-target="#popupProveedor" onclick="vistaParcialProveedor()"><i class="fas fa-plus"></i></button></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
                         <select id="selectProveedor" class="form-control input100" style="border:0px; height: 55px;" name="opxp.idProveedor" onchange="SeleccionarProveedor()">
                             <option value="0">Proveedores</option>
@@ -171,8 +171,6 @@
                                 <button type="submit" class="btn btn-success" style="width:50%">Modificar</button>
                             </div>
                         }
-                        
-                        
                     </div>
                 </div>
                 <br />
@@ -182,6 +180,24 @@
         </div>
     </div>
 </div>
+
+<div id="div-popup-categoria"></div>
+
+@*<div class="modal fade" id="popupProveedor" tabindex="-1" role="dialog" aria-labelledby="popupProveedor" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="div-frmProveedor">
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
 
 @section scripts{
 <script>
@@ -211,32 +227,23 @@
         });
     }
 
-    //function SeleccionarSubcategoria()
-    //{
-    //    var NombreCategoria = $("#select-Categorias option:selected").text();
-    //    var idSubcategoria = document.getElementById("select-Subcategoria").value;
-    //    var NombreSubcategoria = $("#select-Subcategoria option:selected").text();
-    //    var ExisteSubcategoria = false;
-    //    $("#subcategorias-agregadas div").each(function () {
-    //        var idSubcategoriaAgregada = $(this).attr("id");
-    //        if (idSubcategoriaAgregada == "div-categoria-" + idSubcategoria) {
-    //            ExisteSubcategoria = true;
-    //        }
-    //    });
-    //    if (ExisteSubcategoria) {
-    //        swal("Subcategoria ya seleccionada.", "La subcategoria " + NombreSubcategoria + " ya ha sido asignada.", "info");
-    //    } else {
-    //        $('#subcategorias-agregadas').append("<div id=\"div-categoria-" + idSubcategoria + "\" class=\"col-12 col-md-6\"><div class=\"item-seleccionado\" ><span style=\"float:right\"><a style=\"cursor:pointer\" onclick=\"EliminarCategoria(" + idSubcategoria + ")\"><i class=\"far fa-times-circle\" aria-hidden=\"true\"></i></a></span><p style=\"margin-bottom: 0px;\">" + NombreCategoria + " / " + NombreSubcategoria + "</p></div></div>");
-    //    }
-    //    $("#select-Categorias").val(0);
-    //    $("#select-Categorias").change();
-    //}
+    function _PopUpGuardarModificarCategoria(idCategoria) {
+        alert(1);
+        var url = "@Url.Action("_PopUpGuardarModificarCategoria", "Producto")";
+        var data = { idCategoria: idCategoria };
+        alert(2);
+        $.post(url, data).done(function (data) {
+            if (data.length > 0) {
+                $('#div-popup-categoria').html(data);
+                $('#popupCategoria').modal('show');
+            }
+        });
+    }
 
-    //function EliminarCategoria(id_categoria) {
-    //    $('#div-categoria-' + id_categoria).remove();
-    //}
 
     //********** FIN categorias **********
+
+    //********** proveedores
     var idProveedores = " ";
     function SeleccionarProveedor()
     {
@@ -254,7 +261,6 @@
                 swal("Proveedor ya seleccionado.", "El proveedor " + NombreProveedor + " ya ha sido seleccionado.", "info");
             } else {
                 $('#proveedores-agregados').append("<div id=\"div-proveedor-" + idProveedor + "\" class=\"col-12 col-md-6\"><div class=\"item-seleccionado\" ><span style=\"float:right\"><a style=\"cursor:pointer\" onclick=\"EliminarProveedor(" + idProveedor + ")\"><i class=\"far fa-times-circle\" aria-hidden=\"true\"></i></a></span><p style=\"margin-bottom: 0px;\">" + NombreProveedor + "</p></div ></div >");
-                //$('#proveedores-agregados').append("<input name=\"opxp\" value=" + idProveedor + "\" class=\"dis-none\">");
                 if (idProveedores == "undefined") {
                     idProveedores = idProveedor;
                 } else
@@ -262,7 +268,6 @@
                     idProveedores = idProveedores + idProveedor + ";";
                 }
                 $('#inpProveedores').val(idProveedores);
-                //alert(1);
             }
             $("#selectProveedor").val(0);
             $("#selectProveedor").change();
@@ -272,6 +277,18 @@
     function EliminarProveedor(id_proveedor) {
         $('#div-proveedor-' + id_proveedor).remove();
     }
+
+    function vistaParcialProveedor() {
+        var url = "@Url.Action("_frmProveedor", "Proveedor")";
+        var data = { 'oProveedor.idProveedor': 0};
+        $.post(url, data).done(function (data) {
+            if (data.length > 0) {
+                $('#div-frmProveedor').html(data);
+            }
+        });
+    }
+
+    //********** proveedores
 
 </script>
 }

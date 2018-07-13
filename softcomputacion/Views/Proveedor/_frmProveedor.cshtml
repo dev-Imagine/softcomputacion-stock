@@ -3,7 +3,7 @@
 }
 
 
-<form class="validate-form" method="post" action="@Url.Action("GuardarModificarProveedor","Proveedor")" autocomplete="off">
+<form class="validate-form" method="post" action="@Url.Action("GuardarModificarProveedor","Proveedor")" onsubmit="return ValidarNombre()" autocomplete="off">
     @Html.AntiForgeryToken()
     @if (Model.idProveedor == 0)
     {
@@ -23,15 +23,15 @@
     
     <input name="oProveedor.idProveedor" value="@Model.idProveedor" class="dis-none">
     <div class="wrap-input100 validate-input m-b-20" data-validate="Ingrese el proveedor">
-        <input class="input100" type="text" name="oProveedor.nombreEmpresa" placeholder="Proveedor" value="@Model.nombreEmpresa">
+        <input class="input100" id="nombreEmpresa" type="text" name="oProveedor.nombreEmpresa" placeholder="Proveedor" value="@Model.nombreEmpresa">
     </div>
     <div class="wrap-input100 m-b-20">
         <input class="input100" type="text" name="oProveedor.telefono" placeholder="Teléfono" value="@Model.telefono">
     </div>
     <div class="wrap-input100 m-b-20">
         <input class="input100" type="text" name="oProveedor.otroContacto" placeholder="Otro contacto" value="@Model.otroContacto">
-        
     </div>
+
     @*<div class="wrap-input100 validate-input m-b-20" data-validate="Contaco">
         <select class="form-control input100" style="border:0px; height: 55px;" id="exampleFormControlSelect1">
             <option>Categoria 1</option>
@@ -54,3 +54,16 @@
     }
 
 </form>
+
+<script>
+    function ValidarNombre() {
+        var nombreEmpresa = $('#nombreEmpresa').val();
+        if (nombreEmpresa.trim() == "") {
+            return false;
+        } else {
+            //verificar existe nombre
+            return true;
+        }
+        
+    }
+</script>

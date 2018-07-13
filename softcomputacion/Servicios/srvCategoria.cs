@@ -38,5 +38,49 @@ namespace softcomputacion.Servicios
                 return new categoria();
             }
         }
+        public categoria GuardarModificarCategoria (categoria oCategoria)
+        {
+            if (oCategoria.idCategoria ==0)
+            {
+                oCategoria = GuardarCategoria(oCategoria);
+            }
+            else
+            {
+                //oCategoria = ModificarCategoria(oCategoria); //falta actualizar detalle
+            }
+            return oCategoria;
+        }
+        private categoria GuardarCategoria(categoria oCategoria)
+        {
+            try
+            {
+                using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
+                {   
+                    bd.Entry(oCategoria).State = System.Data.Entity.EntityState.Added;
+                    bd.SaveChanges();
+                    return oCategoria;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private categoria ModificarCategoria (categoria oCategoria)
+        {
+            try
+            {
+                using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
+                {
+                    bd.Entry(oCategoria).State = System.Data.Entity.EntityState.Modified;
+                    bd.SaveChanges();
+                    return oCategoria;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
