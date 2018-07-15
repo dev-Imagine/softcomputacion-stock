@@ -46,7 +46,7 @@ namespace softcomputacion.Servicios
             }
             else
             {
-                //oCategoria = ModificarCategoria(oCategoria); //falta actualizar detalle
+                oCategoria = ModificarCategoria(oCategoria); //falta actualizar detalle
             }
             return oCategoria;
         }
@@ -72,9 +72,46 @@ namespace softcomputacion.Servicios
             {
                 using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
                 {
+                    List<subcategoria> lstSubcategoria = oCategoria.subcategoria.ToList();
+                    oCategoria.subcategoria.Clear();
                     bd.Entry(oCategoria).State = System.Data.Entity.EntityState.Modified;
+                    foreach (subcategoria oSubCategoria in lstSubcategoria)
+                    {
+                        if (oSubCategoria.idSubCategoria == 0)
+                        {
+                            bd.Entry(oSubCategoria).State = System.Data.Entity.EntityState.Added;
+                        }
+                        else
+                        {
+                            bd.Entry(oSubCategoria).State = System.Data.Entity.EntityState.Modified;
+                        }
+                    }
                     bd.SaveChanges();
                     return oCategoria;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void EliminarSubcategoria(int idSubCategoria)
+        {
+            try
+            {
+                using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
+                {
+                    subcategoria oSubcategoria = bd.subcategoria.Where(x => x.idSubCategoria == idSubCategoria).FirstOrDefault();
+                    if (oSubcategoria.producto.Count == 0)
+                    {
+                        bd.subcategoria.Remove(oSubcategoria);
+                        bd.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                    
                 }
             }
             catch (Exception ex)

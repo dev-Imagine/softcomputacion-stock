@@ -12,26 +12,32 @@
 </head>
 <body style="background-color:#f2f2f2;">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="box-shadow: 3px 3px 4px rgba(0,0,0,.2)" >
-        <div class="container">
-            <a class="navbar-brand" href="~/Home/Index">Start</a>
+        <div class="container-fluid">
+            <a class="navbar-brand m-l-0 fs-22" href="~/Home/Index">SoftComputación</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto pull-left">
+                <ul class="navbar-nav ml-auto pull-left text-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("ListarUsuario","Usuario",null)">Usuarios</a>
+                        <a class="nav-link  fs-18" href="@Url.Action("ListarUsuario","Usuario",null)">Usuarios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Productos</a>
+                        <a class="nav-link  fs-18" href="">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("ListaProveedores","Proveedor")">Proveedores</a>
+                        <a class="nav-link  fs-18" href="@Url.Action("ListaProveedores","Proveedor")">Proveedores</a>
                     </li>
                 </ul>
-                <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Codigo producto">
-                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
+                <form method="post">
+                    <div class="input-group " style="margin-bottom:0px !important">
+                        <input class="form-control mr-sm-2 ml-sm-1 mt-10 w-full" type="search" placeholder="Código producto" aria-label="Código producto">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-danger w-full" type="submit"><i class="fas fa-search"></i> Buscar</button>
+                        </div>
+                    </div>
+                    @*<input class="form-control mr-sm-2 ml-sm-2 w-full" type="search" placeholder="Código producto" aria-label="Código producto">
+                    <button class="btn btn-outline-danger my-2 my-sm-0 w-full" type="submit"><i class="fas fa-search"></i> Buscar</button>*@
                 </form>
             </div>
         </div>

@@ -30,9 +30,11 @@ namespace softcomputacion.Controllers
         }
 
         // *************** Vistas parciales
+        [HttpPost]
         public PartialViewResult _PopUpGuardarModificarCategoria(int idCategoria =0)
         {
             srvCategoria sCategoria = new srvCategoria();
+            ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
             return PartialView(sCategoria.ObtenerCategoria(idCategoria));
         }
         // *************** Metodos
@@ -125,6 +127,19 @@ namespace softcomputacion.Controllers
             catch (Exception)
             {
                 return Json("");
+            }
+        }
+        public JsonResult EliminarSubCategoria(int id_Subcategoria)
+        {
+            try
+            {
+                srvCategoria sCategoria = new srvCategoria();
+                sCategoria.EliminarSubcategoria(id_Subcategoria);
+                return Json("True");
+            }
+            catch (Exception)
+            {
+                return Json("No se ha podido eliminar la subcategoría. Verifique que no tenga productos asignados.");
             }
         }
     }

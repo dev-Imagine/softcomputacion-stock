@@ -50,7 +50,7 @@
 
                 </div>
                 <div class="col-12 col-md-6">
-                    <label >Sub categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar"><i class="fas fa-plus"></i></button></label>
+                    <label >Sub categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" onclick="_PopUpGuardarModificarCategoria(1)"><i class="fas fa-plus"></i></button></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
                         <select disabled id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
                             <option value="0">Subcategoria</option>
@@ -126,7 +126,7 @@
                     <span class="badge fs-20 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="background-color:#dc3545; color:#fff;">PROVEEDORES</span>
                 </div>
                 <div class="col-12">
-                    <label>Proveedores &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" data-toggle="modal" data-target="#popupProveedor" onclick="vistaParcialProveedor()"><i class="fas fa-plus"></i></button></label>
+                    <label>Proveedores @*&nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" data-toggle="modal" data-target="#popupProveedor" onclick="vistaParcialProveedor()"><i class="fas fa-plus"></i></button>*@</label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
                         <select id="selectProveedor" class="form-control input100" style="border:0px; height: 55px;" name="opxp.idProveedor" onchange="SeleccionarProveedor()">
                             <option value="0">Proveedores</option>
@@ -228,10 +228,11 @@
     }
 
     function _PopUpGuardarModificarCategoria(idCategoria) {
-        alert(1);
+        if (idCategoria == 1) {
+            idCategoria = document.getElementById("select-Categorias").value;
+        }
         var url = "@Url.Action("_PopUpGuardarModificarCategoria", "Producto")";
         var data = { idCategoria: idCategoria };
-        alert(2);
         $.post(url, data).done(function (data) {
             if (data.length > 0) {
                 $('#div-popup-categoria').html(data);

@@ -17,7 +17,7 @@
                         Nueva categoría
                     </span>
 
-                    <input id="popup_idCategoria" class="dis-none">
+                    <input id="popup_idCategoria" value="@Model.idCategoria" class="dis-none">
                     <div class="wrap-input100 m-b-20">
                         <input class="input100" id="popup_NombreCategoria" type="text" placeholder="Nombre" value="@Model.nombre">
                     </div>
@@ -108,6 +108,21 @@
     }
 
     function EliminarSubcategoria(id_Subcategoria) {
-        $('#div-Subcategoria-' + id_Subcategoria).remove();
+        if (id_Subcategoria.includes("000000000000000")) {
+            $('#div-Subcategoria-' + id_Subcategoria).remove();
+        } else
+        {
+            var url = "@Url.Action("EliminarSubCategoria", "Producto")";
+            var data = { id_Subcategoria: id_Subcategoria };
+
+            $.post(url, data).done(function (data) {
+                if (data == "True") {
+                    $('#div-Subcategoria-' + id_Subcategoria).remove();
+                }
+                else {
+                    swal("Ocurrió un error", data, "error");
+                }
+            });
+        }
     }
 </script>
