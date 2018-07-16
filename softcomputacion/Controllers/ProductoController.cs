@@ -11,7 +11,7 @@ namespace softcomputacion.Controllers
 {
     public class ProductoController : Controller
     {
-        // *************** Vistas
+        // *************** Vistas        
         public ActionResult Producto()
         {
             try
@@ -28,6 +28,25 @@ namespace softcomputacion.Controllers
                 return RedirectToAction("Error", "Error", new { stError = "Se produjo un error al intentar obtener los datos del servidor." });
             }
             
+        }
+        [HttpPost]
+        public ActionResult Producto(int idProducto)
+        {
+            try
+            {
+                srvCategoria sCategoria = new srvCategoria();
+                ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
+                srvProveedor sProveedor = new srvProveedor();
+                ViewBag.lstProveedores = sProveedor.ObtenerProveedores();
+                srvProducto sProducto = new srvProducto();
+                ViewBag.oProducto = sProducto.ObtenerProducto(idProducto);
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Error", new { stError = "Se produjo un error al intentar obtener los datos del servidor." });
+            }
+
         }
 
         public ActionResult ListarProducto(int nroPagina = 1, int tamañoPagina = 10)
@@ -64,7 +83,7 @@ namespace softcomputacion.Controllers
                 ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
                 ViewBag.lstEstados = sEstado.ObtenerEstados();
                 ViewBag.filtros = Convert.ToString(nombreProducto + ";" + idCategoria + ";" + idSubCategoria + ";" + idEstado);
-                PagedList<producto> model = new PagedList<producto>(lstProductos.ToList(), 1, 1);
+                PagedList<producto> model = new PagedList<producto>(lstProductos.ToList(), 1, 10);
                 return View(model);
             }
             catch (Exception)

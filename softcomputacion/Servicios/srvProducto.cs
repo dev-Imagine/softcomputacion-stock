@@ -102,8 +102,13 @@ namespace softcomputacion.Servicios
             {
                 using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
                 {
-
-                    return bd.producto.Where(X => X.idProducto == idProducto).FirstOrDefault();
+                    producto oProducto = bd.producto.Where(X => X.idProducto == idProducto).FirstOrDefault();
+                    string st = oProducto.subcategoria.nombre;
+                    foreach (proveedorXproducto oPxp in oProducto.proveedorXproducto.ToList())
+                    {
+                        st = oPxp.proveedor.nombreEmpresa;
+                    }
+                    return oProducto;
                 }
             }
             catch (Exception ex)

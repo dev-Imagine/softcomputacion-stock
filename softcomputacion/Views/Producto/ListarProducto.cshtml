@@ -230,10 +230,12 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-2">
-                                <div class="btn-group w-full" role="group">
-                                    <button type="button" class="btn btn-outline-dark" style="width:50%" onclick=""><i class="fas fa-pen"></i></button>
-                                    <button type="button" class="btn btn-outline-danger" style="width:50%" onclick=""><i class="fas fa-times"></i></button>
-                                </div>
+                                <form method="post" action="@Url.Action("Producto","Producto", new { idProducto = oProducto.idProducto })">
+                                    <div class="btn-group w-full" role="group">
+                                        <button type="submit" class="btn btn-outline-dark" style="width:50%"><i class="fas fa-pen"></i></button>
+                                        <button type="button" class="btn btn-outline-danger" style="width:50%"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </form>
                             </div>
 
                         </div>
@@ -260,13 +262,6 @@
 
 @section scripts{
 <script>
-
-    $(document).ready(function () {
-        //$("#div-paginacion div ul li").each(function () {
-        //    $(this).addClass("page-link");
-            
-        //});
-    });
 
      function CargarComboSubcategoria() {
         var url = "@Url.Action("ObtenerSubcategoriaDeCategoria", "Producto")";
