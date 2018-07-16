@@ -23,5 +23,19 @@ namespace softcomputacion.Servicios
                 throw;
             }
         }
+        public static string ObtenerColorEstado(int idEstado)
+        {
+            switch (idEstado)
+            {
+                case 1:
+                    return "#28a745";
+                case 2:
+                    return "#ffc107";
+                case 3:
+                    return "#dc3545";
+                default:
+                    return "#000";
+            }
+        }
     }
 }

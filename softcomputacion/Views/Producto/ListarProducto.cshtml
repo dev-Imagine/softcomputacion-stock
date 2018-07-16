@@ -5,7 +5,7 @@
     List<softcomputacion.Models.categoria> lstCategorias = (List<softcomputacion.Models.categoria>)ViewBag.lstCategorias;
     List<softcomputacion.Models.estado> lstEstados = (List<softcomputacion.Models.estado>)ViewBag.lstEstados;
     string[] filtros = ViewBag.filtros.Split(';');
-   
+    string stColorStock = "";
 }
 
 
@@ -60,17 +60,17 @@
                                     }
 
                                     @foreach (softcomputacion.Models.categoria oCategoria in lstCategorias)
+                                    {
+                                        if (oCategoria.idCategoria.ToString() == filtros[1])
                                         {
-                                            if (oCategoria.idCategoria.ToString() == filtros[1])
-                                            {
                                                 <option selected value="@oCategoria.idCategoria">@oCategoria.nombre</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@oCategoria.idCategoria">@oCategoria.nombre</option>
-                                            }
-
                                         }
+                                        else
+                                        {
+                                                <option value="@oCategoria.idCategoria">@oCategoria.nombre</option>
+                                        }
+
+                                    }
                                     }
                                 </select>
                             </div>
@@ -129,109 +129,115 @@
                 </form>
             </div>
             
-            <hr style="border-top: 2px solid rgb(220, 53, 69);" />
+            <hr style="border-top: 1px solid rgb(220, 53, 69);" />
             <br />
         </div>
         <div class="row container-fluid">
             <!--Lista de Productos-->
             <div class="m-b-15 col-12 col-lg-12">
-                @foreach (var oProducto in Model)
-            {
-                    <div id="div-@oProducto.idProducto" class="row item-tabla m-b-15" >
-                        <div class="col-12 col-md-10 " style="text-align:left;">
-                            <div class="row">
-                                <div class="col-12 col-sm-6 col-md-5">
-                                    <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                        <strong>Producto:</strong>
-                                        <span id="spanNombreProducto-@oProducto.idProducto">
-                                            <i>@oProducto.categoria.nombre @oProducto.subcategoria.nombre - @oProducto.nombre</i>
-                                        </span>
-                                    </p>
-                                </div>
+                @{
 
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <p class="login100-form-title p-b-10 fs-17 text-center">
-                                        <strong>Stock Actual:</strong>
-                                        <span id="spanActual-@oProducto.idProducto">
-                                            <i>@oProducto.stockActual</i>
-                                        </span>
-                                    </p>
-                                </div>
-                                @* If de validacion sobre el spam de stock *@
-                                @if (oProducto.stockMinimo >= oProducto.stockActual)
-                                {
-                                    <div class="col-12 col-sm-6 col-md-4">
+                    foreach (var oProducto in Model)
+                    {
+
+                        stColorStock = softcomputacion.Servicios.srvEstado.ObtenerColorEstado(oProducto.idEstado);
+
+                        <div id="div-@oProducto.idProducto" class="row item-tabla m-b-15" >
+                            <div class="col-12 col-md-10 " style="text-align:left;">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-5">
                                         <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                            <span class="badge fs-20" style="color:#dc3545; width: 180px;">AGOTADO</span>
+                                            <strong>Producto:</strong>
+                                            <span id="spanNombreProducto-@oProducto.idProducto">
+                                                <i>@oProducto.categoria.nombre @oProducto.subcategoria.nombre - @oProducto.nombre</i>
+                                            </span>
                                         </p>
                                     </div>
-                                }
-                                else
-                                {
-                                    //if (oProducto.stockActual >= oProducto.stockMinimo + 1) //+ lo que sea
-                                    if (oProducto.stockActual <= oProducto.stockMinimo + 2)
+
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <p class="login100-form-title p-b-10 fs-17 text-center">
+                                            <strong>Stock Actual:</strong>
+                                            <span id="spanActual-@oProducto.idProducto">
+                                                <i>@oProducto.stockActual</i>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    @* If de validacion sobre el spam de stock *@
+                                    @*@if (oProducto.stockMinimo >= oProducto.stockActual)
                                     {
                                         <div class="col-12 col-sm-6 col-md-4">
                                             <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                                <span class="badge fs-20" style="color: #ffc107; width: 180px;">STOCK BAJO</span>
+                                                <span class="badge fs-20" style="color:#dc3545; width: 180px;">AGOTADO</span>
                                             </p>
                                         </div>
                                     }
                                     else
                                     {
-                                        //if (oProducto.stockActual >= oProducto.stockIdeal)
-                                        //{
+                                        if (oProducto.stockActual <= oProducto.stockMinimo + 2)
+                                        {
+                                            <div class="col-12 col-sm-6 col-md-4">
+                                                <p class="login100-form-title p-b-10 fs-17 text-center" >
+                                                    <span class="badge fs-20" style="color: #ffc107; width: 180px;">STOCK BAJO</span>
+                                                </p>
+                                            </div>
+                                        }
+                                        else
+                                        {
                                             <div class="col-12 col-sm-6 col-md-4">
                                                 <p class="login100-form-title p-b-10 fs-17 text-center" >
                                                     <span class="badge fs-20" style="color: #28a745; width: 180px;">EN STOCK</span>
                                                 </p>
                                             </div>
-                                        //}
-                                    }
-                                }
+                                        }
+                                    }*@
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <p class="login100-form-title p-b-10 fs-17 text-center">
+                                            <span class="badge fs-20" style="color: @stColorStock; width: 180px;">@oProducto.estado.nombre</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <p class="login100-form-title p-b-10 fs-17 text-center" >
+                                            <strong>Costo</strong>
+                                            <input id="inpCosto-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioCosto" placeholder="Precio costo" value="@Convert.ToInt32(oProducto.precioCosto)">
+                                            <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <p class="login100-form-title p-b-10 fs-17 text-center" >
+                                            <strong>Gremio</strong>
+                                            <input id="inpGremio-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioGremio" placeholder="Precio gremio" value="@Convert.ToInt32(oProducto.precioGremio)">
+                                            <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <p class="login100-form-title p-b-10 fs-17 text-center" >
+                                            <strong>Contado</strong>
+                                            <input id="inpContado-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio contado"  value="@Convert.ToInt32(@oProducto.precioContado)">
+                                            <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>                                    
+                                        </p>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <p class="login100-form-title p-b-10 fs-17 text-center">
+                                            <strong>Lista</strong>
+                                            <input id="inpLista-@oProducto.idProducto" style="background-color:#f2f2f2; text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio lista"  value="@Convert.ToInt32(oProducto.precioLista)">
+                                            <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                        </p>
+                                    </div>
 
 
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                        <strong>Costo</strong>
-                                        <input id="inpCosto-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioCosto" placeholder="Precio costo" value="@Convert.ToInt32(oProducto.precioCosto)">
-                                        <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
-                                    </p>
                                 </div>
-
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                        <strong>Gremio</strong>
-                                        <input id="inpGremio-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioGremio" placeholder="Precio gremio" value="@Convert.ToInt32(oProducto.precioGremio)">
-                                        <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
-                                    </p>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                        <strong>Contado</strong>
-                                        <input id="inpContado-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio contado"  value="@Convert.ToInt32(@oProducto.precioContado)">
-                                        <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>                                    
-                                    </p>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-3">
-                                    <p class="login100-form-title p-b-10 fs-17 text-center">
-                                        <strong>Lista</strong>
-                                        <input id="inpLista-@oProducto.idProducto" style="background-color:#f2f2f2; text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio lista"  value="@Convert.ToInt32(oProducto.precioLista)">
-                                        <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
-                                    </p>
-                                </div>
-
-
                             </div>
-                        </div>
-                        <div class="col-12 col-md-2">
-                            <div class="btn-group w-full" role="group">
-                                <button type="button" class="btn btn-outline-dark" style="width:50%" onclick=""><i class="fas fa-pen"></i></button>
-                                <button type="button" class="btn btn-outline-danger" style="width:50%" onclick=""><i class="fas fa-times"></i></button>
+                            <div class="col-12 col-md-2">
+                                <div class="btn-group w-full" role="group">
+                                    <button type="button" class="btn btn-outline-dark" style="width:50%" onclick=""><i class="fas fa-pen"></i></button>
+                                    <button type="button" class="btn btn-outline-danger" style="width:50%" onclick=""><i class="fas fa-times"></i></button>
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
+                        </div>
+                    }
                 }
             </div>
 
@@ -239,11 +245,11 @@
 
         </div>
         <div class="row container-fluid text-center">
-            
-                @Html.PagedListPager(Model, nroPagina => Url.Action("ListarProducto", "Producto", new { nroPagina, tamañoPagina = Model.PageSize }), new PagedListRenderOptions() { ClassToApplyToFirstListItemInPager = null, ClassToApplyToLastListItemInPager = null, ContainerDivClasses = new[] { "col-12" }, UlElementClasses = new[] { "pagination" }, LiElementClasses = new[] { "page-item" }, DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded, DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,  })
-           
+            <div id="div-paginacion" class="col-12">
+                @Html.PagedListPager(Model, nroPagina => Url.Action("ListarProducto", "Producto", new { nroPagina, tamañoPagina = Model.PageSize }), new PagedListRenderOptions() { ClassToApplyToFirstListItemInPager = null, ClassToApplyToLastListItemInPager = null, UlElementClasses = new[] { "pagination", "justify-content-center" }, LiElementClasses = new[] { "page-item" } })
+            </div>
             <div class="col-12">
-                @Model.FirstItemOnPage a @Model.LastItemOnPage pedidos de un total de @Model.TotalItemCount Productos
+                @Model.FirstItemOnPage a @Model.LastItemOnPage productos de un total de @Model.TotalItemCount Productos.
             </div>
             
             
@@ -252,9 +258,16 @@
     </div>
 </div>
 
-
-
+@section scripts{
 <script>
+
+    $(document).ready(function () {
+        //$("#div-paginacion div ul li").each(function () {
+        //    $(this).addClass("page-link");
+            
+        //});
+    });
+
      function CargarComboSubcategoria() {
         var url = "@Url.Action("ObtenerSubcategoriaDeCategoria", "Producto")";
         var idCategoria = document.getElementById("select-Categorias").value;
@@ -278,28 +291,22 @@
 
 
      function ActualizarPrecios(idProducto) {
-         alert(1);
          var costo = $('#inpCosto-' + idProducto).val();
          var gremio = $('#inpGremio-' + idProducto).val();
          var contado = $('#inpContado-' + idProducto).val();
          var lista = $('#inpLista-' + idProducto).val();
          var url = "@Url.Action("ActualizarPrecios", "Producto")";
-         alert(2);
          var token = $('input[name="__RequestVerificationToken"]').val();
-         alert(3);
          var data = { costo: costo, gremio: gremio, contado: contado, lista: lista, idProducto: idProducto, __RequestVerificationToken: token };
-         alert(4);
          $.post(url, data).done(function (data) {
-             alert(5);
             if (data == "True") {
                 swal("Exito!", "Los precios han sido actualizados.", "success");
-                alert(6);
             }
             else {
                 swal("Ocurrió un error", "Se produjo un error al intentar actualizar los precios..", "error");
-                alert(7);
             }
         });
      }
 
 </script>
+}

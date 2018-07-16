@@ -129,16 +129,17 @@ namespace softcomputacion.Controllers
                 }
                 else
                 {
-                    if (oProducto.stockActual >= oProducto.stockMinimo + 1)
+                    //if (oProducto.stockActual >= oProducto.stockMinimo + 2)
+                    if (oProducto.stockActual <= oProducto.stockMinimo + 2)
                     {
                         oProducto.idEstado = 2;
                     }
                     else
                     {
-                        if (oProducto.stockActual >= oProducto.stockIdeal)
-                        {
+                        //if (oProducto.stockActual >= oProducto.stockIdeal)
+                        //{
                             oProducto.idEstado = 1;
-                        }
+                        //}
                     }
                 }
                 

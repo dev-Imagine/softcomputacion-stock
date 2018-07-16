@@ -86,7 +86,7 @@ namespace softcomputacion.Servicios
                         id = opro.proveedorXproducto.Count();
 
                     }
-                    return lstProductos;
+                    return lstProductos.OrderBy(x => x.categoria.nombre + " - " + x.nombre).ToList();
                 }
                 
             }
