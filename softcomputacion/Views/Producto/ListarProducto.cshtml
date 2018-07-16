@@ -34,7 +34,7 @@
                 <form method="post" action="@Url.Action("ListarProducto", "Producto")" autocomplete="off">                    
                     <div class="row">
                         @Html.AntiForgeryToken()
-                        <div class="col-12 col-md-2">
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="wrap-input100 m-b-20">
                                 @if (filtros[0] == "")
                                 {
@@ -47,7 +47,7 @@
 
                             </div>
                         </div>
-                        <div class="col-12 col-md-2">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <div class="wrap-input100 ¡ m-b-20" data-validate="">
                                 <select id="select-Categorias" onchange="CargarComboSubcategoria()" onload="CargarComboSubcategoria()" class="form-control input100" style="border:0px; height: 55px;" name="idCategoria">
                                     @if (filtros[1] == "0" || filtros[1] == "")
@@ -75,8 +75,7 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-2">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <div class="wrap-input100 ¡ m-b-20" data-validate="">
                                 <select disabled id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="idSubCategoria">
                                     @if (filtros[2].ToString() == "" || filtros[2].ToString() == "0")
@@ -92,8 +91,7 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-2">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <div class="wrap-input100 ¡ m-b-20" data-validate="">
                                     <select id="select-Estado" class="form-control input100" style="border:0px; height: 55px;" name="idEstado">
                                         @if (filtros[3] == "0" || filtros[3] == "")
@@ -120,8 +118,7 @@
                                     </select>
                             </div>
                         </div>
-
-                        <div class="col-12 col-sm-2">
+                        <div class="col-12 col-md-12 col-lg-2">
                             <div class="container-login100-form-btn m-b-20">
                                 <button class="login100-form-btn fs-22" style="height:56px;" type="submit">
                                     <i class="fas fa-search"></i>
@@ -140,11 +137,11 @@
             <div class="m-b-15 col-12 col-lg-12">
                 @foreach (var oProducto in Model)
             {
-                    <div id="div-@oProducto.idProducto" class="row item-tabla m-b-15" style="text-align:left;">
-                        <div class="col-10" style="text-align:left;">
+                    <div id="div-@oProducto.idProducto" class="row item-tabla m-b-15" >
+                        <div class="col-12 col-md-10 " style="text-align:left;">
                             <div class="row">
-                                <div class="col-12 col-sm-6 col-md-4">
-                                    <p class="login100-form-title p-b-10 fs-13" style="text-align:left;">
+                                <div class="col-12 col-sm-6 col-md-5">
+                                    <p class="login100-form-title p-b-10 fs-17 text-center" >
                                         <strong>Producto:</strong>
                                         <span id="spanNombreProducto-@oProducto.idProducto">
                                             <i>@oProducto.categoria.nombre @oProducto.subcategoria.nombre - @oProducto.nombre</i>
@@ -152,8 +149,8 @@
                                     </p>
                                 </div>
 
-                                <div class="col-12 col-sm-6 col-md-4">
-                                    <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <p class="login100-form-title p-b-10 fs-17 text-center">
                                         <strong>Stock Actual:</strong>
                                         <span id="spanActual-@oProducto.idProducto">
                                             <i>@oProducto.stockActual</i>
@@ -161,64 +158,65 @@
                                     </p>
                                 </div>
                                 @* If de validacion sobre el spam de stock *@
-                                @if (oProducto.stockMinimo > oProducto.stockActual)
+                                @if (oProducto.stockMinimo >= oProducto.stockActual)
                                 {
                                     <div class="col-12 col-sm-6 col-md-4">
-                                        <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
-                                            <span class="badge fs-20 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="background-color:#747508;color:#fff;padding-bottom: 0px;padding-top: 0px;padding-left: 0px;padding-right: 0px;width: 180px;">AGOTADO</span>
+                                        <p class="login100-form-title p-b-10 fs-17 text-center" >
+                                            <span class="badge fs-20" style="color:#dc3545; width: 180px;">AGOTADO</span>
                                         </p>
                                     </div>
                                 }
                                 else
                                 {
-                                    if (oProducto.stockActual >= oProducto.stockMinimo + 1)
+                                    //if (oProducto.stockActual >= oProducto.stockMinimo + 1) //+ lo que sea
+                                    if (oProducto.stockActual <= oProducto.stockMinimo + 2)
                                     {
                                         <div class="col-12 col-sm-6 col-md-4">
-                                            <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
-                                                <span class="badge fs-20 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="background-color:#747508;color:#fff;padding-bottom: 0px;padding-top: 0px;padding-left: 0px;padding-right: 0px;width: 180px;">STOCK BAJO</span>
+                                            <p class="login100-form-title p-b-10 fs-17 text-center" >
+                                                <span class="badge fs-20" style="color: #ffc107; width: 180px;">STOCK BAJO</span>
                                             </p>
                                         </div>
                                     }
                                     else
                                     {
-                                        if (oProducto.stockActual >= oProducto.stockIdeal)
-                                        {
+                                        //if (oProducto.stockActual >= oProducto.stockIdeal)
+                                        //{
                                             <div class="col-12 col-sm-6 col-md-4">
-                                                <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
-                                                    <span class="badge fs-20 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="background-color:#747508;color:#fff;padding-bottom: 0px;padding-top: 0px;padding-left: 0px;padding-right: 0px;width: 180px;">EN STOCK</span>
+                                                <p class="login100-form-title p-b-10 fs-17 text-center" >
+                                                    <span class="badge fs-20" style="color: #28a745; width: 180px;">EN STOCK</span>
                                                 </p>
                                             </div>
-                                        }
+                                        //}
                                     }
                                 }
 
 
                                 <div class="col-12 col-sm-6 col-md-3">
-                                    <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                    <p class="login100-form-title p-b-10 fs-17 text-center" >
                                         <strong>Costo</strong>
-                                        <input id="inpCosto-@oProducto.idProducto" style="background-color:#ffffff;text-align:right; width:75px;" type="number" name="precioCosto" placeholder="Precio costo" value="@Convert.ToInt32(oProducto.precioCosto)">
+                                        <input id="inpCosto-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioCosto" placeholder="Precio costo" value="@Convert.ToInt32(oProducto.precioCosto)">
                                         <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
                                     </p>
                                 </div>
 
                                 <div class="col-12 col-sm-6 col-md-3">
-                                    <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                    <p class="login100-form-title p-b-10 fs-17 text-center" >
                                         <strong>Gremio</strong>
-                                        <input id="inpGremio-@oProducto.idProducto" style="background-color:#ffffff;text-align:right; width:75px;" type="number" name="precioGremio" placeholder="Precio gremio" value="@Convert.ToInt32(oProducto.precioGremio)">
+                                        <input id="inpGremio-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioGremio" placeholder="Precio gremio" value="@Convert.ToInt32(oProducto.precioGremio)">
                                         <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
                                     </p>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-3">
-                                    <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                    <p class="login100-form-title p-b-10 fs-17 text-center" >
                                         <strong>Contado</strong>
-                                        <input id="inpContado-@oProducto.idProducto" style="background-color:#ffffff;text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio contado"  value="@Convert.ToInt32(@oProducto.precioContado)">
+                                        <input id="inpContado-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio contado"  value="@Convert.ToInt32(@oProducto.precioContado)">
                                         <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>                                    
                                     </p>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-3">
-                                    <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                    <p class="login100-form-title p-b-10 fs-17 text-center">
                                         <strong>Lista</strong>
-                                        <input id="inpLista-@oProducto.idProducto" style="background-color:#ffffff; text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio lista"  value="@Convert.ToInt32(oProducto.precioLista)">
+                                        <input id="inpLista-@oProducto.idProducto" style="background-color:#f2f2f2; text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio lista"  value="@Convert.ToInt32(oProducto.precioLista)">
                                         <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
                                     </p>
                                 </div>
@@ -240,9 +238,15 @@
 
 
         </div>
-        <div style="text-align:center">
-            @Html.PagedListPager(Model, nroPagina => Url.Action("ListarProducto", "Producto", new { nroPagina, tamañoPagina = Model.PageSize }))
-            @Model.FirstItemOnPage a @Model.LastItemOnPage pedidos de un total de @Model.TotalItemCount Productos
+        <div class="row container-fluid text-center">
+            
+                @Html.PagedListPager(Model, nroPagina => Url.Action("ListarProducto", "Producto", new { nroPagina, tamañoPagina = Model.PageSize }), new PagedListRenderOptions() { ClassToApplyToFirstListItemInPager = null, ClassToApplyToLastListItemInPager = null, ContainerDivClasses = new[] { "col-12" }, UlElementClasses = new[] { "pagination" }, LiElementClasses = new[] { "page-item" }, DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded, DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,  })
+           
+            <div class="col-12">
+                @Model.FirstItemOnPage a @Model.LastItemOnPage pedidos de un total de @Model.TotalItemCount Productos
+            </div>
+            
+            
 
         </div>
     </div>

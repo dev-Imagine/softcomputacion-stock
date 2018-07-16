@@ -51,7 +51,29 @@ namespace softcomputacion.Controllers
             }
 
         }
-        
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ListarProducto(string nombreProducto = "", int idEstado = 0, int idCategoria = 0, int idSubCategoria = 0)
+        {
+            try
+            {
+                srvEstado sEstado = new srvEstado();
+                srvProducto sProducto = new srvProducto();
+                srvCategoria sCategoria = new srvCategoria();
+                List<producto> lstProductos = new List<producto>();
+                lstProductos = sProducto.ObtenerProductos(nombreProducto, idCategoria, idSubCategoria, idEstado);
+                ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
+                ViewBag.lstEstados = sEstado.ObtenerEstados();
+                ViewBag.filtros = Convert.ToString(nombreProducto + ";" + idCategoria + ";" + idSubCategoria + ";" + idEstado);
+                PagedList<producto> model = new PagedList<producto>(lstProductos.ToList(), 1, 1);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Error", new { stError = "Se produjo un error al intentar obtener los datos del servidor." });
+            }
+
+        }
+
 
         // *************** Vistas parciales
         [HttpPost]
@@ -101,7 +123,7 @@ namespace softcomputacion.Controllers
                     }
  
                 }
-                if (oProducto.stockMinimo>oProducto.stockActual)
+                if (oProducto.stockMinimo>=oProducto.stockActual)
                 {
                     oProducto.idEstado = 3;
                 }
@@ -165,30 +187,6 @@ namespace softcomputacion.Controllers
             {
                 return Json("No se ha podido eliminar la subcategoría. Verifique que no tenga productos asignados.");
             }
-        }
-
-        //PostListarProductos
-        [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult ListarProducto(string nombreProducto = "", int idEstado = 0, int idCategoria = 0, int idSubCategoria = 0)
-        {
-            try
-            {
-                srvEstado sEstado = new srvEstado();
-                srvProducto sProducto = new srvProducto();
-                srvCategoria sCategoria = new srvCategoria();
-                List<producto> lstProductos = new List<producto>();
-                lstProductos = sProducto.ObtenerProductos(nombreProducto, idCategoria, idSubCategoria, idEstado);
-                ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
-                ViewBag.lstEstados = sEstado.ObtenerEstados();
-                ViewBag.filtros = Convert.ToString(nombreProducto + ";" + idCategoria + ";" + idSubCategoria + ";" + idEstado);
-                PagedList<producto> model = new PagedList<producto>(lstProductos.ToList(), 1, 10);
-                return View(model);
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("Error", "Error", new { stError = "Se produjo un error al intentar obtener los datos del servidor." });
-            }
-
         }
         [HttpPost, ValidateAntiForgeryToken]
         public JsonResult ActualizarPrecios(int costo, int gremio, int contado, int lista, int idProducto)
