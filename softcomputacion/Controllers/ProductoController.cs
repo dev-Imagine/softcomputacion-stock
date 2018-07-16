@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using softcomputacion.Models;
 using softcomputacion.Servicios;
 
@@ -28,6 +29,29 @@ namespace softcomputacion.Controllers
             }
             
         }
+
+        public ActionResult ListarProducto(int nroPagina = 1, int tamañoPagina = 10)
+        {
+            try
+            {
+                srvEstado sEstado = new srvEstado();
+                srvProducto sProducto = new srvProducto();
+                srvCategoria sCategoria = new srvCategoria();
+                List<producto> lstProductos = new List<producto>();
+                lstProductos = sProducto.ObtenerProductos();
+                ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
+                ViewBag.lstEstados = sEstado.ObtenerEstados();
+                ViewBag.filtros = ";;;";
+                PagedList<producto> model = new PagedList<producto>(lstProductos.ToList(), nroPagina, tamañoPagina);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Error", new { stError = "Se produjo un error al intentar obtener los datos del servidor." });
+            }
+
+        }
+        
 
         // *************** Vistas parciales
         [HttpPost]
@@ -142,5 +166,51 @@ namespace softcomputacion.Controllers
                 return Json("No se ha podido eliminar la subcategoría. Verifique que no tenga productos asignados.");
             }
         }
+
+        //PostListarProductos
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult ListarProducto(string nombreProducto = "", int idEstado = 0, int idCategoria = 0, int idSubCategoria = 0)
+        {
+            try
+            {
+                srvEstado sEstado = new srvEstado();
+                srvProducto sProducto = new srvProducto();
+                srvCategoria sCategoria = new srvCategoria();
+                List<producto> lstProductos = new List<producto>();
+                lstProductos = sProducto.ObtenerProductos(nombreProducto, idCategoria, idSubCategoria, idEstado);
+                ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
+                ViewBag.lstEstados = sEstado.ObtenerEstados();
+                ViewBag.filtros = Convert.ToString(nombreProducto + ";" + idCategoria + ";" + idSubCategoria + ";" + idEstado);
+                PagedList<producto> model = new PagedList<producto>(lstProductos.ToList(), 1, 10);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Error", new { stError = "Se produjo un error al intentar obtener los datos del servidor." });
+            }
+
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public JsonResult ActualizarPrecios(int costo, int gremio, int contado, int lista, int idProducto)
+        {
+            try
+            {
+                srvProducto sProducto = new srvProducto();
+                producto oProducto = new producto();
+                oProducto = sProducto.ObtenerProducto(idProducto);
+                oProducto.precioCosto = costo;
+                oProducto.precioGremio = gremio;
+                oProducto.precioContado = contado;
+                oProducto.precioLista = lista;
+                sProducto.GuardarModificarProducto(oProducto);
+                return Json("True");
+            }
+            catch (Exception)
+            {
+                return Json("False");
+            }
+
+        }
+
     }
 }

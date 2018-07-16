@@ -277,6 +277,7 @@
     }
     function EliminarProveedor(id_proveedor) {
         $('#div-proveedor-' + id_proveedor).remove();
+        idProveedores = idProveedores.replace(id_proveedor + ";", '');
     }
 
     function vistaParcialProveedor() {

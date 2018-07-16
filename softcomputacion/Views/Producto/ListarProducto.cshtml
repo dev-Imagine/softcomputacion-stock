@@ -1,0 +1,301 @@
+﻿@{
+    ViewBag.Title = "Listar Productos";
+    Layout = "~/Views/Shared/_UsuarioLogueado.cshtml";
+    //List<softcomputacion.Models.producto> lstProductos = (List<softcomputacion.Models.producto>)ViewBag.lstProductos;
+    List<softcomputacion.Models.categoria> lstCategorias = (List<softcomputacion.Models.categoria>)ViewBag.lstCategorias;
+    List<softcomputacion.Models.estado> lstEstados = (List<softcomputacion.Models.estado>)ViewBag.lstEstados;
+    string[] filtros = ViewBag.filtros.Split(';');
+   
+}
+
+
+@model PagedList.IPagedList<softcomputacion.Models.producto>
+@using PagedList.Mvc;
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryFormPopup" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<br />
+<br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>Productos</h2>
+        </div>
+    </div>
+    <hr style="border-top: 2px solid rgb(220, 53, 69);" />
+    <br />
+    <div class="row container-fluid">
+        <div class="col-12 col-lg-12">
+            <div class="col-12">
+                @* Form de busqueda *@
+                <form method="post" action="@Url.Action("ListarProducto", "Producto")" autocomplete="off">                    
+                    <div class="row">
+                        @Html.AntiForgeryToken()
+                        <div class="col-12 col-md-2">
+                            <div class="wrap-input100 m-b-20">
+                                @if (filtros[0] == "")
+                                {
+                                    <input class="input100" type="text" name="nombreProducto" placeholder="Buscar...">
+                                }
+                                else
+                                {
+                                    <input class="input100" type="text" name="nombreProducto" placeholder="Nombre del producto" value="@filtros[0]">
+                                }
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <div class="wrap-input100 ¡ m-b-20" data-validate="">
+                                <select id="select-Categorias" onchange="CargarComboSubcategoria()" onload="CargarComboSubcategoria()" class="form-control input100" style="border:0px; height: 55px;" name="idCategoria">
+                                    @if (filtros[1] == "0" || filtros[1] == "")
+                                    {
+                                        <option selected value="0">Categoría</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="0">Categoría</option>
+                                    }
+
+                                    @foreach (softcomputacion.Models.categoria oCategoria in lstCategorias)
+                                        {
+                                            if (oCategoria.idCategoria.ToString() == filtros[1])
+                                            {
+                                                <option selected value="@oCategoria.idCategoria">@oCategoria.nombre</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@oCategoria.idCategoria">@oCategoria.nombre</option>
+                                            }
+
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-2">
+                            <div class="wrap-input100 ¡ m-b-20" data-validate="">
+                                <select disabled id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="idSubCategoria">
+                                    @if (filtros[2].ToString() == "" || filtros[2].ToString() == "0")
+                                    {
+                                        <option selected value="0">Subcategoria</option>
+                                    }
+                                    else
+                                    {
+                                        <option selected value="0">Subcategoria</option>
+                                    }
+
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-2">
+                            <div class="wrap-input100 ¡ m-b-20" data-validate="">
+                                    <select id="select-Estado" class="form-control input100" style="border:0px; height: 55px;" name="idEstado">
+                                        @if (filtros[3] == "0" || filtros[3] == "")
+                                        {
+                                                <option selected value="0">Estado</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0">Estado</option>
+                                        }
+
+                                        @foreach (softcomputacion.Models.estado oEstado in lstEstados)
+                                        {
+                                            if (oEstado.idEstado.ToString() == filtros[3])
+                                            {
+                                                <option selected value="@oEstado.idEstado">@oEstado.nombre</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@oEstado.idEstado">@oEstado.nombre</option>
+                                            }
+
+                                        }                                        
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-2">
+                            <div class="container-login100-form-btn m-b-20">
+                                <button class="login100-form-btn fs-22" style="height:56px;" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <hr style="border-top: 2px solid rgb(220, 53, 69);" />
+            <br />
+        </div>
+        <div class="row container-fluid">
+            <!--Lista de Productos-->
+            <div class="m-b-15 col-12 col-lg-12">
+                @foreach (var oProducto in Model)
+            {
+                    <div id="div-@oProducto.idProducto" class="row item-tabla m-b-15" style="text-align:left;">
+                        <div class="col-10" style="text-align:left;">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <p class="login100-form-title p-b-10 fs-13" style="text-align:left;">
+                                        <strong>Producto:</strong>
+                                        <span id="spanNombreProducto-@oProducto.idProducto">
+                                            <i>@oProducto.categoria.nombre @oProducto.subcategoria.nombre - @oProducto.nombre</i>
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                        <strong>Stock Actual:</strong>
+                                        <span id="spanActual-@oProducto.idProducto">
+                                            <i>@oProducto.stockActual</i>
+                                        </span>
+                                    </p>
+                                </div>
+                                @* If de validacion sobre el spam de stock *@
+                                @if (oProducto.stockMinimo > oProducto.stockActual)
+                                {
+                                    <div class="col-12 col-sm-6 col-md-4">
+                                        <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                            <span class="badge fs-20 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="background-color:#747508;color:#fff;padding-bottom: 0px;padding-top: 0px;padding-left: 0px;padding-right: 0px;width: 180px;">AGOTADO</span>
+                                        </p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    if (oProducto.stockActual >= oProducto.stockMinimo + 1)
+                                    {
+                                        <div class="col-12 col-sm-6 col-md-4">
+                                            <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                                <span class="badge fs-20 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="background-color:#747508;color:#fff;padding-bottom: 0px;padding-top: 0px;padding-left: 0px;padding-right: 0px;width: 180px;">STOCK BAJO</span>
+                                            </p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        if (oProducto.stockActual >= oProducto.stockIdeal)
+                                        {
+                                            <div class="col-12 col-sm-6 col-md-4">
+                                                <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                                    <span class="badge fs-20 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="background-color:#747508;color:#fff;padding-bottom: 0px;padding-top: 0px;padding-left: 0px;padding-right: 0px;width: 180px;">EN STOCK</span>
+                                                </p>
+                                            </div>
+                                        }
+                                    }
+                                }
+
+
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                        <strong>Costo</strong>
+                                        <input id="inpCosto-@oProducto.idProducto" style="background-color:#ffffff;text-align:right; width:75px;" type="number" name="precioCosto" placeholder="Precio costo" value="@Convert.ToInt32(oProducto.precioCosto)">
+                                        <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                    </p>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                        <strong>Gremio</strong>
+                                        <input id="inpGremio-@oProducto.idProducto" style="background-color:#ffffff;text-align:right; width:75px;" type="number" name="precioGremio" placeholder="Precio gremio" value="@Convert.ToInt32(oProducto.precioGremio)">
+                                        <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                    </p>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                        <strong>Contado</strong>
+                                        <input id="inpContado-@oProducto.idProducto" style="background-color:#ffffff;text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio contado"  value="@Convert.ToInt32(@oProducto.precioContado)">
+                                        <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>                                    
+                                    </p>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <p class="login100-form-title p-b-10 fs-13 " style="text-align:left;">
+                                        <strong>Lista</strong>
+                                        <input id="inpLista-@oProducto.idProducto" style="background-color:#ffffff; text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio lista"  value="@Convert.ToInt32(oProducto.precioLista)">
+                                        <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                    </p>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <div class="btn-group w-full" role="group">
+                                <button type="button" class="btn btn-outline-dark" style="width:50%" onclick=""><i class="fas fa-pen"></i></button>
+                                <button type="button" class="btn btn-outline-danger" style="width:50%" onclick=""><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+
+
+        </div>
+        <div style="text-align:center">
+            @Html.PagedListPager(Model, nroPagina => Url.Action("ListarProducto", "Producto", new { nroPagina, tamañoPagina = Model.PageSize }))
+            @Model.FirstItemOnPage a @Model.LastItemOnPage pedidos de un total de @Model.TotalItemCount Productos
+
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+     function CargarComboSubcategoria() {
+        var url = "@Url.Action("ObtenerSubcategoriaDeCategoria", "Producto")";
+        var idCategoria = document.getElementById("select-Categorias").value;
+        var data = { idCategoria: idCategoria };
+        $.post(url, data).done(function (data) {
+            if (data == "<option selected value=\"0\">Subcategoria</option>" | data == "") {
+                document.getElementById("select-Subcategoria").innerHTML = "<option selected value=\"0\">Subcategoria</option>";
+                document.getElementById("select-Subcategoria").setAttribute("disabled", "true");
+            }
+            else {
+                document.getElementById("select-Subcategoria").innerHTML = data + "";
+                document.getElementById("select-Subcategoria").removeAttribute("disabled");
+            }
+            if ('@filtros[2].ToString()' != "0" || filtros[2].ToString() != "") {
+                $("#select-Subcategoria option[value=" + '@filtros[2].ToString()' + "]").attr("selected", true);
+            }
+        });
+    }
+
+     window.onload = CargarComboSubcategoria;
+
+
+     function ActualizarPrecios(idProducto) {
+         alert(1);
+         var costo = $('#inpCosto-' + idProducto).val();
+         var gremio = $('#inpGremio-' + idProducto).val();
+         var contado = $('#inpContado-' + idProducto).val();
+         var lista = $('#inpLista-' + idProducto).val();
+         var url = "@Url.Action("ActualizarPrecios", "Producto")";
+         alert(2);
+         var token = $('input[name="__RequestVerificationToken"]').val();
+         alert(3);
+         var data = { costo: costo, gremio: gremio, contado: contado, lista: lista, idProducto: idProducto, __RequestVerificationToken: token };
+         alert(4);
+         $.post(url, data).done(function (data) {
+             alert(5);
+            if (data == "True") {
+                swal("Exito!", "Los precios han sido actualizados.", "success");
+                alert(6);
+            }
+            else {
+                swal("Ocurrió un error", "Se produjo un error al intentar actualizar los precios..", "error");
+                alert(7);
+            }
+        });
+     }
+
+</script>
