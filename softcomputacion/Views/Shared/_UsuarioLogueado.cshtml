@@ -23,10 +23,11 @@
             </button>
            
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <form class="form-inline mr-auto" target="_self"></form>
-                <form method="post">
+                <form class="form-inline mr-auto" ></form>
+                <form method="post" action="@Url.Action("VistaProducto", "Producto")" target="_self" autocomplete="off">
+                    @Html.AntiForgeryToken()
                     <div class="input-group " style="margin-bottom:0px !important">
-                        <input class="form-control mr-sm-2 ml-sm-1 mt-10 w-full" type="search" placeholder="Código producto" aria-label="Código producto">
+                        <input class="form-control mr-sm-2 ml-sm-1 mt-10 w-full" type="search" placeholder="Código producto" name="idProducto" aria-label="Código producto">
                         <div class="input-group-append">
                             <button class="btn btn-outline-danger w-full" type="submit"><i class="fas fa-search"></i> Buscar</button>
                         </div>

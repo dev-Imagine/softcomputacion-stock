@@ -1,0 +1,114 @@
+﻿
+@{
+    @model softcomputacion.Models.producto
+    ViewBag.Title = "VistaProducto";
+    Layout = "~/Views/Shared/_UsuarioLogueado.cshtml";
+    string stColorStock = softcomputacion.Servicios.srvEstado.ObtenerColorEstado(Model.idEstado);
+}
+
+<br /><br />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-lg-8 offset-lg-2 text-center">
+            <h2>@Model.nombre</h2>
+        </div>
+    </div>
+    <hr style="border-top: 2px solid rgb(220, 53, 69);" />
+    <br />
+    <div class="row container-fluid">
+        <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+            <input name="oProducto.idProducto" value="@Model.idProducto" class="dis-none">
+
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-6">
+                        <p class="login100-form-title p-b-10 fs-17 text-center">
+                            <strong>Categoría:</strong>
+                            <span>
+                                <i>@Model.categoria.nombre</i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6">
+                        <p class="login100-form-title p-b-10 fs-17 text-center">
+                            <strong>Subcategoría:</strong>
+                            <span>
+                                <i>@Model.subcategoria.nombre</i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-12 m-b-14">
+                        <hr />
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6">
+                        <p class="login100-form-title p-b-10 fs-17 text-center">
+                            <strong>Stock Actual:</strong>
+                            <span>
+                                <i>@Model.stockActual</i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6">
+                        <p class="login100-form-title p-b-10 fs-17 text-center">
+                            <span class="badge fs-17" style="color: @stColorStock; width: 180px;">@Model.estado.nombre</span>
+                        </p>
+                    </div>
+                    <div class="col-12 text-center p-b-20">
+                        <hr />
+                        <span class="fs-24 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="color:#000">PRECIOS</span>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4">
+                        <p class="login100-form-title p-b-10 fs-17 text-center">
+                            <strong>Gremio</strong>
+                            <span>
+                                <i>@Model.precioGremio.ToString().TrimEnd('0').TrimEnd(',')</i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4">
+                        <p class="login100-form-title p-b-10 fs-17 text-center">
+                            <strong>Contado</strong>
+                            <span>
+                                <i>@Model.precioContado.ToString().TrimEnd('0').TrimEnd(',')</i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4">
+                        <p class="login100-form-title p-b-10 fs-17 text-center">
+                            <strong>Lista</strong>
+                            <span>
+                                <i>@Model.precioLista.ToString().TrimEnd('0').TrimEnd(',')</i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-12">
+                        <br />
+                        <hr />
+                        <p class="text-center"><canvas class="img-fluid" id="barcode"></canvas></p>
+                    </div>
+
+                </div>
+        </div>
+
+             
+        <div class="col-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
+            <div class="container-login100-form-btn m-t-20 m-b-30">
+                <button id="btnGuardar" type="submit" class="btn btn-success fs-22" style="width:100%">Guardar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+<script src="~/Scripts/JsBarcode.all.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var idProducto = '@Model.idProducto';
+        $("#barcode").JsBarcode(idProducto);
+    });
+</script>
+}
+
+
+
+

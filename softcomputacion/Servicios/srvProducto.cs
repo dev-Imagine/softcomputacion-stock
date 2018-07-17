@@ -110,6 +110,8 @@ namespace softcomputacion.Servicios
                 {
                     producto oProducto = bd.producto.Where(X => X.idProducto == idProducto).FirstOrDefault();
                     string st = oProducto.subcategoria.nombre;
+                    st = oProducto.categoria.nombre;
+                    st = oProducto.estado.nombre;
                     foreach (proveedorXproducto oPxp in oProducto.proveedorXproducto.ToList())
                     {
                         st = oPxp.proveedor.nombreEmpresa;

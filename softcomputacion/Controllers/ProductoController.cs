@@ -60,7 +60,6 @@ namespace softcomputacion.Controllers
             }
 
         }
-
         public ActionResult ListarProducto(int nroPagina = 1, int tamañoPagina = 10)
         {
             try
@@ -116,7 +115,31 @@ namespace softcomputacion.Controllers
             }
 
         }
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult VistaProducto(int idProducto=0)
+        {
+            try
+            {
+                usuario oUsuario = (usuario)Session["Usuario"];
+                if (oUsuario == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
+                srvProducto sProducto = new srvProducto();
+                producto oProducto = sProducto.ObtenerProducto(idProducto);
+                if (oProducto == null || oProducto.idProducto == 0)
+                {
+                    throw new Exception();
+                }
+                return View(oProducto);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Error", new { stError = "El producto solicitado no se ha encontrado." });
+            }
 
+        }
 
         // *************** Vistas parciales
         [HttpPost]
