@@ -53,6 +53,21 @@ namespace softcomputacion.Servicios
             try
             {
                 oProducto.nombre = oProducto.nombre.ToUpper();
+                if (oProducto.stockActual == 0)
+                {
+                    oProducto.idEstado = 3;
+                }
+                else
+                {
+                    if (oProducto.stockActual <= oProducto.stockMinimo)
+                    {
+                        oProducto.idEstado = 2;
+                    }
+                    else
+                    {
+                        oProducto.idEstado = 1;
+                    }
+                }
                 if (oProducto.idProducto == 0)
                 {
                     GuardarProducto(oProducto);

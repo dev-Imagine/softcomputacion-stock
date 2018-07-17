@@ -143,9 +143,9 @@
                         stColorStock = softcomputacion.Servicios.srvEstado.ObtenerColorEstado(oProducto.idEstado);
 
                         <div id="div-@oProducto.idProducto" class="row item-tabla m-b-15" >
-                            <div class="col-12 col-md-10 " style="text-align:left;">
+                            <div class="col-12 col-md-11 " style="text-align:left;">
                                 <div class="row">
-                                    <div class="col-12 col-sm-6 col-md-5">
+                                    <div class="col-12 col-sm-12 col-md-5">
                                         <p class="login100-form-title p-b-10 fs-17 text-center" >
                                             <strong>Producto:</strong>
                                             <span id="spanNombreProducto-@oProducto.idProducto">
@@ -162,34 +162,6 @@
                                             </span>
                                         </p>
                                     </div>
-                                    @* If de validacion sobre el spam de stock *@
-                                    @*@if (oProducto.stockMinimo >= oProducto.stockActual)
-                                    {
-                                        <div class="col-12 col-sm-6 col-md-4">
-                                            <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                                <span class="badge fs-20" style="color:#dc3545; width: 180px;">AGOTADO</span>
-                                            </p>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        if (oProducto.stockActual <= oProducto.stockMinimo + 2)
-                                        {
-                                            <div class="col-12 col-sm-6 col-md-4">
-                                                <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                                    <span class="badge fs-20" style="color: #ffc107; width: 180px;">STOCK BAJO</span>
-                                                </p>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="col-12 col-sm-6 col-md-4">
-                                                <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                                    <span class="badge fs-20" style="color: #28a745; width: 180px;">EN STOCK</span>
-                                                </p>
-                                            </div>
-                                        }
-                                    }*@
                                     <div class="col-12 col-sm-6 col-md-4">
                                         <p class="login100-form-title p-b-10 fs-17 text-center">
                                             <span class="badge fs-20" style="color: @stColorStock; width: 180px;">@oProducto.estado.nombre</span>
@@ -229,11 +201,10 @@
 
                                 </div>
                             </div>
-                            <div class="col-12 col-md-2">
+                            <div class="col-12 col-md-1">
                                 <form method="post" action="@Url.Action("Producto","Producto", new { idProducto = oProducto.idProducto })">
                                     <div class="btn-group w-full" role="group">
-                                        <button type="submit" class="btn btn-outline-dark" style="width:50%"><i class="fas fa-pen"></i></button>
-                                        <button type="button" class="btn btn-outline-danger" style="width:50%"><i class="fas fa-times"></i></button>
+                                        <button type="submit" class="btn btn-outline-dark" style="width:100%"><i class="fas fa-pen"></i></button>
                                     </div>
                                 </form>
                             </div>

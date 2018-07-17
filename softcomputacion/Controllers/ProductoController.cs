@@ -195,27 +195,6 @@ namespace softcomputacion.Controllers
                     }
  
                 }
-                if (oProducto.stockMinimo>=oProducto.stockActual)
-                {
-                    oProducto.idEstado = 3;
-                }
-                else
-                {
-                    //if (oProducto.stockActual >= oProducto.stockMinimo + 2)
-                    if (oProducto.stockActual <= oProducto.stockMinimo + 2)
-                    {
-                        oProducto.idEstado = 2;
-                    }
-                    else
-                    {
-                        //if (oProducto.stockActual >= oProducto.stockIdeal)
-                        //{
-                            oProducto.idEstado = 1;
-                        //}
-                    }
-                }
-                
-
                 sProducto.GuardarModificarProducto(oProducto);
                 return RedirectToAction("ListarProducto");
             }
