@@ -62,6 +62,22 @@ namespace softcomputacion.Servicios
                 throw ex;
             }
         }
+        public usuario ObtenerUsuario(string dni, string contraseña)
+        {
+            try
+            {
+                using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
+                {
+                    usuario oUsuario = bd.usuario.Where(x => x.dni == dni && x.contraseña == contraseña).FirstOrDefault();
+                    //string st = oUsuario.tipoUsuario.nombre;
+                    return oUsuario;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
         private usuario GuardarUsuario(usuario oUsuario)
         {

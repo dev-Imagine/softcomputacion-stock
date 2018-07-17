@@ -32,6 +32,12 @@ namespace softcomputacion.Servicios
                 using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
                 {
                     oProducto.nombre = oProducto.nombre.ToUpper();
+                    bd.Database.ExecuteSqlCommand("DELETE FROM proveedorXproducto WHERE idProducto = @id", new System.Data.SqlClient.SqlParameter("id", oProducto.idProducto));
+                    foreach (proveedorXproducto oPxp in oProducto.proveedorXproducto.ToList())
+                    {
+                        bd.Entry(oPxp).State = System.Data.Entity.EntityState.Added;
+                    }
+                    oProducto.proveedorXproducto.Clear();
                     bd.Entry(oProducto).State = System.Data.Entity.EntityState.Modified;
                     bd.SaveChanges();
                     return oProducto;
@@ -109,6 +115,22 @@ namespace softcomputacion.Servicios
                         st = oPxp.proveedor.nombreEmpresa;
                     }
                     return oProducto;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public void QuitarProveedorProducto(int idPxp)
+        {
+            try
+            {
+                using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
+                {
+                    proveedorXproducto oPxp = bd.proveedorXproducto.Where(x => x.idProveedorXproducto == idPxp).FirstOrDefault();
+                    bd.proveedorXproducto.Remove(oPxp);
+                    bd.SaveChanges();
                 }
             }
             catch (Exception ex)

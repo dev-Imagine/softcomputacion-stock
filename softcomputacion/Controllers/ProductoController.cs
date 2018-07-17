@@ -164,7 +164,7 @@ namespace softcomputacion.Controllers
                 
 
                 sProducto.GuardarModificarProducto(oProducto);
-                return RedirectToAction("Producto");
+                return RedirectToAction("ListarProducto");
             }
             catch (Exception)
             {
@@ -229,6 +229,6 @@ namespace softcomputacion.Controllers
             }
 
         }
-
+        
     }
 }

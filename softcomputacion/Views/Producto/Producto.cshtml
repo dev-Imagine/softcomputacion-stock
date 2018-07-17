@@ -5,6 +5,11 @@
     softcomputacion.Models.producto oProducto = (softcomputacion.Models.producto)ViewBag.oProducto;
     List<softcomputacion.Models.categoria> lstCategorias = (List<softcomputacion.Models.categoria>)ViewBag.lstCategorias;
     List<softcomputacion.Models.proveedor> lstProveedores = (List<softcomputacion.Models.proveedor>)ViewBag.lstProveedores;
+    string stProveedores = "";
+    foreach (softcomputacion.Models.proveedorXproducto oProveedorxProducto in oProducto.proveedorXproducto.ToList())
+    {
+        stProveedores = stProveedores + oProveedorxProducto.idProveedor + ";";
+    }
 }
 <br /><br />
 <div class="container-fluid">
@@ -58,17 +63,24 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <label >Sub categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" onclick="_PopUpGuardarModificarCategoria(1)"><i class="fas fa-plus"></i></button></label>
-                    <div class="wrap-input100 validate-input m-b-20" data-validate="">
-                        <select disabled id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
-                            <option value="0">Subcategoria</option>
-                            @{
-                                if (oProducto.idSubCategoria != 0)
-                                {
-                                    <option value="@oProducto.idSubCategoria" selected>@oProducto.subcategoria.nombre</option>
-                                }
+                        @{
+                            if (oProducto.idSubCategoria != 0)
+                            {
+                                <div class="wrap-input100 validate-input m-b-20" data-validate="">
+                                    <select id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
+                                        <option value="@oProducto.idSubCategoria" selected>@oProducto.subcategoria.nombre</option>
+                                    </select>
+                                </div>
                             }
-                        </select>
-                    </div>
+                            else
+                            {
+                                <div class="wrap-input100 validate-input m-b-20" data-validate="">
+                                    <select disabled id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
+                                        <option value="0">Subcategoria</option>
+                                    </select>
+                                </div>
+                            }
+                        }
                 </div>
 
 
@@ -158,23 +170,23 @@
                         @{ 
                             if (oProducto.proveedorXproducto.Count() > 0)
                             {
-                                foreach (softcomputacion.Models.proveedorXproducto oProveedor in oProducto.proveedorXproducto.ToList())
+                                foreach (softcomputacion.Models.proveedorXproducto oPxp in oProducto.proveedorXproducto.ToList())
                                 {
-                                    <div id="div-proveedor-@oProveedor.idProveedor" class="col-12 col-md-6">
+                                    <div id="div-proveedor-@oPxp.idProveedor" data-id="@oPxp.idProveedorXproducto" class="col-12 col-md-6">
                                         <div class="item-seleccionado">
                                             <span style="float:right">
-                                                <a style="cursor:pointer" onclick="EliminarProveedor(@oProveedor.idProveedor)">
+                                                <a style="cursor:pointer" onclick="LlamarControladorQuitarProveedor(@oPxp.idProveedor)">
                                                     <i class="far fa-times-circle" aria-hidden="true"></i>
                                                 </a>
                                             </span>
-                                            <p style="margin-bottom: 0px;">@oProveedor.proveedor.nombreEmpresa</p>
+                                            <p style="margin-bottom: 0px;">@oPxp.proveedor.nombreEmpresa</p>
                                         </div>
                                     </div>
                                 }
                             }
                         }
 
-                        <input id="inpProveedores" name="idProveedores" value="" class="dis-none">
+                        <input id="inpProveedores" name="idProveedores" value="@stProveedores" class="dis-none">
 
                     </div>
                 </div>
@@ -266,7 +278,7 @@
             if (ExisteProveedor) {
                 swal("Proveedor ya seleccionado.", "El proveedor " + NombreProveedor + " ya ha sido seleccionado.", "info");
             } else {
-                $('#proveedores-agregados').append("<div id=\"div-proveedor-" + idProveedor + "\" class=\"col-12 col-md-6\"><div class=\"item-seleccionado\" ><span style=\"float:right\"><a style=\"cursor:pointer\" onclick=\"EliminarProveedor(" + idProveedor + ")\"><i class=\"far fa-times-circle\" aria-hidden=\"true\"></i></a></span><p style=\"margin-bottom: 0px;\">" + NombreProveedor + "</p></div ></div >");
+                $('#proveedores-agregados').append("<div id=\"div-proveedor-" + idProveedor + "\" class=\"col-12 col-md-6\"><div class=\"item-seleccionado\" ><span style=\"float:right\"><a style=\"cursor:pointer\" onclick=\"LlamarControladorQuitarProveedor(" + idProveedor + ")\"><i class=\"far fa-times-circle\" aria-hidden=\"true\"></i></a></span><p style=\"margin-bottom: 0px;\">" + NombreProveedor + "</p></div ></div >");
                 if (idProveedores == "undefined") {
                     idProveedores = idProveedor;
                 } else
@@ -280,7 +292,8 @@
         }
 
     }
-    function EliminarProveedor(id_proveedor) {
+
+    function LlamarControladorQuitarProveedor(id_proveedor) {
         $('#div-proveedor-' + id_proveedor).remove();
         idProveedores = idProveedores.replace(id_proveedor + ";", '');
     }
