@@ -69,7 +69,7 @@ namespace softcomputacion.Servicios
                 using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
                 {
                     usuario oUsuario = bd.usuario.Where(x => x.dni == dni && x.contraseña == contraseña).FirstOrDefault();
-                    //string st = oUsuario.tipoUsuario.nombre;
+                    string st = oUsuario.tipoUsuario.nombre;
                     return oUsuario;
                 }
             }

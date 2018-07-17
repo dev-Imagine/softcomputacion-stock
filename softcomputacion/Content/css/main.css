@@ -645,3 +645,18 @@ input.input100 {
         border-top-right-radius: 0.2rem;
         border-bottom-right-radius: 0.2rem;
     }
+
+.dropdown-usuario {
+    min-width: 13rem;
+    padding-bottom: 0px;
+    border-left: 2px solid rgb(220, 53, 69);
+    box-shadow: 3px 3px 4px rgba(0,0,0,.2);
+}
+.dropdown-usuario-item {
+    
+    border-bottom: 2px solid transparent;
+}
+    .dropdown-usuario-item:hover {
+        color: rgb(220, 53, 69);
+        border-bottom: 2px solid rgb(220, 53, 69);
+    }

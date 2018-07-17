@@ -16,6 +16,12 @@ namespace softcomputacion.Controllers
         {
             try
             {
+                usuario oUsuario = (usuario)Session["Usuario"];
+                if (oUsuario == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("Index","Home");
+                }
                 srvCategoria sCategoria = new srvCategoria();
                 ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
                 srvProveedor sProveedor = new srvProveedor();
@@ -34,6 +40,12 @@ namespace softcomputacion.Controllers
         {
             try
             {
+                usuario oUsuario = (usuario)Session["Usuario"];
+                if (oUsuario == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
                 srvCategoria sCategoria = new srvCategoria();
                 ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
                 srvProveedor sProveedor = new srvProveedor();
@@ -53,6 +65,12 @@ namespace softcomputacion.Controllers
         {
             try
             {
+                usuario oUsuario = (usuario)Session["Usuario"];
+                if (oUsuario == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
                 srvEstado sEstado = new srvEstado();
                 srvProducto sProducto = new srvProducto();
                 srvCategoria sCategoria = new srvCategoria();
@@ -75,6 +93,12 @@ namespace softcomputacion.Controllers
         {
             try
             {
+                usuario oUsuario = (usuario)Session["Usuario"];
+                if (oUsuario == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
                 srvEstado sEstado = new srvEstado();
                 srvProducto sProducto = new srvProducto();
                 srvCategoria sCategoria = new srvCategoria();
@@ -127,6 +151,12 @@ namespace softcomputacion.Controllers
         {
             try
             {
+                usuario oUsuario = (usuario)Session["Usuario"];
+                if (oUsuario == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
                 srvProducto sProducto = new srvProducto();
                 string [] idProveedor = idProveedores.Split(';');
 

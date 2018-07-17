@@ -16,6 +16,12 @@ namespace softcomputacion.Controllers
         {
             try
             {
+                usuario oUsuario = (usuario)Session["Usuario"];
+                if (oUsuario == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
                 srvUsuario sUsuario = new srvUsuario();
                 ViewBag.lstUsuarios = sUsuario.ObtenerUsuarios();
                 return View();
@@ -34,6 +40,12 @@ namespace softcomputacion.Controllers
         {
             try
             {
+                usuario oSession = (usuario)Session["Usuario"];
+                if (oSession == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
                 srvUsuario sUsuario= new srvUsuario();
                 sUsuario.GuardarModificarUsuario(oUsuario);
                 return RedirectToAction("ListarUsuario");

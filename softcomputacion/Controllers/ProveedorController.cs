@@ -15,6 +15,12 @@ namespace softcomputacion.Controllers
         {
             try
             {
+                usuario oUsuario = (usuario)Session["Usuario"];
+                if (oUsuario == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
                 srvProveedor sProveedor = new srvProveedor();
                 ViewBag.lstProveedores = sProveedor.ObtenerProveedores();
                 return View();
@@ -29,6 +35,12 @@ namespace softcomputacion.Controllers
         {
             try
             {
+                usuario oUsuario = (usuario)Session["Usuario"];
+                if (oUsuario == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
                 srvProveedor sProveedor = new srvProveedor();
                 ViewBag.lstProveedores = sProveedor.ObtenerProveedores(nombreEmpresa);
                 return View();
@@ -54,6 +66,12 @@ namespace softcomputacion.Controllers
         {
             try
             {
+                usuario oUsuario = (usuario)Session["Usuario"];
+                if (oUsuario == null)
+                {
+                    Session.Clear();
+                    return RedirectToAction("Index", "Home");
+                }
                 srvProveedor sProveedor = new srvProveedor();
                 sProveedor.GuardarModificarProveedor(oProveedor);
                 return RedirectToAction("ListaProveedores");
