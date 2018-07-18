@@ -16,7 +16,7 @@ namespace softcomputacion.Controllers
             try
             {
                 usuario oUsuario = (usuario)Session["Usuario"];
-                if (oUsuario == null)
+                if (oUsuario == null ||oUsuario.idTipoUsuario != 2)
                 {
                     Session.Clear();
                     return RedirectToAction("Index", "Home");
@@ -36,7 +36,7 @@ namespace softcomputacion.Controllers
             try
             {
                 usuario oUsuario = (usuario)Session["Usuario"];
-                if (oUsuario == null)
+                if (oUsuario == null || oUsuario.idTipoUsuario != 2)
                 {
                     Session.Clear();
                     return RedirectToAction("Index", "Home");

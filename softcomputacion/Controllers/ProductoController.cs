@@ -17,7 +17,7 @@ namespace softcomputacion.Controllers
             try
             {
                 usuario oUsuario = (usuario)Session["Usuario"];
-                if (oUsuario == null)
+                if (oUsuario == null || oUsuario.idTipoUsuario != 2)
                 {
                     Session.Clear();
                     return RedirectToAction("Index","Home");
@@ -35,13 +35,13 @@ namespace softcomputacion.Controllers
             }
             
         }
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Producto(int idProducto)
         {
             try
             {
                 usuario oUsuario = (usuario)Session["Usuario"];
-                if (oUsuario == null)
+                if (oUsuario == null || oUsuario.idTipoUsuario != 2)
                 {
                     Session.Clear();
                     return RedirectToAction("Index", "Home");
@@ -87,7 +87,7 @@ namespace softcomputacion.Controllers
             }
 
         }
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
         public ActionResult ListarProducto(string nombreProducto = "", int idEstado = 0, int idCategoria = 0, int idSubCategoria = 0)
         {
             try

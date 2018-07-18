@@ -6,6 +6,7 @@
     List<softcomputacion.Models.estado> lstEstados = (List<softcomputacion.Models.estado>)ViewBag.lstEstados;
     string[] filtros = ViewBag.filtros.Split(';');
     string stColorStock = "";
+    softcomputacion.Models.usuario oUsuario = (softcomputacion.Models.usuario)Session["Usuario"];
 }
 
 
@@ -28,10 +29,11 @@
     <hr style="border-top: 2px solid rgb(220, 53, 69);" />
     <br />
     <div class="row container-fluid">
-        <div class="col-12 col-lg-12">
-            <div class="col-12">
+        <div class="col-12 col-lg-12 row">
+            <div class="col-11">
                 @* Form de busqueda *@
-                <form method="post" action="@Url.Action("ListarProducto", "Producto")" autocomplete="off">                    
+
+                <form method="post" action="@Url.Action("ListarProducto", "Producto")" autocomplete="off">
                     <div class="row">
                         @Html.AntiForgeryToken()
                         <div class="col-12 col-md-6 col-lg-4">
@@ -63,11 +65,11 @@
                                     {
                                         if (oCategoria.idCategoria.ToString() == filtros[1])
                                         {
-                                                <option selected value="@oCategoria.idCategoria">@oCategoria.nombre</option>
+                                            <option selected value="@oCategoria.idCategoria">@oCategoria.nombre</option>
                                         }
                                         else
                                         {
-                                                <option value="@oCategoria.idCategoria">@oCategoria.nombre</option>
+                                            <option value="@oCategoria.idCategoria">@oCategoria.nombre</option>
                                         }
 
                                     }
@@ -93,29 +95,29 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-2">
                             <div class="wrap-input100 ¡ m-b-20" data-validate="">
-                                    <select id="select-Estado" class="form-control input100" style="border:0px; height: 55px;" name="idEstado">
-                                        @if (filtros[3] == "0" || filtros[3] == "")
+                                <select id="select-Estado" class="form-control input100" style="border:0px; height: 55px;" name="idEstado">
+                                    @if (filtros[3] == "0" || filtros[3] == "")
+                                    {
+                                        <option selected value="0">Estado</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="0">Estado</option>
+                                    }
+
+                                    @foreach (softcomputacion.Models.estado oEstado in lstEstados)
+                                    {
+                                        if (oEstado.idEstado.ToString() == filtros[3])
                                         {
-                                                <option selected value="0">Estado</option>
+                                            <option selected value="@oEstado.idEstado">@oEstado.nombre</option>
                                         }
                                         else
                                         {
-                                            <option value="0">Estado</option>
+                                            <option value="@oEstado.idEstado">@oEstado.nombre</option>
                                         }
 
-                                        @foreach (softcomputacion.Models.estado oEstado in lstEstados)
-                                        {
-                                            if (oEstado.idEstado.ToString() == filtros[3])
-                                            {
-                                                <option selected value="@oEstado.idEstado">@oEstado.nombre</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@oEstado.idEstado">@oEstado.nombre</option>
-                                            }
-
-                                        }                                        
-                                    </select>
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-2">
@@ -128,6 +130,17 @@
                     </div>
                 </form>
             </div>
+            @if (oUsuario.idTipoUsuario == 2)
+            {
+                <div class="col-11 col-md-11 col-lg-1">
+                    <div class="container-login100-form-btn m-b-20">
+                        <button class="login100-form-btn fs-22" style="height:56px; background-color:#ff0000" onclick="location.href='@Url.Action("Producto","Producto")'">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+           
             
             <hr style="border-top: 1px solid rgb(220, 53, 69);" />
             <br />
@@ -170,54 +183,91 @@
 
                                     <div class="col-12 col-sm-6 col-md-3">
                                         <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                            <strong>Costo</strong>
-                                            <input id="inpCosto-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioCosto" placeholder="Precio costo" value="@Convert.ToInt32(oProducto.precioCosto)">
-                                            <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                            
+                                            @if (oUsuario.idTipoUsuario == 2)
+                                            {
+                                                <strong> Costo: </strong>
+                                                <input id="inpCosto-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioCosto" placeholder="Precio costo" value="@Convert.ToInt32(oProducto.precioCosto)">
+                                                <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                            }
+                                    
                                         </p>
                                     </div>
 
                                     <div class="col-12 col-sm-6 col-md-3">
                                         <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                            <strong>Gremio</strong>
-                                            <input id="inpGremio-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioGremio" placeholder="Precio gremio" value="@Convert.ToInt32(oProducto.precioGremio)">
-                                            <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                            
+                                            @if (oUsuario.idTipoUsuario == 1)
+                                            {
+                                                <strong>Gremio: @oProducto.precioGremio.ToString().TrimEnd('0').TrimEnd(',')</strong>
+                                            }
+                                            else
+                                            {
+                                                <strong>Gremio</strong>
+                                                <input id="inpGremio-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioGremio" placeholder="Precio gremio" value="@Convert.ToInt32(oProducto.precioGremio)">
+                                                <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                            }
                                         </p>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-3">
                                         <p class="login100-form-title p-b-10 fs-17 text-center" >
-                                            <strong>Contado</strong>
-                                            <input id="inpContado-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio contado"  value="@Convert.ToInt32(@oProducto.precioContado)">
-                                            <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>                                    
+                                            
+                                            @if (oUsuario.idTipoUsuario == 1)
+                                            {
+                                                <strong>Contado: @oProducto.precioContado.ToString().TrimEnd('0').TrimEnd(',')</strong>
+                                            }
+                                            else
+                                            {
+                                                <strong>Contado</strong>
+                                                <input id="inpContado-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio contado" value="@Convert.ToInt32(@oProducto.precioContado)">
+                                                <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                            }
                                         </p>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-3">
                                         <p class="login100-form-title p-b-10 fs-17 text-center">
-                                            <strong>Lista</strong>
-                                            <input id="inpLista-@oProducto.idProducto" style="background-color:#f2f2f2; text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio lista"  value="@Convert.ToInt32(oProducto.precioLista)">
-                                            <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                            
+                                            @if (oUsuario.idTipoUsuario == 1)
+                                            {
+                                                <strong>Lista: @oProducto.precioLista.ToString().TrimEnd('0').TrimEnd(',')</strong>
+                                            }
+                                            else
+                                            {
+                                                <strong>Lista</strong>
+                                                <input id="inpLista-@oProducto.idProducto" style="background-color:#f2f2f2; text-align:right; width:75px;" type="number" name="precioContado" placeholder="Precio lista" value="@Convert.ToInt32(oProducto.precioLista)">
+                                                <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                            }
                                         </p>
                                     </div>
 
 
                                 </div>
                             </div>
-                            <div class="col-12 col-md-1">
-                                <form method="post" action="@Url.Action("Producto","Producto", new { idProducto = oProducto.idProducto })">
-                                    <div class="btn-group w-full" role="group">
-                                        <button type="submit" class="btn btn-outline-dark" style="width:100%"><i class="fas fa-pen"></i></button>
-                                    </div>
-                                </form>
-                            </div>
-
+                            @if (oUsuario.idTipoUsuario == 2)
+                            {
+                                <div class="col-12 col-md-1">
+                                    <form method="post" action="@Url.Action("Producto", "Producto", new { idProducto = oProducto.idProducto })">
+                                        <div class="btn-group w-full" role="group">
+                                            <button type="submit" class="btn btn-outline-dark" style="width:100%"><i class="fas fa-pen"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+                            else
+                            {                                
+                                <div class="col-12 col-md-1">
+                                    <form method="post" action="@Url.Action("VistaProducto", "Producto", new { idProducto = oProducto.idProducto })">
+                                        @Html.AntiForgeryToken()
+                                        <div class="btn-group w-full" role="group">
+                                            <button type="submit" class="btn btn-outline-dark" style="width:100%"><i class="fas fa-list-alt"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            }
                         </div>
                     }
                 }
-            </div>
-
-
-
-        </div>
-        <div class="row container-fluid text-center">
+            </div></div><div class="row container-fluid text-center">
             <div id="div-paginacion" class="col-12">
                 @Html.PagedListPager(Model, nroPagina => Url.Action("ListarProducto", "Producto", new { nroPagina, tamañoPagina = Model.PageSize }), new PagedListRenderOptions() { ClassToApplyToFirstListItemInPager = null, ClassToApplyToLastListItemInPager = null, UlElementClasses = new[] { "pagination", "justify-content-center" }, LiElementClasses = new[] { "page-item" } })
             </div>
