@@ -88,11 +88,18 @@
 
                 </div>
         </div>
-
-             
-        <div class="col-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
-            <div class="container-login100-form-btn m-t-20 m-b-30">
-                <button id="btnGuardar" type="submit" class="btn btn-success fs-22" style="width:100%">Guardar</button>
+        <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+            <br />
+            <hr />
+        </div>
+         
+        <div class="col-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4">
+            
+            <div class="input-group " style="margin-bottom:0px !important">
+                <input class="form-control mr-sm-2 ml-sm-1 mt-10 w-full" type="number" max="@Model.stockActual" min="0" id="inpCantidad" placeholder="Cantidad" name="Cantidad" aria-label="Cantidad:" value="1">
+                <div class="input-group-append">
+                    <button class="btn btn-danger w-full" onclick="descontarStock()" type="submit">Descontar</button>
+                </div>
             </div>
         </div>
 
@@ -106,6 +113,13 @@
         var idProducto = '@Model.idProducto';
         $("#barcode").JsBarcode(idProducto);
     });
+
+    function descontarStock() {
+        var cantidad = $('#inpCantidad').val
+        if (cantidad>0 && cantidad<='@Model.stockActual') {
+
+        }
+    }
 </script>
 }
 
