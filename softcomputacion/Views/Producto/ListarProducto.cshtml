@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "Listar Productos";
     Layout = "~/Views/Shared/_UsuarioLogueado.cshtml";
-    //List<softcomputacion.Models.producto> lstProductos = (List<softcomputacion.Models.producto>)ViewBag.lstProductos;
     List<softcomputacion.Models.categoria> lstCategorias = (List<softcomputacion.Models.categoria>)ViewBag.lstCategorias;
     List<softcomputacion.Models.estado> lstEstados = (List<softcomputacion.Models.estado>)ViewBag.lstEstados;
     string[] filtros = ViewBag.filtros.Split(';');
@@ -28,118 +27,104 @@
     </div>
     <hr style="border-top: 2px solid rgb(220, 53, 69);" />
     <br />
-    <div class="row container-fluid">
-        <div class="col-12 col-lg-12 row">
-            <div class="col-11">
-                @* Form de busqueda *@
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="row">
+                <div class="col-12 col-lg-11">
+                    @* Form de busqueda *@
 
-                <form method="post" action="@Url.Action("ListarProducto", "Producto")" autocomplete="off">
-                    <div class="row">
-                        @Html.AntiForgeryToken()
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="wrap-input100 m-b-20">
-                                @if (filtros[0] == "")
-                                {
-                                    <input class="input100" type="text" name="nombreProducto" placeholder="Buscar...">
-                                }
-                                else
-                                {
+                    <form method="post" action="@Url.Action("ListarProducto", "Producto")" autocomplete="off">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="wrap-input100 m-b-20">
                                     <input class="input100" type="text" name="nombreProducto" placeholder="Nombre del producto" value="@filtros[0]">
-                                }
-
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-2">
-                            <div class="wrap-input100 ¡ m-b-20" data-validate="">
-                                <select id="select-Categorias" onchange="CargarComboSubcategoria()" onload="CargarComboSubcategoria()" class="form-control input100" style="border:0px; height: 55px;" name="idCategoria">
-                                    @if (filtros[1] == "0" || filtros[1] == "")
-                                    {
-                                        <option selected value="0">Categoría</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="0">Categoría</option>
-                                    }
-
-                                    @foreach (softcomputacion.Models.categoria oCategoria in lstCategorias)
-                                    {
-                                        if (oCategoria.idCategoria.ToString() == filtros[1])
+                            <div class="col-12 col-md-6 col-lg-2">
+                                <div class="wrap-input100 ¡ m-b-20" data-validate="">
+                                    <select id="select-Categorias" onchange="CargarComboSubcategoria()" onload="CargarComboSubcategoria()" class="form-control input100" style="border:0px; height: 55px;" name="idCategoria">
+                                        @if (filtros[1] == "0" || filtros[1] == "")
                                         {
-                                            <option selected value="@oCategoria.idCategoria">@oCategoria.nombre</option>
+                                            <option selected value="0">Categoría</option>
                                         }
                                         else
                                         {
-                                            <option value="@oCategoria.idCategoria">@oCategoria.nombre</option>
+                                            <option value="0">Categoría</option>
                                         }
 
-                                    }
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-2">
-                            <div class="wrap-input100 ¡ m-b-20" data-validate="">
-                                <select disabled id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="idSubCategoria">
-                                    @if (filtros[2].ToString() == "" || filtros[2].ToString() == "0")
-                                    {
-                                        <option selected value="0">Subcategoria</option>
-                                    }
-                                    else
-                                    {
-                                        <option selected value="0">Subcategoria</option>
-                                    }
-
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-2">
-                            <div class="wrap-input100 ¡ m-b-20" data-validate="">
-                                <select id="select-Estado" class="form-control input100" style="border:0px; height: 55px;" name="idEstado">
-                                    @if (filtros[3] == "0" || filtros[3] == "")
-                                    {
-                                        <option selected value="0">Estado</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="0">Estado</option>
-                                    }
-
-                                    @foreach (softcomputacion.Models.estado oEstado in lstEstados)
-                                    {
-                                        if (oEstado.idEstado.ToString() == filtros[3])
+                                        @foreach (softcomputacion.Models.categoria oCategoria in lstCategorias)
                                         {
-                                            <option selected value="@oEstado.idEstado">@oEstado.nombre</option>
+                                            if (oCategoria.idCategoria.ToString() == filtros[1])
+                                            {
+                                                <option selected value="@oCategoria.idCategoria">@oCategoria.nombre</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@oCategoria.idCategoria">@oCategoria.nombre</option>
+                                            }
+
+                                        }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-2">
+                                <div class="wrap-input100 ¡ m-b-20" data-validate="">
+                                    <select disabled id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="idSubCategoria">
+                                        <option selected value="0">Subcategoria</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-2">
+                                <div class="wrap-input100 ¡ m-b-20" data-validate="">
+                                    <select id="select-Estado" class="form-control input100" style="border:0px; height: 55px;" name="idEstado">
+                                        @if (filtros[3] == "0" || filtros[3] == "")
+                                        {
+                                            <option selected value="0">Estado</option>
                                         }
                                         else
                                         {
-                                            <option value="@oEstado.idEstado">@oEstado.nombre</option>
+                                            <option value="0">Estado</option>
                                         }
 
-                                    }
-                                </select>
+                                        @foreach (softcomputacion.Models.estado oEstado in lstEstados)
+                                        {
+                                            if (oEstado.idEstado.ToString() == filtros[3])
+                                            {
+                                                <option selected value="@oEstado.idEstado">@oEstado.nombre</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@oEstado.idEstado">@oEstado.nombre</option>
+                                            }
+
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-2">
+                                <div class="container-login100-form-btn m-b-20">
+                                    <button class="login100-form-btn fs-22" style="height:56px;" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-2">
-                            <div class="container-login100-form-btn m-b-20">
-                                <button class="login100-form-btn fs-22" style="height:56px;" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            @if (oUsuario.idTipoUsuario == 2)
-            {
-                <div class="col-11 col-md-11 col-lg-1">
-                    <div class="container-login100-form-btn m-b-20">
-                        <button class="login100-form-btn fs-22" style="height:56px; background-color:#ff0000" onclick="location.href='@Url.Action("Producto","Producto")'">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
+                    </form>
                 </div>
-            }
+
+                @if (oUsuario.idTipoUsuario == 2)
+                {
+                    <div class="col-12 col-md-12 col-lg-1">
+                        <div class="container-login100-form-btn m-b-20">
+                            <button class="btn fs-22 btn-danger w-full" style="height:56px;" onclick="location.href='@Url.Action("Producto","Producto")'">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+            
            
             
             <hr style="border-top: 1px solid rgb(220, 53, 69);" />
@@ -247,6 +232,7 @@
                             {
                                 <div class="col-12 col-md-1">
                                     <form method="post" action="@Url.Action("Producto", "Producto", new { idProducto = oProducto.idProducto })">
+                                        @Html.AntiForgeryToken()
                                         <div class="btn-group w-full" role="group">
                                             <button type="submit" class="btn btn-outline-dark" style="width:100%"><i class="fas fa-pen"></i></button>
                                         </div>

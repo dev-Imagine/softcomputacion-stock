@@ -10,6 +10,7 @@
     {
         stProveedores = stProveedores + oProveedorxProducto.idProveedor + ";";
     }
+    
 }
 <br /><br />
 <div class="container-fluid">
@@ -190,6 +191,16 @@
 
                     </div>
                 </div>
+                <!--codigo de barras-->
+                @if (oProducto.idProducto != 0 && oProducto != null)
+                {
+                    <div class="col-12">
+                        <br />
+                        <hr />
+                        <p class="text-center"><canvas class="img-fluid" id="barcode"></canvas></p>
+                    </div>
+                }
+                <!--btns-->
                 <div class="col-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
                     <div class="container-login100-form-btn m-t-20 m-b-30">
                         @if (oProducto.idProducto==0)
@@ -217,12 +228,18 @@
 
 
 @section scripts{
+<script src="~/Scripts/JsBarcode.all.min.js"></script>
 <script>
 
     $(document).ready(function () {
         var idProducto = '@oProducto.idProducto';
         if (idProducto == 0 || idProducto == null) {
             $(':input[type="number"]').val('');
+        }
+        //barcode
+        var idProducto = '@oProducto.idProducto';
+        if (idProducto != "" && idProducto != 0) {
+            $("#barcode").JsBarcode(idProducto);
         }
     });
 
