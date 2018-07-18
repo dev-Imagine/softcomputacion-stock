@@ -32,6 +32,7 @@ namespace softcomputacion.Servicios
                 using (BDSoftComputacionEntities bd = new BDSoftComputacionEntities())
                 {
                     oProducto.nombre = oProducto.nombre.ToUpper();
+                    oProducto.estado = bd.estado.Where(x => x.idEstado == oProducto.idEstado).FirstOrDefault();
                     bd.Database.ExecuteSqlCommand("DELETE FROM proveedorXproducto WHERE idProducto = @id", new System.Data.SqlClient.SqlParameter("id", oProducto.idProducto));
                     foreach (proveedorXproducto oPxp in oProducto.proveedorXproducto.ToList())
                     {
@@ -53,6 +54,7 @@ namespace softcomputacion.Servicios
             try
             {
                 oProducto.nombre = oProducto.nombre.ToUpper();
+                oProducto.estado = null;
                 if (oProducto.stockActual == 0)
                 {
                     oProducto.idEstado = 3;

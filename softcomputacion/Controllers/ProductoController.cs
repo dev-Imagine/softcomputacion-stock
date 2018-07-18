@@ -261,6 +261,31 @@ namespace softcomputacion.Controllers
             }
 
         }
-        
+        [HttpPost]
+        public JsonResult DescontarStock(int idProducto, int cantidad)
+        {
+            try
+            {
+                string stRespuesta = "";
+                srvProducto sProducto = new srvProducto();
+                producto oProducto = sProducto.ObtenerProducto(idProducto);
+                if (oProducto.stockActual >= cantidad)
+                {
+                    oProducto.stockActual = oProducto.stockActual - cantidad;
+                    oProducto = sProducto.GuardarModificarProducto(oProducto);
+                    stRespuesta = oProducto.stockActual + ";" + oProducto.estado.nombre + ";" + srvEstado.ObtenerColorEstado(oProducto.idEstado);
+                    return Json(stRespuesta);
+                }
+                else
+                {
+                    return Json("");
+                }
+            }
+            catch (Exception)
+            {
+                return Json("");
+            }
+
+        }
     }
 }

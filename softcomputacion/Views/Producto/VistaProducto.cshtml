@@ -43,13 +43,13 @@
                         <p class="login100-form-title p-b-10 fs-17 text-center">
                             <strong>Stock Actual:</strong>
                             <span>
-                                <i>@Model.stockActual</i>
+                                <i id="iStockActual">@Model.stockActual</i>
                             </span>
                         </p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-6">
                         <p class="login100-form-title p-b-10 fs-17 text-center">
-                            <span class="badge fs-17" style="color: @stColorStock; width: 180px;">@Model.estado.nombre</span>
+                            <span class="badge fs-17" style="color: @stColorStock; width: 180px;" id="spnEstadoStock">@Model.estado.nombre</span>
                         </p>
                     </div>
                     <div class="col-12 text-center p-b-20">
@@ -96,9 +96,9 @@
         <div class="col-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4">
             
             <div class="input-group " style="margin-bottom:0px !important">
-                <input class="form-control mr-sm-2 ml-sm-1 mt-10 w-full" type="number" max="@Model.stockActual" min="0" id="inpCantidad" placeholder="Cantidad" name="Cantidad" aria-label="Cantidad:" value="1">
+                <input class="form-control mr-sm-2 ml-sm-1 mt-10 w-full fs-22 text-center" style="border-color:rgb(220, 53, 69)" type="number" max="@Model.stockActual" min="0" id="inpCantidad" placeholder="Cantidad" name="Cantidad" aria-label="Cantidad:" value="1">
                 <div class="input-group-append">
-                    <button class="btn btn-danger w-full" onclick="descontarStock()" type="submit">Descontar</button>
+                    <button class="btn btn-danger w-full fs-22" onclick="descontarStock()" type="submit">Descontar</button>
                 </div>
             </div>
         </div>
@@ -115,9 +115,28 @@
     });
 
     function descontarStock() {
-        var cantidad = $('#inpCantidad').val
-        if (cantidad>0 && cantidad<='@Model.stockActual') {
-
+        var cantidad = $('#inpCantidad').val();
+        var StockActual = '@Model.stockActual';
+        if (cantidad > 0 && cantidad<= StockActual) {
+            var url = "@Url.Action("DescontarStock", "Producto")";
+            var data = { idProducto:@Model.idProducto, cantidad: cantidad };
+            $.post(url, data).done(function (data) {
+                if (data.length != 0) {
+                    data = data.split(';');
+                    $('#iStockActual').text(data[0]);
+                    $('#spnEstadoStock').text(data[1]);
+                    $('#spnEstadoStock').css("color", data[2]);
+                    swal("Exito! \n \n", "Se a actualizado el stock del producto", "success");
+                }
+                else
+                {
+                    swal("Ocurrió un error \n \n", "No existe stock suficiente.", "error");
+                }
+            });
+        }
+        else
+        {
+            swal("Ocurrió un error \n \n", "No existe stock suficiente.", "error");
         }
     }
 </script>
