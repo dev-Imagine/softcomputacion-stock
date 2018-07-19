@@ -368,6 +368,8 @@
     <Content Include="Views\Producto\_PopUpGuardarModificarCategoria.cshtml" />
     <Content Include="Views\Producto\ListarProducto.cshtml" />
     <Content Include="Views\Producto\VistaProducto.cshtml" />
+    <Content Include="Views\Producto\_PopUpImprimirCodigoBarra.cshtml" />
+    <Content Include="Views\Producto\ImprimirCodigoBarra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -154,6 +154,12 @@ namespace softcomputacion.Controllers
             ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
             return PartialView(sCategoria.ObtenerCategoria(idCategoria));
         }
+
+        [HttpPost]
+        public PartialViewResult _PopUpImprimirCodigoBarra(int idProducto)
+        {
+            return PartialView(idProducto);
+        }
         // *************** Metodos
         public JsonResult ObtenerSubcategoriaDeCategoria(int idCategoria)
         {
@@ -329,6 +335,14 @@ namespace softcomputacion.Controllers
                     return 0;
                 }
             }
+        }
+
+        [HttpPost]
+        public ViewResult ImprimirCodigoBarra (int idProducto, int cantidad)
+        {
+            ViewBag.idProducto = idProducto;
+            ViewBag.cantidad = cantidad;
+            return View();
         }
     }
 }
