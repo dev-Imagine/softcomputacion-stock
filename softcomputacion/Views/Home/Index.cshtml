@@ -9,6 +9,9 @@
         <div class="wrap-login100">
             <form class="login100-form validate-form" autocomplete="off" method="post" action="@Url.Action("Ingresar","Home")">
                 @Html.AntiForgeryToken()
+                <span class="login100-form-title p-b-10 d-block d-sm-block d-md-none">
+                    <img src="~/Content/images/softcomputacion_icono.png" />
+                </span>
                 <span class="login100-form-title p-b-34">
                     Ingresar
                 </span>
@@ -32,7 +35,7 @@
                     </button>
                 </div>
             </form>
-            <div class="login100-more" style="background-image: url('../../Content/images/bg-01.jpg');"></div>
+            <div class="login100-more" style="background-image: url('../../Content/images/softcomputacion_perfil_white.jpg');z-index: inherit;"></div>
         </div>
     </div>
 </div>

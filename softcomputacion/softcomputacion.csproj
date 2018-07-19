@@ -222,8 +222,12 @@
     <Content Include="Content\fonts\Linearicons-Free-v1.0.0\icon-font.min.css" />
     <Content Include="Content\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.svg" />
     <Content Include="Content\fonts\montserrat\OFL.txt" />
-    <Content Include="Content\images\bg-01.jpg" />
     <Content Include="Content\images\icono_error.png" />
+    <Content Include="Content\images\softcomputacion_ico.ico" />
+    <Content Include="Content\images\softcomputacion_icono.png" />
+    <Content Include="Content\images\softcomputacion_icono_white.png" />
+    <Content Include="Content\images\softcomputacion_perfil.png" />
+    <Content Include="Content\images\softcomputacion_perfil_white.jpg" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\css\sweetalert.css" />
     <Content Include="Content\PagedList.css" />
