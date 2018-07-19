@@ -198,6 +198,9 @@
                         <br />
                         <hr />
                         <p class="text-center"><canvas class="img-fluid" id="barcode"></canvas></p>
+                        <div class="text-center">
+                            <button class="btn btn-danger" onclick="_PopUpImprimirCodigoBarra()">Imprimir</button>
+                        </div>
                     </div>
                 }
                 <!--btns-->
@@ -222,7 +225,7 @@
 </div>
 
 <div id="div-popup-categoria"></div>
-
+<div id="div-popup-codigoBarra"></div>
 
 
 
@@ -325,7 +328,7 @@
         });
     }
 
-    //********** proveedores
+    //**********
 
     function validarSubcategoria() {
         if ($("#select-Subcategoria").val() == 0) {
@@ -335,6 +338,17 @@
             return true;
         }
 
+    }
+
+    function _PopUpImprimirCodigoBarra() {
+        var url = "@Url.Action("_PopUpImprimirCodigoBarra", "Producto")";
+        var data = { idProducto: '@oProducto.idProducto' };
+        $.post(url, data).done(function (data) {
+            if (data.length > 0) {
+                $('#div-popup-codigoBarra').html(data);
+                $('#popImprimirCodigoBarra').modal('show');
+            }
+        });
     }
 </script>
 }
