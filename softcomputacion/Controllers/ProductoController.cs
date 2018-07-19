@@ -6,6 +6,10 @@ using System.Web.Mvc;
 using PagedList;
 using softcomputacion.Models;
 using softcomputacion.Servicios;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace softcomputacion.Controllers
 {
@@ -64,6 +68,7 @@ namespace softcomputacion.Controllers
         {
             try
             {
+                double ValorUSD = GetValorUsd();
                 usuario oUsuario = (usuario)Session["Usuario"];
                 if (oUsuario == null)
                 {
@@ -301,6 +306,29 @@ namespace softcomputacion.Controllers
                 return Json("");
             }
 
+        }
+        [OutputCache(Duration = 3600, Location =System.Web.UI.OutputCacheLocation.Server)]
+        public double GetValorUsd()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://ws.geeklab.com.ar");
+                var responseTask = client.GetAsync("dolar/get-dolar-json.php");
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsStringAsync();
+                    readTask.Wait();
+                    //  {\"libre\":\"28.41\",\"blue\":\"28.65\"}
+                    string stResult = readTask.Result.Substring(10, 5);
+                    return Convert.ToDouble(stResult);
+                }
+                else //web api sent error response 
+                {
+                    return 0;
+                }
+            }
         }
     }
 }
