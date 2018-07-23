@@ -9,10 +9,10 @@
         <div class="wrap-login100">
             <form class="login100-form validate-form" autocomplete="off" method="post" action="@Url.Action("Ingresar","Home")">
                 @Html.AntiForgeryToken()
-                <span class="login100-form-title p-b-10 d-block d-sm-block d-md-none">
+                <span class="login100-form-title d-block d-sm-block d-md-none" style="padding-bottom:10px;">
                     <img src="~/Content/images/softcomputacion_icono.png" />
                 </span>
-                <span class="login100-form-title p-b-34">
+                <span class="login100-form-title" style="padding-bottom:34px;">
                     Ingresar
                 </span>
 
@@ -26,10 +26,10 @@
                 </div>
                 @if (DatosIncorrectos)
                 {
-                    <p class="w-full text-center text-danger fs-15">Documento o contraseña incorrectos</p>
+                    <p class="w-100 text-center text-danger" style="font-size:15px;">Documento o contraseña incorrectos</p>
                 }
 
-                <div class="container-login100-form-btn m-t-20">
+                <div class="container-login100-form-btn" style="margin-top:20px;">
                     <button type="submit" class="login100-form-btn">
                         comenzar
                     </button>

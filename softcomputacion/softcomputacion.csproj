@@ -213,7 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\main.css" />
-    <Content Include="Content\css\util.css" />
     <Content Include="Content\css\util.min.css" />
     <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="Content\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -230,7 +229,6 @@
     <Content Include="Content\images\softcomputacion_perfil_white.jpg" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\css\sweetalert.css" />
-    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

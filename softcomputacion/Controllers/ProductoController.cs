@@ -68,7 +68,7 @@ namespace softcomputacion.Controllers
         {
             try
             {
-                double ValorUSD = GetValorUsd();
+                //double ValorUSD = GetValorUsd();
                 usuario oUsuario = (usuario)Session["Usuario"];
                 if (oUsuario == null)
                 {
@@ -144,6 +144,13 @@ namespace softcomputacion.Controllers
                 return RedirectToAction("Error", "Error", new { stError = "El producto solicitado no se ha encontrado." });
             }
 
+        }
+        [HttpPost]
+        public ViewResult ImprimirCodigoBarra(int idProducto, int cantidad)
+        {
+            ViewBag.idProducto = idProducto;
+            ViewBag.cantidad = cantidad;
+            return View();
         }
 
         // *************** Vistas parciales
@@ -337,12 +344,6 @@ namespace softcomputacion.Controllers
             }
         }
 
-        [HttpPost]
-        public ViewResult ImprimirCodigoBarra (int idProducto, int cantidad)
-        {
-            ViewBag.idProducto = idProducto;
-            ViewBag.cantidad = cantidad;
-            return View();
-        }
+        
     }
 }
