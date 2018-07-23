@@ -19,11 +19,6 @@
           <Property Name="idEstado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="precioDolar">
-          <Property Name="precioDolar" Type="money" />
-        </EntityType>-->
         <EntityType Name="producto">
           <Key>
             <PropertyRef Name="idProducto" />
@@ -41,6 +36,7 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
           <Property Name="idCategoria" Type="int" Nullable="false" />
           <Property Name="idSubCategoria" Type="int" Nullable="false" />
           <Property Name="idEstado" Type="int" Nullable="false" />
+          <Property Name="precioFijo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="proveedor">
           <Key>
@@ -375,6 +371,7 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
           <Property Name="idCategoria" Type="Int32" Nullable="false" />
           <Property Name="idSubCategoria" Type="Int32" Nullable="false" />
           <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <Property Name="precioFijo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="categoria" Relationship="BDSoftComputacionModel.FK_producto_categoria" FromRole="producto" ToRole="categoria" />
           <NavigationProperty Name="estado" Relationship="BDSoftComputacionModel.FK_producto_estado" FromRole="producto" ToRole="estado" />
           <NavigationProperty Name="subcategoria" Relationship="BDSoftComputacionModel.FK_producto_subcategoria" FromRole="producto" ToRole="subcategoria" />
@@ -504,6 +501,7 @@ advertencia 6013: La tabla o vista 'BDSoftComputacion.dbo.precioDolar' no tiene 
           <EntitySetMapping Name="producto">
             <EntityTypeMapping TypeName="BDSoftComputacionModel.producto">
               <MappingFragment StoreEntitySet="producto">
+                <ScalarProperty Name="precioFijo" ColumnName="precioFijo" />
                 <ScalarProperty Name="idEstado" ColumnName="idEstado" />
                 <ScalarProperty Name="idSubCategoria" ColumnName="idSubCategoria" />
                 <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />

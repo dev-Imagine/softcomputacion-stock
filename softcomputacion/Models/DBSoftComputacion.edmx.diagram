@@ -15,7 +15,7 @@
         <AssociationConnector Association="BDSoftComputacionModel.FK_proveedorXproducto_proveedor" />
         <EntityTypeShape EntityType="BDSoftComputacionModel.usuario" Width="1.5" PointX="10" PointY="0.75" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_usuario_tipoUsuario" />
-        <EntityTypeShape EntityType="BDSoftComputacionModel.producto" Width="1.5" PointX="5.25" PointY="5.125" />
+        <EntityTypeShape EntityType="BDSoftComputacionModel.producto" Width="1.5" PointX="5.25" PointY="5" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_producto_categoria" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_producto_estado" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_producto_subcategoria" />

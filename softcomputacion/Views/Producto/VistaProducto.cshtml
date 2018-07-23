@@ -4,6 +4,16 @@
     ViewBag.Title = "VistaProducto";
     Layout = "~/Views/Shared/_UsuarioLogueado.cshtml";
     string stColorStock = softcomputacion.Servicios.srvEstado.ObtenerColorEstado(Model.idEstado);
+    double ValorUSD = (double)ViewBag.ValorUSD;
+    double dContado = Convert.ToDouble(Model.precioContado);
+    double dGremio = Convert.ToDouble(Model.precioGremio);
+    double dLista = Convert.ToDouble(Model.precioLista);
+    if (Model.precioFijo == false)
+    {
+        dContado = dContado * ValorUSD;
+        dGremio = dGremio * ValorUSD;
+        dLista = dLista * ValorUSD;
+    }
 }
 
 <br /><br />
@@ -58,25 +68,25 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-4">
                         <p class="login100-form-title p-b-10 fs-17 text-center">
-                            <strong>Gremio</strong>
+                            <strong>Gremio <precio class="text-primary">$ARS</precio></strong>
                             <span>
-                                <i>@Model.precioGremio.ToString().TrimEnd('0').TrimEnd(',')</i>
+                                <i>@dGremio</i>
                             </span>
                         </p>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4">
                         <p class="login100-form-title p-b-10 fs-17 text-center">
-                            <strong>Contado</strong>
+                            <strong>Contado <precio class="text-primary">$ARS</precio></strong>
                             <span>
-                                <i>@Model.precioContado.ToString().TrimEnd('0').TrimEnd(',')</i>
+                                <i>@dContado</i>
                             </span>
                         </p>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4">
                         <p class="login100-form-title p-b-10 fs-17 text-center">
-                            <strong>Lista</strong>
+                            <strong>Lista <precio class="text-primary">$ARS</precio></strong>
                             <span>
-                                <i>@Model.precioLista.ToString().TrimEnd('0').TrimEnd(',')</i>
+                                <i>@dLista</i>
                             </span>
                         </p>
                     </div>

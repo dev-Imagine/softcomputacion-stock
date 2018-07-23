@@ -135,6 +135,7 @@ namespace softcomputacion.Controllers
                 }
                 srvProducto sProducto = new srvProducto();
                 producto oProducto = sProducto.ObtenerProducto(idProducto);
+                ViewBag.ValorUSD = GetValorUsd();
                 if (oProducto == null || oProducto.idProducto == 0)
                 {
                     throw new Exception();
@@ -169,6 +170,7 @@ namespace softcomputacion.Controllers
         {
             return PartialView(idProducto);
         }
+
         // *************** Metodos
         public JsonResult ObtenerSubcategoriaDeCategoria(int idCategoria)
         {
@@ -202,8 +204,8 @@ namespace softcomputacion.Controllers
                 }
                 srvProducto sProducto = new srvProducto();
                 string [] idProveedor = idProveedores.Split(';');
-
                 proveedorXproducto oProvedorXproducto = new proveedorXproducto();
+                
                 foreach (string idProv in idProveedor)
                 {
                     if (idProv != "")
@@ -271,7 +273,7 @@ namespace softcomputacion.Controllers
             }
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult ActualizarPrecios(int costo, int gremio, int contado, int lista, int idProducto)
+        public JsonResult ActualizarPrecios(int costo, int gremio, int contado, int lista, int idProducto, string stMoneda)
         {
             try
             {
@@ -283,10 +285,45 @@ namespace softcomputacion.Controllers
                 srvProducto sProducto = new srvProducto();
                 producto oProducto = new producto();
                 oProducto = sProducto.ObtenerProducto(idProducto);
-                oProducto.precioCosto = costo;
-                oProducto.precioGremio = gremio;
-                oProducto.precioContado = contado;
-                oProducto.precioLista = lista;
+                double ValorUSD = GetValorUsd();
+                switch (stMoneda)
+                {
+                    case "ARS"://precios vienen en ARS
+                        if (oProducto.precioFijo == true)/*precio fijo en ARS*/
+                        {
+                            oProducto.precioCosto = costo;
+                            oProducto.precioGremio = gremio;
+                            oProducto.precioContado = contado;
+                            oProducto.precioLista = lista;
+                        }
+                        else
+                        {
+                            /*guardar precio en usd; pasar ars a usd*/
+                            oProducto.precioCosto = Convert.ToDecimal(costo / ValorUSD);
+                            oProducto.precioGremio = Convert.ToDecimal(gremio / ValorUSD);
+                            oProducto.precioContado = Convert.ToDecimal(contado / ValorUSD);
+                            oProducto.precioLista = Convert.ToDecimal(lista / ValorUSD);
+                        }
+                        break;
+                    case "USD"://precios vienen en USD
+                        if (oProducto.precioFijo == true)/*precio fijo en ARS, pasar usd a ars*/
+                        {
+                            oProducto.precioCosto = Convert.ToDecimal(costo * ValorUSD);
+                            oProducto.precioGremio = Convert.ToDecimal(gremio * ValorUSD);
+                            oProducto.precioContado = Convert.ToDecimal(contado * ValorUSD);
+                            oProducto.precioLista = Convert.ToDecimal(lista * ValorUSD);
+                        }
+                        else
+                        {
+                            /*guardar precio en usd*/
+                            oProducto.precioCosto = costo;
+                            oProducto.precioGremio = gremio;
+                            oProducto.precioContado = contado;
+                            oProducto.precioLista = lista;
+                        }
+                        break;
+                }
+                
                 sProducto.GuardarModificarProducto(oProducto);
                 return Json("True");
             }

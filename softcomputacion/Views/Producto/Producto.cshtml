@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <label for="frmNombre">Precio costo</label>
+                    <label for="frmNombre">Precio costo <precio class="text-success">$USD</precio></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="Precio Costo">
                         <input id="frmPrecioCosto" class="input100" type="number" name="oProducto.precioCosto" placeholder="Costo" value="@Convert.ToInt32(oProducto.precioCosto)">
                     </div>
@@ -128,7 +128,15 @@
                 <div class="col-12">
                     <div class="funkyradio">
                         <div class="funkyradio-dark">
-                            <input type="checkbox" name="checkbox" id="preciodolar" /> <!-- codigo change en document.ready -->
+                            @if (oProducto.precioFijo==true)
+                            {
+                                <input type="checkbox" name="oProducto.precioFijo" id="preciodolar" checked value="true" /> <!-- codigo change en document.ready -->
+                            }
+                            else
+                            {
+                                <input type="checkbox" name="oProducto.precioFijo" id="preciodolar" value="false" /> <!-- codigo change en document.ready -->
+                            }
+
                             <label id="lblPreciodolar" for="preciodolar" style="color:#777;">Precio fijo $ARS</label>
                         </div>
                     </div>
@@ -236,35 +244,37 @@
 
 
 
-
 @section scripts{
 <script src="~/Scripts/JsBarcode.all.min.js"></script>
 <script>
-
+    async function obtenerCodidoBarra(idProducto) {
+        await $("#barcode").JsBarcode(idProducto);
+    }
     $(document).ready(function () {
         var idProducto = '@oProducto.idProducto';
         if (idProducto == 0 || idProducto == null) {
             $(':input[type="number"]').val('');
         }
-        //barcode
-        var idProducto = '@oProducto.idProducto';
+        barcode
         if (idProducto != "" && idProducto != 0) {
-            $("#barcode").JsBarcode(idProducto);
+            obtenerCodidoBarra(idProducto);
         }
 
         $('#preciodolar').change(function () {
             if ($(this).is(":checked")) {
+                $(this).val(true);
                 $('precio').text('$ARS');
                 $('precio').addClass('text-primary').removeClass('text-success');
             }
             else {
+                $(this).val(false);
                 $('precio').text('$USD');
                 $('precio').addClass('text-success').removeClass('text-primary');
             }
             
         });
 
-
+        $('#preciodolar').change();
     });
 
     //********** Categoria **********
@@ -372,10 +382,6 @@
         });
     }
 
-    //function chk_Precio() {
-    //    alert($('#preciodolar').val());
-       
-    //}
 </script>
 }
 
