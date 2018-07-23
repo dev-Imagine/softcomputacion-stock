@@ -777,3 +777,91 @@ input.input100 {
     color: #fff;
     background-color: #222222;
 }
+
+/*imput number*/
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* switch usd/ars*/
+.btn-toggle {
+    margin: 0 4rem;
+    padding: 0;
+    position: relative;
+    border: none;
+    height: 1.5rem;
+    width: 3rem;
+    border-radius: 1.5rem;
+    color: #6b7381;
+    background: #28a745;
+}
+
+    .btn-toggle:focus,
+    .btn-toggle.focus,
+    .btn-toggle:focus.active,
+    .btn-toggle.focus.active {
+        outline: none;
+        box-shadow: initial !important;
+    }
+
+    .btn-toggle:before,
+    .btn-toggle:after {
+        line-height: 1.5rem;
+        width: 4rem;
+        text-align: center;
+        font-weight: 600;
+        /*font-size: 1rem;*/
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: absolute;
+        bottom: 0;
+        transition: opacity .25s;
+    }
+
+    .btn-toggle:before {
+        content: '$USD';
+        left: -4rem;
+        color: #28a745;
+        font-size: 1rem;
+    }
+
+    .btn-toggle:after {
+        content: '$ARS';
+        right: -4rem;
+        opacity: .4;
+        color: #007bff;
+        font-size: 0.75rem;
+    }
+
+    .btn-toggle > .handle {
+        position: absolute;
+        top: 0.1875rem;
+        left: 0.1875rem;
+        width: 1.125rem;
+        height: 1.125rem;
+        border-radius: 1.125rem;
+        background: #fff;
+        transition: left .25s;
+    }
+
+    .btn-toggle.active {
+        transition: background-color 0.25s;
+        background-color: #007bff;
+    }
+
+        .btn-toggle.active > .handle {
+            left: 1.6875rem;
+            transition: left .25s;
+        }
+
+        .btn-toggle.active:before {
+            opacity: .4;
+            font-size: 0.75rem;
+        }
+
+        .btn-toggle.active:after {
+            opacity: 1;
+            font-size: 1rem;
+        }
