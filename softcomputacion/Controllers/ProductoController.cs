@@ -68,7 +68,7 @@ namespace softcomputacion.Controllers
         {
             try
             {
-                //double ValorUSD = GetValorUsd();
+                
                 usuario oUsuario = (usuario)Session["Usuario"];
                 if (oUsuario == null)
                 {
@@ -83,6 +83,7 @@ namespace softcomputacion.Controllers
                 ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
                 ViewBag.lstEstados = sEstado.ObtenerEstados();
                 ViewBag.filtros = ";;;";
+                ViewBag.ValorUSD = GetValorUsd();
                 PagedList<producto> model = new PagedList<producto>(lstProductos.ToList(), nroPagina, tamañoPagina);
                 return View(model);
             }
@@ -111,6 +112,7 @@ namespace softcomputacion.Controllers
                 ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
                 ViewBag.lstEstados = sEstado.ObtenerEstados();
                 ViewBag.filtros = Convert.ToString(nombreProducto + ";" + idCategoria + ";" + idSubCategoria + ";" + idEstado);
+                ViewBag.ValorUSD = GetValorUsd();
                 PagedList<producto> model = new PagedList<producto>(lstProductos.ToList(), 1, 10);
                 return View(model);
             }
@@ -334,7 +336,7 @@ namespace softcomputacion.Controllers
                     var readTask = result.Content.ReadAsStringAsync();
                     readTask.Wait();
                     //  {\"libre\":\"28.41\",\"blue\":\"28.65\"}
-                    string stResult = readTask.Result.Substring(10, 5);
+                    string stResult = readTask.Result.Substring(10, 5).Replace(".",",");
                     return Convert.ToDouble(stResult);
                 }
                 else //web api sent error response 

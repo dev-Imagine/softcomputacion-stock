@@ -128,8 +128,8 @@
                 <div class="col-12">
                     <div class="funkyradio">
                         <div class="funkyradio-dark">
-                            <input type="checkbox" name="checkbox" id="preciodolar" checked /> <!-- codigo change en document.ready -->
-                            <label id="lblPreciodolar" for="preciodolar">Ajustar precio del producto al dólar</label>
+                            <input type="checkbox" name="checkbox" id="preciodolar" /> <!-- codigo change en document.ready -->
+                            <label id="lblPreciodolar" for="preciodolar" style="color:#777;">Precio fijo $ARS</label>
                         </div>
                     </div>
                 </div>
@@ -254,14 +254,12 @@
 
         $('#preciodolar').change(function () {
             if ($(this).is(":checked")) {
-                $('#lblPreciodolar').text("Ajustar precio del producto al dólar");
-                $('precio').text('$USD');
-                $('precio').addClass('text-success').removeClass('text-primary');
-            }
-            else {
-                $('#lblPreciodolar').text("No ajustar precio del producto al dólar");
                 $('precio').text('$ARS');
                 $('precio').addClass('text-primary').removeClass('text-success');
+            }
+            else {
+                $('precio').text('$USD');
+                $('precio').addClass('text-success').removeClass('text-primary');
             }
             
         });
