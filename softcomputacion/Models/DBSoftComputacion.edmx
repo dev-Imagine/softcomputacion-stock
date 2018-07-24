@@ -19,6 +19,16 @@
           <Property Name="idEstado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="historialStock">
+          <Key>
+            <PropertyRef Name="idHistorial" />
+          </Key>
+          <Property Name="idHistorial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fechaHora" Type="datetime" Nullable="false" />
+          <Property Name="idProducto" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="tipo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="producto">
           <Key>
             <PropertyRef Name="idProducto" />
@@ -84,6 +94,18 @@
           <Property Name="contraseña" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="fechaBaja" Type="datetime" />
         </EntityType>
+        <Association Name="FK_hostorialStock_producto">
+          <End Role="producto" Type="Self.producto" Multiplicity="1" />
+          <End Role="historialStock" Type="Self.historialStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="historialStock">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_producto_categoria">
           <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
           <End Role="producto" Type="Self.producto" Multiplicity="*" />
@@ -171,12 +193,17 @@
         <EntityContainer Name="BDSoftComputacionModelStoreContainer">
           <EntitySet Name="categoria" EntityType="Self.categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="estado" EntityType="Self.estado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="historialStock" EntityType="Self.historialStock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proveedor" EntityType="Self.proveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="proveedorXproducto" EntityType="Self.proveedorXproducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="subcategoria" EntityType="Self.subcategoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tipoUsuario" EntityType="Self.tipoUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_hostorialStock_producto" Association="Self.FK_hostorialStock_producto">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="historialStock" EntitySet="historialStock" />
+          </AssociationSet>
           <AssociationSet Name="FK_producto_categoria" Association="Self.FK_producto_categoria">
             <End Role="categoria" EntitySet="categoria" />
             <End Role="producto" EntitySet="producto" />
@@ -304,6 +331,11 @@
             <End Role="producto" EntitySet="producto" />
             <End Role="proveedorXproducto" EntitySet="proveedorXproducto" />
           </AssociationSet>
+          <EntitySet Name="historialStock" EntityType="BDSoftComputacionModel.historialStock" />
+          <AssociationSet Name="FK_hostorialStock_producto" Association="BDSoftComputacionModel.FK_hostorialStock_producto">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="historialStock" EntitySet="historialStock" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="proveedor">
           <Key>
@@ -376,6 +408,7 @@
           <NavigationProperty Name="estado" Relationship="BDSoftComputacionModel.FK_producto_estado" FromRole="producto" ToRole="estado" />
           <NavigationProperty Name="subcategoria" Relationship="BDSoftComputacionModel.FK_producto_subcategoria" FromRole="producto" ToRole="subcategoria" />
           <NavigationProperty Name="proveedorXproducto" Relationship="BDSoftComputacionModel.FK_proveedorXproducto_producto" FromRole="producto" ToRole="proveedorXproducto" />
+          <NavigationProperty Name="historialStock" Relationship="BDSoftComputacionModel.FK_hostorialStock_producto" FromRole="producto" ToRole="historialStock" />
         </EntityType>
         <Association Name="FK_producto_categoria">
           <End Type="BDSoftComputacionModel.categoria" Role="categoria" Multiplicity="1" />
@@ -421,6 +454,29 @@
               <PropertyRef Name="idProducto" />
             </Principal>
             <Dependent Role="proveedorXproducto">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="historialStock">
+          <Key>
+            <PropertyRef Name="idHistorial" />
+          </Key>
+          <Property Name="idHistorial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fechaHora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idProducto" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="tipo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="producto" Relationship="BDSoftComputacionModel.FK_hostorialStock_producto" FromRole="historialStock" ToRole="producto" />
+        </EntityType>
+        <Association Name="FK_hostorialStock_producto">
+          <End Type="BDSoftComputacionModel.producto" Role="producto" Multiplicity="1" />
+          <End Type="BDSoftComputacionModel.historialStock" Role="historialStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="idProducto" />
+            </Principal>
+            <Dependent Role="historialStock">
               <PropertyRef Name="idProducto" />
             </Dependent>
           </ReferentialConstraint>
@@ -515,6 +571,17 @@
                 <ScalarProperty Name="observacion" ColumnName="observacion" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="historialStock">
+            <EntityTypeMapping TypeName="BDSoftComputacionModel.historialStock">
+              <MappingFragment StoreEntitySet="historialStock">
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+                <ScalarProperty Name="fechaHora" ColumnName="fechaHora" />
+                <ScalarProperty Name="idHistorial" ColumnName="idHistorial" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -18,6 +18,7 @@ namespace softcomputacion.Models
         public producto()
         {
             this.proveedorXproducto = new HashSet<proveedorXproducto>();
+            this.historialStock = new HashSet<historialStock>();
         }
     
         public int idProducto { get; set; }
@@ -40,5 +41,7 @@ namespace softcomputacion.Models
         public virtual subcategoria subcategoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<proveedorXproducto> proveedorXproducto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<historialStock> historialStock { get; set; }
     }
 }

@@ -33,5 +33,6 @@ namespace softcomputacion.Models
         public virtual DbSet<proveedor> proveedor { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
         public virtual DbSet<producto> producto { get; set; }
+        public virtual DbSet<historialStock> historialStock { get; set; }
     }
 }

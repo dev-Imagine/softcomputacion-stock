@@ -20,6 +20,8 @@
         <AssociationConnector Association="BDSoftComputacionModel.FK_producto_estado" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_producto_subcategoria" />
         <AssociationConnector Association="BDSoftComputacionModel.FK_proveedorXproducto_producto" />
+        <EntityTypeShape EntityType="BDSoftComputacionModel.historialStock" Width="1.5" PointX="7.5" PointY="9.25" />
+        <AssociationConnector Association="BDSoftComputacionModel.FK_hostorialStock_producto" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
