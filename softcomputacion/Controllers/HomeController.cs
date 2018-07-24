@@ -28,7 +28,7 @@ namespace softcomputacion.Controllers
                 return RedirectToAction("ListarProducto", "Producto");
             }
             Session["Usuario"] = null;
-            return RedirectToAction("Index", new { DatosIncorrectos = true, dni = "ERROR", contraseña = "ERROR" });
+            return RedirectToAction("Index", new { DatosIncorrectos = true, dni = dni, contraseña = contraseña });
         }
         public ActionResult CerrarSession()
         {

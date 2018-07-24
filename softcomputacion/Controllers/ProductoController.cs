@@ -273,7 +273,7 @@ namespace softcomputacion.Controllers
             }
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult ActualizarPrecios(int costo, int gremio, int contado, int lista, int idProducto, string stMoneda)
+        public JsonResult ActualizarPrecios(string costo, string gremio, string contado, string lista, int idProducto, string stMoneda)
         {
             try
             {
@@ -285,51 +285,55 @@ namespace softcomputacion.Controllers
                 srvProducto sProducto = new srvProducto();
                 producto oProducto = new producto();
                 oProducto = sProducto.ObtenerProducto(idProducto);
-                double ValorUSD = GetValorUsd();
+                decimal ValorUSD = Convert.ToDecimal(GetValorUsd());
+                decimal dCosto = Convert.ToDecimal(costo);
+                decimal dGremio = Convert.ToDecimal(gremio);
+                decimal dContado = Convert.ToDecimal(contado);
+                decimal dLista = Convert.ToDecimal(lista);
                 switch (stMoneda)
                 {
                     case "ARS"://precios vienen en ARS
                         if (oProducto.precioFijo == true)/*precio fijo en ARS*/
                         {
-                            oProducto.precioCosto = costo;
-                            oProducto.precioGremio = gremio;
-                            oProducto.precioContado = contado;
-                            oProducto.precioLista = lista;
+                            oProducto.precioCosto = dCosto;
+                            oProducto.precioGremio = dGremio;
+                            oProducto.precioContado = dContado;
+                            oProducto.precioLista = dLista;
                         }
                         else
                         {
                             /*guardar precio en usd; pasar ars a usd*/
-                            oProducto.precioCosto = Convert.ToDecimal(costo / ValorUSD);
-                            oProducto.precioGremio = Convert.ToDecimal(gremio / ValorUSD);
-                            oProducto.precioContado = Convert.ToDecimal(contado / ValorUSD);
-                            oProducto.precioLista = Convert.ToDecimal(lista / ValorUSD);
+                            oProducto.precioCosto = dCosto / ValorUSD;
+                            oProducto.precioGremio = dGremio / ValorUSD;
+                            oProducto.precioContado = dContado / ValorUSD;
+                            oProducto.precioLista = dLista / ValorUSD;
                         }
                         break;
                     case "USD"://precios vienen en USD
                         if (oProducto.precioFijo == true)/*precio fijo en ARS, pasar usd a ars*/
                         {
-                            oProducto.precioCosto = Convert.ToDecimal(costo * ValorUSD);
-                            oProducto.precioGremio = Convert.ToDecimal(gremio * ValorUSD);
-                            oProducto.precioContado = Convert.ToDecimal(contado * ValorUSD);
-                            oProducto.precioLista = Convert.ToDecimal(lista * ValorUSD);
+                            oProducto.precioCosto = Convert.ToDecimal(dCosto * ValorUSD);
+                            oProducto.precioGremio = Convert.ToDecimal(dGremio * ValorUSD);
+                            oProducto.precioContado = Convert.ToDecimal(dContado * ValorUSD);
+                            oProducto.precioLista = Convert.ToDecimal(dLista * ValorUSD);
                         }
                         else
                         {
                             /*guardar precio en usd*/
-                            oProducto.precioCosto = costo;
-                            oProducto.precioGremio = gremio;
-                            oProducto.precioContado = contado;
-                            oProducto.precioLista = lista;
+                            oProducto.precioCosto = dCosto;
+                            oProducto.precioGremio = dGremio;
+                            oProducto.precioContado = dContado;
+                            oProducto.precioLista = dLista;
                         }
                         break;
                 }
-                
+
                 sProducto.GuardarModificarProducto(oProducto);
                 return Json("True");
             }
             catch (Exception)
             {
-                return Json("False");
+                return Json("");
             }
 
         }
