@@ -204,7 +204,7 @@
                                                 {
                                                     <strong> Costo: <precio class="text-success fs-12">$USD</precio></strong>
                                                     <input class="Valor-USDARS" id="inpCosto-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:58px;" type="number" name="precioCosto" Valor-USD="@PrecioCostoUSD.ToString().Replace(",",".")" Valor-ARS="@PrecioCostoARS.ToString().Replace(",",".")" value="@Convert.ToString(Math.Round(PrecioCostoUSD, 2)).Replace(",",".")">
-                                                    <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                                    <span onclick="ActualizarPrecios(@oProducto.idProducto,'Costo')" class="far fa-save" style="cursor:pointer"></span>
                                                 }
 
                                             </p>
@@ -221,7 +221,7 @@
                                                 {
                                                     <strong>Gremio <precio class="text-success fs-12">$USD</precio></strong>
                                                     <input class="Valor-USDARS" id="inpGremio-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:58px;" type="number" name="precioGremio" Valor-USD="@PrecioGremioUSD.ToString().Replace(",",".")" Valor-ARS="@PrecioGremioARS.ToString().Replace(",",".")" value="@Convert.ToString(Math.Round(PrecioGremioUSD, 2)).Replace(",",".")">
-                                                    <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                                    <span onclick="ActualizarPrecios(@oProducto.idProducto,'Gremio')" class="far fa-save" style="cursor:pointer"></span>
                                                 }
                                             </p>
                                         </div>
@@ -236,7 +236,7 @@
                                                 {
                                                     <strong>Contado <precio class="text-success fs-12">$USD</precio></strong>
                                                     <input class="Valor-USDARS" id="inpContado-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:58px;" type="number" name="precioContado" Valor-USD="@PrecioContadoUSD.ToString().Replace(",",".")" Valor-ARS="@PrecioContadoARS.ToString().Replace(",",".")" value="@Convert.ToString(Math.Round(PrecioContadoUSD, 2)).Replace(",",".")">
-                                                    <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                                    <span onclick="ActualizarPrecios(@oProducto.idProducto,'Contado')" class="far fa-save" style="cursor:pointer"></span>
                                                 }
                                             </p>
                                         </div>
@@ -251,7 +251,7 @@
                                                 {
                                                     <strong>Lista <precio class="text-success fs-12">$USD</precio></strong>
                                                     <input class="Valor-USDARS" id="inpLista-@oProducto.idProducto" style="background-color:#f2f2f2; text-align:right; width:58px;" type="number" name="precioContado" Valor-USD="@PrecioListaUSD.ToString().Replace(",",".")" Valor-ARS="@PrecioListaARS.ToString().Replace(",",".")" value="@Convert.ToString(Math.Round(PrecioListaUSD, 2)).Replace(",",".")">
-                                                    <span onclick="ActualizarPrecios(@oProducto.idProducto)" class="far fa-save" style="cursor:pointer"></span>
+                                                    <span onclick="ActualizarPrecios(@oProducto.idProducto,'Lista')" class="far fa-save" style="cursor:pointer"></span>
                                                 }
                                             </p>
                                         </div>
@@ -324,22 +324,18 @@
 
      window.onload = CargarComboSubcategoria;
 
-
-     function ActualizarPrecios(idProducto) {
-         var costo = $('#inpCosto-' + idProducto).val();
-         var gremio = $('#inpGremio-' + idProducto).val();
-         var contado = $('#inpContado-' + idProducto).val();
-         var lista = $('#inpLista-' + idProducto).val();
+    //tipoPrecio: Costo,Gremio,Contado,Lista
+    function ActualizarPrecios(idProducto, tipoPrecio) {
+         var precio = $('#inp' + tipoPrecio + '-' + idProducto).val();
          var url = "@Url.Action("ActualizarPrecios", "Producto")";
          var token = $('input[name="__RequestVerificationToken"]').val();
-         var data = { costo: costo.replace(".", ","), gremio: gremio.replace(".", ","), contado: contado.replace(".", ","), lista: lista.replace(".", ","), idProducto: idProducto, stMoneda: stMoneda, __RequestVerificationToken: token };
+         var data = { precio: precio.replace(".", ","), tipoPrecio: tipoPrecio, idProducto: idProducto, stMoneda: stMoneda, __RequestVerificationToken: token };
          $.post(url, data).done(function (data) {
              if (data.length != 0) {
-                $('#inpCosto-' + idProducto).val();
-                $('#inpGremio-' + idProducto).val();
-                $('#inpContado-' + idProducto).val();
-                $('#inpLista-' + idProducto).val()
-                swal("Exito!", "Los precios han sido actualizados.", "success");
+                 data = data.split(';');
+                 $('#inp' + tipoPrecio + '-' + idProducto).attr("Valor-USD", data[0].replace(",",".") + "");
+                 $('#inp' + tipoPrecio + '-' + idProducto).attr("Valor-ARS", data[1].replace(",", ".") + "");
+                 swal("Exito!", "Los precios han sido actualizados.", "success");
             }
             else {
                 swal("Ocurrió un error", "Se produjo un error al intentar actualizar los precios..", "error");

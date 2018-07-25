@@ -1,8 +1,6 @@
 ﻿
 @{
     bool DatosIncorrectos = ViewBag.DatosIncorrectos;
-    string dni = ViewBag.dni;
-    string contraseña = ViewBag.contraseña;
 }
 <div class="limiter">
     <div class="container-login100">
@@ -17,11 +15,11 @@
                 </span>
 
                 <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Ingrese su DNI">
-                    <input id="dni" class="input100" type="text" name="dni" placeholder="Documento" value="@dni">
+                    <input id="dni" class="input100" type="text" name="dni" placeholder="Documento">
                     <span class="focus-input100"></span>
                 </div>
                 <div class="wrap-input100 rs2-wrap-input100 validate-input" data-validate="Ingrese su contraseña">
-                    <input class="input100" type="password" name="contraseña" placeholder="Contraseña" value="@contraseña">
+                    <input class="input100" type="password" name="contraseña" placeholder="Contraseña">
                     <span class="focus-input100"></span>
                 </div>
                 @if (DatosIncorrectos)

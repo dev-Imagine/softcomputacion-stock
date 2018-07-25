@@ -10,11 +10,9 @@ namespace softcomputacion.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(bool DatosIncorrectos = false, string dni ="", string contraseña ="")
+        public ActionResult Index(bool DatosIncorrectos = false)
         {
             ViewBag.DatosIncorrectos = DatosIncorrectos;
-            ViewBag.dni = dni;
-            ViewBag.contraseña = contraseña;
             return View();
         }
         [HttpPost, ValidateAntiForgeryToken]
@@ -28,7 +26,7 @@ namespace softcomputacion.Controllers
                 return RedirectToAction("ListarProducto", "Producto");
             }
             Session["Usuario"] = null;
-            return RedirectToAction("Index", new { DatosIncorrectos = true, dni = dni, contraseña = contraseña });
+            return RedirectToAction("Index", new { DatosIncorrectos = true});
         }
         public ActionResult CerrarSession()
         {
