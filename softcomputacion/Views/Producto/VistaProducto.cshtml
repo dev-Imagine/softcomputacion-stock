@@ -142,7 +142,6 @@
                     $('#spnEstadoStock').text(data[1]);
                     $('#spnEstadoStock').css("color", data[2]);
                     swal("Exito! \n \n", "Se ha actualizado el stock del producto", "success");
-                    GuardarHistorialStock();
                 }
                 else
                 {
@@ -166,15 +165,7 @@
             }
         });
     }
-    function GuardarHistorialStock() {
-        var cantidad = parseInt($('#inpCantidad').val());
-        var url = "@Url.Action("GuardarHistorialStock", "Reporte")";
-        var data = { idProducto: '@Model.idProducto', cantidad: cantidad, tipo: "salida" };
-        $.post(url, data).done(function (data) {
-            if (data == "True") {
-            }
-        });
-    }
+  
 </script>
 }
 

@@ -229,7 +229,7 @@
                         {
                             <div id="btnModificar" class="btn-group w-full" role="group">
                                 <button type="reset" class="btn btn-dark fs-22" style="width:50%" onclick="location.href='@Url.Action("ListarProducto","Producto")'">Cancelar</button>
-                                <button type="submit" onclick="GuardarHistorialStock()" class="btn btn-success fs-22" style="width:50%">Modificar</button>
+                                <button type="submit" class="btn btn-success fs-22" style="width:50%">Modificar</button>
                             </div>
                         }
                     </div>
@@ -381,32 +381,7 @@
             }
         });
     }
-
-    //Guardar Historial Stock
-
-    function GuardarHistorialStock() {
-        var stockActual = parseInt('@oProducto.stockActual');
-        var cantidad = parseInt($('#frmStockActual').val());
-        var tipo = "";
-        if (cantidad != stockActual) {
-            if (cantidad < stockActual && cantidad>=0) {
-                tipo = "salida";
-                cantidad = stockActual - cantidad;
-            } else
-            {
-                tipo = "entrada";
-                cantidad = cantidad - stockActual;
-            }
-            var url = "@Url.Action("GuardarHistorialStock", "Reporte")";
-            var data = { idProducto: '@oProducto.idProducto', cantidad: cantidad, tipo: tipo };
-            $.post(url, data).done(function (data) {
-                if (data == "True") {
-                    alert(1);
-                }
-            });
-        }
-
-    }
+    
 </script>
 }
 
