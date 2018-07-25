@@ -5,6 +5,7 @@
         @for (int i = 0; i < ViewBag.cantidad; i++)
         {
             <div class="col-12 col-md-2 col-lg-1" >
+                <p class="text-center">@ViewBag.nombre</p>
                 <p class="text-center"><canvas class="img-fluid" id="barcode"></canvas></p>
             </div>
         }

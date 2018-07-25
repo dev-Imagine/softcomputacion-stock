@@ -151,6 +151,9 @@ namespace softcomputacion.Controllers
         [HttpPost]
         public ViewResult ImprimirCodigoBarra(int idProducto, int cantidad)
         {
+            srvProducto sProducto = new srvProducto();
+            producto oProducto = sProducto.ObtenerProducto(idProducto);
+            ViewBag.nombre = oProducto.nombre;
             ViewBag.idProducto = idProducto;
             ViewBag.cantidad = cantidad;
             return View();
