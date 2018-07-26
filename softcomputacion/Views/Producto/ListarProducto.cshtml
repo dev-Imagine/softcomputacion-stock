@@ -175,34 +175,34 @@
                                 <div class="col-12 col-md-11 " style="text-align:left;">
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-5">
-                                            <p class="login100-form-title p-b-10 fs-17 text-center">
-                                                <strong>Producto:</strong>
+                                            <p class="login100-form-title fs-22 p-l-5 text-left">
+                                                @*<strong>Producto:</strong>*@
                                                 <span id="spanNombreProducto-@oProducto.idProducto">
-                                                    <i>@oProducto.categoria.nombre @oProducto.subcategoria.nombre - @oProducto.nombre</i>
+                                                    <strong>@oProducto.categoria.nombre @oProducto.subcategoria.nombre - @oProducto.nombre</strong>
                                                 </span>
                                             </p>
                                         </div>
 
                                         <div class="col-12 col-sm-6 col-md-3">
-                                            <p class="login100-form-title p-b-10 fs-17 text-center">
-                                                <strong>Stock Actual:</strong>
+                                            <p class="login100-form-title fs-15 text-center">
+                                                <span>Stock Actual:</span>
                                                 <span id="spanActual-@oProducto.idProducto">
                                                     <i>@oProducto.stockActual</i>
                                                 </span>
                                             </p>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-4">
-                                            <p class="login100-form-title p-b-10 fs-17 text-center">
+                                            <p class="login100-form-title fs-17 text-center">
                                                 <span class="badge fs-20" style="color: @stColorStock; width: 180px;">@oProducto.estado.nombre</span>
                                             </p>
                                         </div>
 
-                                        <div class="col-12 col-sm-6 col-md-3">
-                                            <p class="login100-form-title p-b-10 fs-17 text-center">
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                                            <p class="login100-form-title p-b-10 fs-15 text-center">
 
                                                 @if (oUsuario.idTipoUsuario == 2)
                                                 {
-                                                    <strong> Costo: <precio class="text-success fs-12">$USD</precio></strong>
+                                                    <span> Costo: <precio class="text-success fs-12">$USD</precio></span>
                                                     <input class="Valor-USDARS" id="inpCosto-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:58px;" type="number" name="precioCosto" Valor-USD="@PrecioCostoUSD.ToString().Replace(",",".")" Valor-ARS="@PrecioCostoARS.ToString().Replace(",",".")" value="@Convert.ToString(Math.Round(PrecioCostoUSD, 2)).Replace(",",".")">
                                                     <span onclick="ActualizarPrecios(@oProducto.idProducto,'Costo')" class="far fa-save" style="cursor:pointer"></span>
                                                 }
@@ -210,46 +210,46 @@
                                             </p>
                                         </div>
 
-                                        <div class="col-12 col-sm-6 col-md-3">
-                                            <p class="login100-form-title p-b-10 fs-17 text-center">
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                                            <p class="login100-form-title p-b-10 fs-15 text-center">
 
                                                 @if (oUsuario.idTipoUsuario == 1)
                                                 {
-                                                    <strong>Gremio: <precio class="text-primary fs-12">$ARS</precio> @PrecioGremioARS</strong>
+                                                    <span>Gremio: <precio class="text-primary fs-12">$ARS</precio> @PrecioGremioARS</span>
                                                 }
                                                 else
                                                 {
-                                                    <strong>Gremio <precio class="text-success fs-12">$USD</precio></strong>
+                                                    <span>Gremio <precio class="text-success fs-12">$USD</precio></span>
                                                     <input class="Valor-USDARS" id="inpGremio-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:58px;" type="number" name="precioGremio" Valor-USD="@PrecioGremioUSD.ToString().Replace(",",".")" Valor-ARS="@PrecioGremioARS.ToString().Replace(",",".")" value="@Convert.ToString(Math.Round(PrecioGremioUSD, 2)).Replace(",",".")">
                                                     <span onclick="ActualizarPrecios(@oProducto.idProducto,'Gremio')" class="far fa-save" style="cursor:pointer"></span>
                                                 }
                                             </p>
                                         </div>
-                                        <div class="col-12 col-sm-6 col-md-3">
-                                            <p class="login100-form-title p-b-10 fs-17 text-center">
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                                            <p class="login100-form-title p-b-10 fs-15 text-center">
 
                                                 @if (oUsuario.idTipoUsuario == 1)
                                                 {
-                                                <strong>Contado: <precio class="text-primary fs-12">$ARS</precio> @PrecioContadoARS</strong>
+                                                <span>Contado: <precio class="text-primary fs-12">$ARS</precio> @PrecioContadoARS</span>
                                                 }
                                                 else
                                                 {
-                                                    <strong>Contado <precio class="text-success fs-12">$USD</precio></strong>
+                                                    <span>Contado <precio class="text-success fs-12">$USD</precio></span>
                                                     <input class="Valor-USDARS" id="inpContado-@oProducto.idProducto" style="background-color:#f2f2f2;text-align:right; width:58px;" type="number" name="precioContado" Valor-USD="@PrecioContadoUSD.ToString().Replace(",",".")" Valor-ARS="@PrecioContadoARS.ToString().Replace(",",".")" value="@Convert.ToString(Math.Round(PrecioContadoUSD, 2)).Replace(",",".")">
                                                     <span onclick="ActualizarPrecios(@oProducto.idProducto,'Contado')" class="far fa-save" style="cursor:pointer"></span>
                                                 }
                                             </p>
                                         </div>
-                                        <div class="col-12 col-sm-6 col-md-3">
-                                            <p class="login100-form-title p-b-10 fs-17 text-center">
+                                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                                            <p class="login100-form-title p-b-10 fs-15 text-center">
 
                                                 @if (oUsuario.idTipoUsuario == 1)
                                                 {
-                                                <strong>Lista: <precio class="text-primary fs-12">$ARS</precio> @PrecioListaARS</strong>
+                                                <span>Lista: <precio class="text-primary fs-12">$ARS</precio> @PrecioListaARS</span>
                                                 }
                                                 else
                                                 {
-                                                    <strong>Lista <precio class="text-success fs-12">$USD</precio></strong>
+                                                    <span>Lista <precio class="text-success fs-12">$USD</precio></span>
                                                     <input class="Valor-USDARS" id="inpLista-@oProducto.idProducto" style="background-color:#f2f2f2; text-align:right; width:58px;" type="number" name="precioContado" Valor-USD="@PrecioListaUSD.ToString().Replace(",",".")" Valor-ARS="@PrecioListaARS.ToString().Replace(",",".")" value="@Convert.ToString(Math.Round(PrecioListaUSD, 2)).Replace(",",".")">
                                                     <span onclick="ActualizarPrecios(@oProducto.idProducto,'Lista')" class="far fa-save" style="cursor:pointer"></span>
                                                 }
@@ -354,7 +354,7 @@
             $(".Valor-USDARS").each(function () {//pasa de ARS a USD
                 var precioUSD = $(this).attr('Valor-USD');
                 precioUSD = precioUSD * 1;
-                $(this).val(precioUSD.toFixed(2))
+                $(this).val(parseFloat(precioUSD.toFixed(2).toString().replace(",00", "")));
             });
         }
         else {
@@ -364,7 +364,7 @@
             $(".Valor-USDARS").each(function () {//pasa de USD a ARS
                 var precioARS = $(this).attr('Valor-ARS');
                 precioARS = precioARS * 1;
-                $(this).val(precioARS.toFixed(2))
+                $(this).val(parseFloat(precioARS.toFixed(2).toString().replace(",00", "")));
             });
         }
     }

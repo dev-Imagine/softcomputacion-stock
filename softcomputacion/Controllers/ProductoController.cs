@@ -78,8 +78,11 @@ namespace softcomputacion.Controllers
                 srvEstado sEstado = new srvEstado();
                 srvProducto sProducto = new srvProducto();
                 srvCategoria sCategoria = new srvCategoria();
-                List<producto> lstProductos = new List<producto>();
-                lstProductos = sProducto.ObtenerProductos();
+                List<producto> lstProductos = (List<producto>)Session["lstProducto"];
+                if (lstProductos == null || lstProductos.Count ==0)
+                {
+                    lstProductos = new List<producto>();
+                }
                 ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
                 ViewBag.lstEstados = sEstado.ObtenerEstados();
                 ViewBag.filtros = ";;;";
@@ -107,8 +110,8 @@ namespace softcomputacion.Controllers
                 srvEstado sEstado = new srvEstado();
                 srvProducto sProducto = new srvProducto();
                 srvCategoria sCategoria = new srvCategoria();
-                List<producto> lstProductos = new List<producto>();
-                lstProductos = sProducto.ObtenerProductos(nombreProducto, idCategoria, idSubCategoria, idEstado);
+                List<producto> lstProductos = sProducto.ObtenerProductos(nombreProducto, idCategoria, idSubCategoria, idEstado);
+                Session["lstProducto"] = lstProductos;
                 ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
                 ViewBag.lstEstados = sEstado.ObtenerEstados();
                 ViewBag.filtros = Convert.ToString(nombreProducto + ";" + idCategoria + ";" + idSubCategoria + ";" + idEstado);
