@@ -327,22 +327,28 @@
      window.onload = CargarComboSubcategoria;
 
     //tipoPrecio: Costo,Gremio,Contado,Lista
-    function ActualizarPrecios(idProducto, tipoPrecio) {
-         var precio = $('#inp' + tipoPrecio + '-' + idProducto).val();
-         var url = "@Url.Action("ActualizarPrecios", "Producto")";
-         var token = $('input[name="__RequestVerificationToken"]').val();
+     function ActualizarPrecios(idProducto, tipoPrecio) {
+         var precio = $('#inp' + tipoPrecio + '-' + idProducto).val();   
+         var url = "@Url.Action("ActualizarPrecios", "Producto")";       
+         var token = $('input[name="__RequestVerificationToken"]').val();        
          var data = { precio: precio.replace(".", ","), tipoPrecio: tipoPrecio, idProducto: idProducto, stMoneda: stMoneda, __RequestVerificationToken: token };
-         $.post(url, data).done(function (data) {
-             if (data.length != 0) {
-                 data = data.split(';');
-                 $('#inp' + tipoPrecio + '-' + idProducto).attr("Valor-USD", data[0].replace(",",".") + "");
-                 $('#inp' + tipoPrecio + '-' + idProducto).attr("Valor-ARS", data[1].replace(",", ".") + "");
-                 swal("Exito!", "Los precios han sido actualizados.", "success");
-            }
-            else {
-                swal("Ocurrió un error", "Se produjo un error al intentar actualizar los precios..", "error");
-            }
-        });
+         if (parseFloat(precio) >= 0) {             
+             $.post(url, data).done(function (data) {
+                 if (data.length != 0) {
+                     data = data.split(';');
+                     $('#inp' + tipoPrecio + '-' + idProducto).attr("Valor-USD", data[0].replace(",", ".") + "");
+                     $('#inp' + tipoPrecio + '-' + idProducto).attr("Valor-ARS", data[1].replace(",", ".") + "");
+                     swal("Exito!", "Los precios han sido actualizados.", "success");
+                 }
+                 else {
+                     swal("Ocurrió un error", "Se produjo un error al intentar actualizar los precios..", "error");
+                 }
+             });
+         } else
+         {
+             swal("Ocurrió un error", "No se puede guardar valores negativos.", "error");
+         }
+         
      }
 
     function ConvertirPrecios() {
