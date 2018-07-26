@@ -41,7 +41,7 @@ namespace softcomputacion.Controllers
             try
             {
                 usuario oSession = (usuario)Session["Usuario"];
-                if (oSession == null || oUsuario.idTipoUsuario != 2)
+                if (oSession == null || oSession.idTipoUsuario != 2)
                 {
                     Session.Clear();
                     return RedirectToAction("Index", "Home");
