@@ -36,7 +36,7 @@
 
 
                 <div class="col-12 col-md-6">
-                    <label>Categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" onclick="_PopUpGuardarModificarCategoria(0)"><i class="fas fa-plus"></i></button></label>
+                    <label>Categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" onclick="_PopUpGuardarModificarCategoria(0,1)"><i class="fas fa-plus"></i></button></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
                         <select id="select-Categorias" onchange="CargarComboSubcategoria()" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idCategoria">
                             <option selected value="0">Categoría</option>
@@ -58,7 +58,7 @@
 
                 </div>
                 <div class="col-12 col-md-6">
-                    <label>Sub categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" onclick="_PopUpGuardarModificarCategoria(1)"><i class="fas fa-plus"></i></button></label>
+                    <label>Sub categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" onclick="_PopUpGuardarModificarCategoria(1,2)"><i class="fas fa-plus"></i></button></label>
                     @{
                         if (oProducto.idSubCategoria != 0)
                         {
@@ -296,7 +296,7 @@
         });
     }
 
-    function _PopUpGuardarModificarCategoria(idCategoria) {
+    function _PopUpGuardarModificarCategoria(idCategoria, tipo) {
         if (idCategoria == 1) {
             idCategoria = document.getElementById("select-Categorias").value;
         }
@@ -305,7 +305,13 @@
         $.post(url, data).done(function (data) {
             if (data.length > 0) {
                 $('#div-popup-categoria').html(data);
-                $('#popupCategoria').modal('show');
+                $('#popupCategoria').modal('show');    
+                if (tipo == 1) {
+                    $('#spnTituloPopUp').text('NUEVA CATEGORIA')
+                } else {
+                    $('#spnTituloPopUp').text('NUEVA SUBCATEGORIA')
+                }
+                
             }
         });
     }
