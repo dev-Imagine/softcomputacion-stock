@@ -27,21 +27,16 @@
                 @Html.AntiForgeryToken()
                 <input name="oProducto.idProducto" value="@oProducto.idProducto" class="dis-none">
 
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-12">
                     <label for="frmNombre">Nombre producto</label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="Nombre">
                         <input id="frmNombre" class="input100" type="text" name="oProducto.nombre" placeholder="Nombre" value="@oProducto.nombre">
                     </div>
                 </div>
-                <div class="col-12 col-md-6">
-                    <label for="frmNombre">Precio costo <precio class="text-success">$USD</precio></label>
-                    <div class="wrap-input100 validate-input m-b-20" data-validate="Precio Costo">
-                        <input id="frmPrecioCosto" class="input100" type="number" min="0" step="0.01" name="precioCosto" placeholder="Costo" value="@Convert.ToString(Math.Round(oProducto.precioCosto, 2)).Replace(",",".").Replace(",00","")">
-                    </div>
-                </div>
+
 
                 <div class="col-12 col-md-6">
-                    <label >Categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" onclick="_PopUpGuardarModificarCategoria(0)"><i class="fas fa-plus"></i></button></label>
+                    <label>Categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" onclick="_PopUpGuardarModificarCategoria(0)"><i class="fas fa-plus"></i></button></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="">
                         <select id="select-Categorias" onchange="CargarComboSubcategoria()" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idCategoria">
                             <option selected value="0">Categoría</option>
@@ -63,25 +58,25 @@
 
                 </div>
                 <div class="col-12 col-md-6">
-                    <label >Sub categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" onclick="_PopUpGuardarModificarCategoria(1)"><i class="fas fa-plus"></i></button></label>
-                        @{
-                            if (oProducto.idSubCategoria != 0)
-                            {
-                                <div class="wrap-input100 validate-input m-b-20" data-validate="">
-                                    <select id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
-                                        <option value="@oProducto.idSubCategoria" selected>@oProducto.subcategoria.nombre</option>
-                                    </select>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="wrap-input100 validate-input m-b-20" data-validate="">
-                                    <select disabled id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
-                                        <option value="0">Subcategoria</option>
-                                    </select>
-                                </div>
-                            }
+                    <label>Sub categoría &nbsp;&nbsp;<button type="button" class="btn btn-outline-dark btn-agregar" onclick="_PopUpGuardarModificarCategoria(1)"><i class="fas fa-plus"></i></button></label>
+                    @{
+                        if (oProducto.idSubCategoria != 0)
+                        {
+                            <div class="wrap-input100 validate-input m-b-20" data-validate="">
+                                <select id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
+                                    <option value="@oProducto.idSubCategoria" selected>@oProducto.subcategoria.nombre</option>
+                                </select>
+                            </div>
                         }
+                        else
+                        {
+                            <div class="wrap-input100 validate-input m-b-20" data-validate="">
+                                <select disabled id="select-Subcategoria" class="form-control input100" style="border:0px; height: 55px;" name="oProducto.idSubCategoria">
+                                    <option value="0">Subcategoria</option>
+                                </select>
+                            </div>
+                        }
+                    }
                 </div>
 
 
@@ -91,8 +86,8 @@
                         <textarea class="input100 p-t-15" style="height:100px" type="text" name="oProducto.observacion" placeholder="Observacion">@oProducto.observacion</textarea>
                     </div>
                 </div>
-                
-                
+
+
 
                 <!--stock-->
 
@@ -115,12 +110,12 @@
                 <div class="col-12 col-md-4">
                     <label for="frmStockIdeal">Ideal</label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="Stock Ideal">
-                        <input id="frmStockIdeal" class="input100"  min="0" type="number" name="oProducto.stockIdeal" placeholder="Ideal" value="@oProducto.stockIdeal">
+                        <input id="frmStockIdeal" class="input100" min="0" type="number" name="oProducto.stockIdeal" placeholder="Ideal" value="@oProducto.stockIdeal">
                     </div>
                 </div>
 
                 <!--precios-->
-                
+
                 <div class="col-12 text-center p-b-20">
                     <hr />
                     <span class="fs-24 p-b-5 p-t-5 p-l-20 p-r-20 m-b-5" style="color:#000">PRECIOS</span>
@@ -128,7 +123,7 @@
                 <div class="col-12">
                     <div class="funkyradio">
                         <div class="funkyradio-dark">
-                            @if (oProducto.precioFijo==true)
+                            @if (oProducto.precioFijo == true)
                             {
                                 <input type="checkbox" name="oProducto.precioFijo" id="preciodolar" checked value="true" /> <!-- codigo change en document.ready -->
                             }
@@ -141,19 +136,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-3">
+                    <label for="frmNombre">Costo <precio class="text-success">$USD</precio></label>
+                    <div class="wrap-input100 validate-input m-b-20" data-validate="Precio Costo">
+                        <input id="frmPrecioCosto" class="input100" type="number" min="0" step="0.01" name="precioCosto" placeholder="Costo" value="@Convert.ToString(Math.Round(oProducto.precioCosto, 2)).Replace(",",".").Replace(",00","")">
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
                     <label for="frmPrecioContado">Contado <precio class="text-success">$USD</precio></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="Precio Contado">
                         <input id="frmPrecioContado" class="input100" type="number" step="0.01" name="precioContado" min="0" placeholder="Precio contado" value="@Convert.ToString(Math.Round(oProducto.precioContado, 2)).Replace(",",".")">
                     </div>
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-3">
                     <label for="frmPrecioLista">Lista <precio class="text-success">$USD</precio></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="Precio Lista">
                         <input id="frmPrecioLista" class="input100" type="number" step="0.01" name="precioLista" min="0" placeholder="Precio lista" value="@Convert.ToString(Math.Round(oProducto.precioLista, 2)).Replace(",",".")">
                     </div>
                 </div>
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-3">
                     <label for="frmPrecioGremio">Gremio <precio class="text-success">$USD</precio></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="Precio Gremio">
                         <input id="frmPrecioGremio" class="input100" type="number" step="0.01" name="precioGremio" min="0" placeholder="Precio gremio" value="@Convert.ToString(Math.Round(oProducto.precioGremio, 2)).Replace(",",".")">
@@ -183,7 +184,7 @@
 
                 <div class="col-12">
                     <div class="row fs-14" id="proveedores-agregados">
-                        @{ 
+                        @{
                             if (oProducto.proveedorXproducto.Count() > 0)
                             {
                                 foreach (softcomputacion.Models.proveedorXproducto oPxp in oProducto.proveedorXproducto.ToList())
@@ -221,9 +222,9 @@
                 <!--btns-->
                 <div class="col-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1">
                     <div class="container-login100-form-btn m-t-20 m-b-30">
-                        @if (oProducto.idProducto==0)
-	                    {
-		                    <button id="btnGuardar" type="submit" class="btn btn-success fs-22" style="width:100%">Guardar</button>       
+                        @if (oProducto.idProducto == 0)
+                        {
+                            <button id="btnGuardar" type="submit" class="btn btn-success fs-22" style="width:100%">Guardar</button>
                         }
                         else
                         {
