@@ -209,7 +209,7 @@ namespace softcomputacion.Controllers
             
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult GuardarModificarProducto(producto oProducto, string idProveedores)
+        public ActionResult GuardarModificarProducto(producto oProducto, string idProveedores, string precioContado,string precioCosto, string precioGremio, string precioLista)
         {
             try
             {
@@ -222,7 +222,10 @@ namespace softcomputacion.Controllers
                 srvProducto sProducto = new srvProducto();
                 string [] idProveedor = idProveedores.Split(';');
                 proveedorXproducto oProvedorXproducto = new proveedorXproducto();
-                
+                oProducto.precioContado = Convert.ToDecimal(precioContado.Replace(".",","));
+                oProducto.precioCosto = Convert.ToDecimal(precioCosto.Replace(".", ","));
+                oProducto.precioGremio = Convert.ToDecimal(precioGremio.Replace(".", ","));
+                oProducto.precioLista = Convert.ToDecimal(precioLista.Replace(".", ","));
                 foreach (string idProv in idProveedor)
                 {
                     if (idProv != "")
