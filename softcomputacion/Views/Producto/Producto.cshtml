@@ -36,7 +36,7 @@
                 <div class="col-12 col-md-6">
                     <label for="frmNombre">Precio costo <precio class="text-success">$USD</precio></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="Precio Costo">
-                        <input id="frmPrecioCosto" class="input100" type="number" name="oProducto.precioCosto" placeholder="Costo" value="@Convert.ToInt32(oProducto.precioCosto)">
+                        <input id="frmPrecioCosto" class="input100" type="number" name="oProducto.precioCosto" placeholder="Costo" value="@Convert.ToString(Math.Round(oProducto.precioCosto, 2)).Replace(",",".").Replace(",00","")">
                     </div>
                 </div>
 
@@ -144,19 +144,19 @@
                 <div class="col-12 col-md-4">
                     <label for="frmPrecioContado">Contado <precio class="text-success">$USD</precio></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="Precio Contado">
-                        <input id="frmPrecioContado" class="input100" type="number" name="oProducto.precioContado" placeholder="Precio contado" value="@Convert.ToInt32(oProducto.precioContado)">
+                        <input id="frmPrecioContado" class="input100" type="number" name="oProducto.precioContado" placeholder="Precio contado" value="@Convert.ToString(Math.Round(oProducto.precioContado, 2)).Replace(",",".")">
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
                     <label for="frmPrecioLista">Lista <precio class="text-success">$USD</precio></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="Precio Lista">
-                        <input id="frmPrecioLista" class="input100" type="number" name="oProducto.precioLista" placeholder="Precio lista" value="@Convert.ToInt32(oProducto.precioLista)">
+                        <input id="frmPrecioLista" class="input100" type="number" name="oProducto.precioLista" placeholder="Precio lista" value="@Convert.ToString(Math.Round(oProducto.precioLista, 2)).Replace(",",".")">
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
                     <label for="frmPrecioGremio">Gremio <precio class="text-success">$USD</precio></label>
                     <div class="wrap-input100 validate-input m-b-20" data-validate="Precio Gremio">
-                        <input id="frmPrecioGremio" class="input100" type="number" name="oProducto.precioGremio" placeholder="Precio gremio" value="@Convert.ToInt32(oProducto.precioGremio)">
+                        <input id="frmPrecioGremio" class="input100" type="number" name="oProducto.precioGremio" placeholder="Precio gremio" value="@Convert.ToString(Math.Round(oProducto.precioGremio, 2)).Replace(",",".")">
                     </div>
                 </div>
 

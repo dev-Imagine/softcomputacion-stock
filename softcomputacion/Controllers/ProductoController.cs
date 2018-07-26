@@ -8,8 +8,8 @@ using softcomputacion.Models;
 using softcomputacion.Servicios;
 using System.Net.Http.Headers;
 using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+//using System.Threading.Tasks;
+//using Newtonsoft.Json;
 
 namespace softcomputacion.Controllers
 {
