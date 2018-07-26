@@ -5,6 +5,8 @@
     List<softcomputacion.Models.estado> lstEstados = (List<softcomputacion.Models.estado>)ViewBag.lstEstados;
     string[] filtros = ViewBag.filtros.Split(';');
     string stColorStock = "";
+    //string stValorUSD = Convert.ToString(ViewBag.ValorUSD);
+    //double ValorUSD = Convert.ToDouble(stValorUSD.ToString().Replace(".", ","));
     double ValorUSD = (double)ViewBag.ValorUSD;
     softcomputacion.Models.usuario oUsuario = (softcomputacion.Models.usuario)Session["Usuario"];
 
@@ -287,7 +289,7 @@
                 </div>
             </div><div class="row container-fluid text-center">
                 <div id="div-paginacion" class="col-12">
-                    @Html.PagedListPager(Model, nroPagina => Url.Action("ListarProducto", "Producto", new { nroPagina, tamañoPagina = Model.PageSize }), new PagedListRenderOptions() { ClassToApplyToFirstListItemInPager = null, ClassToApplyToLastListItemInPager = null, UlElementClasses = new[] { "pagination", "justify-content-center" }, LiElementClasses = new[] { "page-item" } })
+                    @Html.PagedListPager(Model, nroPagina => Url.Action("ListarProducto", "Producto", new { nroPagina, tamañoPagina = Model.PageSize, paginacion = true }), new PagedListRenderOptions() { ClassToApplyToFirstListItemInPager = null, ClassToApplyToLastListItemInPager = null, UlElementClasses = new[] { "pagination", "justify-content-center" }, LiElementClasses = new[] { "page-item" } })
                 </div>
                 <div class="col-12">
                     @Model.FirstItemOnPage a @Model.LastItemOnPage productos de un total de @Model.TotalItemCount Productos.

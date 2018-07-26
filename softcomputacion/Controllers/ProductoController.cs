@@ -64,7 +64,7 @@ namespace softcomputacion.Controllers
             }
 
         }
-        public ActionResult ListarProducto(int nroPagina = 1, int tamañoPagina = 10)
+        public ActionResult ListarProducto(int nroPagina = 1, int tamañoPagina = 10, bool paginacion = false)
         {
             try
             {
@@ -79,8 +79,9 @@ namespace softcomputacion.Controllers
                 srvProducto sProducto = new srvProducto();
                 srvCategoria sCategoria = new srvCategoria();
                 List<producto> lstProductos = (List<producto>)Session["lstProducto"];
-                if (lstProductos == null || lstProductos.Count ==0)
+                if (lstProductos == null || lstProductos.Count ==0 || paginacion == false)
                 {
+                    Session["lstProducto"] = new List<producto>();
                     lstProductos = new List<producto>();
                 }
                 ViewBag.lstCategorias = sCategoria.ObtenerCategorias();
