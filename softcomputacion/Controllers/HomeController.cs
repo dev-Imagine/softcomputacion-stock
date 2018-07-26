@@ -20,7 +20,7 @@ namespace softcomputacion.Controllers
         {
             srvUsuario sUsuario = new srvUsuario();
             usuario oUsuario = sUsuario.ObtenerUsuario(dni, contraseña);
-            if (oUsuario != null)
+            if (oUsuario != null && oUsuario.fechaBaja == null)
             {
                 Session["Usuario"] = oUsuario;
                 return RedirectToAction("ListarProducto", "Producto");
