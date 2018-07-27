@@ -125,11 +125,11 @@
                         <div class="funkyradio-dark">
                             @if (oProducto.precioFijo == true)
                             {
-                                <input type="checkbox" name="oProducto.precioFijo" id="preciodolar" checked value="true" /> <!-- codigo change en document.ready -->
+                                <input onclick="cambiarLbl()" type="checkbox" name="oProducto.precioFijo" id="preciodolar" checked value="true" /> <!-- codigo change en document.ready -->
                             }
                             else
                             {
-                                <input type="checkbox" name="oProducto.precioFijo" id="preciodolar" value="false" /> <!-- codigo change en document.ready -->
+                                <input onclick="cambiarLbl()" type="checkbox" name="oProducto.precioFijo" id="preciodolar" value="false" /> <!-- codigo change en document.ready -->
                             }
 
                             <label id="lblPreciodolar" for="preciodolar" style="color:#777;">Precio fijo $ARS</label>
@@ -264,7 +264,7 @@
         $('#preciodolar').change(function () {
             if ($(this).is(":checked")) {
                 $(this).val(true);
-                $('precio').text('$ARS');
+                $('precio').text('$ARS');                
                 $('precio').addClass('text-primary').removeClass('text-success');
             }
             else {
@@ -388,6 +388,21 @@
             }
         });
     }
+
+    function cambiarLbl() {
+            if ($('#preciodolar').is(":checked")) {
+                $('#preciodolar').val(true);
+                $('precio').text('$ARS');
+                $('precio').addClass('text-primary').removeClass('text-success');
+            }
+            else {
+                $('#preciodolar').val(false);
+                $('precio').text('$USD');
+                $('precio').addClass('text-success').removeClass('text-primary');
+            }
+
+        };
+    
     
 </script>
 }
